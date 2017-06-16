@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class IndexController{
 
     @RequestMapping(params = {"id", "serviceNumber", "text", "msisdn", "date", "operator"})
-    public String sms (@RequestParam("id") String id,
-                       @RequestParam("serviceNumber") String serviceNumber,
-                       @RequestParam("text") String text,
-                       @RequestParam("msisdn") String msisdn,
-                       @RequestParam("date") String date,
-                       @RequestParam("operator") String operator, Model map) {
+    public String index (@RequestParam("id") String id,
+                         @RequestParam("serviceNumber") String serviceNumber,
+                         @RequestParam("text") String text,
+                         @RequestParam("msisdn") String msisdn,
+                         @RequestParam("date") String date,
+                         @RequestParam("operator") String operator, Model map) {
 
         map.addAttribute("msg", "Your Details Are : " + id +
                 ", " + serviceNumber +", " + text +", " + msisdn +", " + date +", " + operator);
