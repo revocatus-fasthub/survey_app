@@ -10,6 +10,10 @@ buildscript {
 	}
 }
 
+wrapper {
+	gradleVersion = '2.1'
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -32,4 +36,8 @@ dependencies {
 	//runtime('mysql:mysql-connector-java')
 	//testCompile('org.springframework.boot:spring-boot-starter-test')
 	//testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+}
+
+springBoot{
+	executable=true
 }
