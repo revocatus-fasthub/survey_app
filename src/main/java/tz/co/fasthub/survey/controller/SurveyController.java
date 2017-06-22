@@ -22,7 +22,7 @@ import tz.co.fasthub.survey.service.SurveyService;
 @RequestMapping(value = "/sms/utc")
 public class SurveyController {
 
-   private SurveyService surveyService;
+    private SurveyService surveyService;
     private static final Logger log = LoggerFactory.getLogger(SurveyController.class);
     static AbstractApplicationContext context;
 
@@ -31,6 +31,7 @@ public class SurveyController {
         this.surveyService = surveyService;
     }
 
+    //recieving from mobile
     @RequestMapping(params = {"id", "serviceNumber", "text", "msisdn", "date", "operator"}, method = RequestMethod.GET, produces = "text/plain")
     public ResponseEntity<String> index (@RequestParam("id") String id,
                                          @RequestParam("serviceNumber") String serviceNumber,
@@ -42,8 +43,28 @@ public class SurveyController {
         final HttpHeaders httpHeaders= new HttpHeaders();
         httpHeaders.setContentType(MediaType.TEXT_PLAIN);
         httpHeaders.add("id",id);
-        log.info("recieved message from gravity");
-            return new ResponseEntity<String>("THANK YOU", httpHeaders, HttpStatus.OK);
+        log.info("received message from gravity: "+text+ " from "+msisdn);
+        String response = null;
+
+        switch (text) {
+            case "FastHub":
+                response = "Ready to initiate survey (\n1-Yes \n 2-No \n 0-quit)?";
+                break;
+            case "1":
+                response="Do you live in dar es salaam?";
+                break;
+            case "2":
+                response="Thank you for your time";
+                break;
+            case "0":
+                surveyService.terminateSurvey();
+                response="THANK YOU!";
+                break;
+            default:
+                response="Invalid response";
+                break;
+        }
+        return new ResponseEntity<String>(response, httpHeaders, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/index")
@@ -51,12 +72,12 @@ public class SurveyController {
         return "index";
     }
 
+    public Survey[] initQsn(){
+        return surveyService.initQsn();
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public Survey[] getQuestions(){
         return surveyService.getQuestions();
     }
-
-
-
-
 }

@@ -7,4 +7,6 @@ import tz.co.fasthub.survey.domain.Survey;
  */
 public interface SurveyService {
     Survey[] getQuestions();
+    Survey[] initQsn();
+    void terminateSurvey();
 }

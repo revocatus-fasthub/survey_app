@@ -16,12 +16,12 @@ public class SurveyServiceImpl implements SurveyService {
 
     private static final Logger log = LoggerFactory.getLogger(SurveyController.class);
     private static AbstractApplicationContext context;
-    private int answer;
+    private int answer= Integer.parseInt(null);
 
     public Survey[] getQuestions(){
         Survey qsn1 = new Survey(1,"Do you live in dar es salaam?");
         Survey qsn2 = new Survey(2,"Send 1 when you are ready");
-        Survey quit = new Survey(00,"Thank you for your time");
+        Survey quit = new Survey(0,"Thank you for your time");
 
         if(answer==1){
             return new Survey[]{qsn1};
@@ -41,7 +41,7 @@ public class SurveyServiceImpl implements SurveyService {
         return new Survey[]{mainqsn};
     }
 
-    private static void terminateSurvey() {
+    public void terminateSurvey() {
         log.info("Terminating Survey...");
         context.close();
     }
