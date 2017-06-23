@@ -16,7 +16,8 @@ public class SurveyServiceImpl implements SurveyService {
 
     private static final Logger log = LoggerFactory.getLogger(SurveyController.class);
     private static AbstractApplicationContext context;
-    private int answer= Integer.parseInt(null);
+    private int answer;
+
 
     public Survey[] getQuestions(){
         Survey qsn1 = new Survey(1,"Do you live in dar es salaam?");
