@@ -22,7 +22,7 @@ import tz.co.fasthub.survey.service.SurveyService;
 @RequestMapping(value = "/sms/utc")
 public class SurveyController {
 
-    private SurveyService surveyService;
+    private final SurveyService surveyService;
     private static final Logger log = LoggerFactory.getLogger(SurveyController.class);
     static AbstractApplicationContext context;
 
@@ -31,7 +31,6 @@ public class SurveyController {
         this.surveyService = surveyService;
     }
 
-    //recieving from mobile
     @RequestMapping(params = {"id", "serviceNumber", "text", "msisdn", "date", "operator"}, method = RequestMethod.GET, produces = "text/plain")
     public ResponseEntity<String> index (@RequestParam("id") String id,
                                          @RequestParam("serviceNumber") String serviceNumber,
