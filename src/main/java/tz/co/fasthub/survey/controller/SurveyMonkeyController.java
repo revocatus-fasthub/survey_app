@@ -69,7 +69,6 @@ public class SurveyMonkeyController {
     public String afterAuthorization(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             try {
                 doGet(request,response);
-             // authorize(request);
                 requestToken(request,response);
                 return "index";
                 //return "redirect:/survey/viewCollector";
@@ -110,24 +109,25 @@ public class SurveyMonkeyController {
     }
 
     @RequestMapping(value = "/viewCollector",method = RequestMethod.GET)
-    public ResponseEntity<String> authorize(HttpServletRequest request){
-        Object collectors;
+    public String viewCollectors(HttpServletRequest request){
         request.getSession();
-
+        log.info("**********************"+accessTokenFromPayload);
         MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
-        parts.add("type","weblink");
+      //  parts.add("type","weblink");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-      //  headers.add("Authorization ","bearer "+accessTokenFromPayload);
-         headers.add("bearer ","Authorization: bearer "+accessTokenFromPayload);
-        log.info("**********************"+accessTokenFromPayload);
+
+        headers.add("Authorization","bearer "+accessTokenFromPayload);
+      //   headers.add("bearer ","Authorization: Bearer "+accessTokenFromPayload);
+
         HttpEntity<?> entity = new HttpEntity<Object>(parts, headers);
 
-        collectors=restTemplate.postForObject(collectorUrl,entity,Object.class);
-        log.info("collectors="+collectors);
+        Object collectors = restTemplate.getForObject(collectorUrl,Object.class,entity);
+        log.info("collectors= "+collectors);
 
-        return new ResponseEntity<>("response", headers, HttpStatus.OK);
+        return "viewSurvey";
+        //return new ResponseEntity<>("response", headers, HttpStatus.OK);
     }
 
 
