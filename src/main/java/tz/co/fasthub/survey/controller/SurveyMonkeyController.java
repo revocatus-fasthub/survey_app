@@ -45,7 +45,7 @@ public class SurveyMonkeyController {
     private static final String requestTokenUrl = "https://api.surveymonkey.net/oauth/token";
 
 
-    private static final String collectorUrl="https://api.surveymonkey.net/v3/surveys/118875579/collectors";
+    private static final String collectorUrl="https://api.surveymonkey.net/v3/surveys/118875579/collectors";//https://api.surveymonkey.net/v3/surveys/118875579/collectors
     private static final String fetchSurvey=" /surveys/118875579/responses/bulk";
     private static final String viewSurvey="https://api.surveymonkey.net/v3/surveys/118875579";
 
@@ -112,19 +112,22 @@ public class SurveyMonkeyController {
     public String viewCollectors(HttpServletRequest request){
         request.getSession();
         log.info("**********************"+accessTokenFromPayload);
-        MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
-      //  parts.add("type","weblink");
+          MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
+       //   parts.add("type","weblink");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
+        //headers.add("Authorization ","bearer "+accessTokenFromPayload);
         headers.add("Authorization","bearer "+accessTokenFromPayload);
-      //   headers.add("bearer ","Authorization: Bearer "+accessTokenFromPayload);
 
-        HttpEntity<?> entity = new HttpEntity<Object>(parts, headers);
+        HttpEntity<?> entity = new HttpEntity<>(headers);
 
-        Object collectors = restTemplate.getForObject(collectorUrl,Object.class,entity);
-        log.info("collectors= "+collectors);
+        //Object collectors = restTemplate.getForObject(collectorUrl,Object.class,entity);
+        ResponseEntity<String> response = restTemplate.exchange(collectorUrl,HttpMethod.GET,entity,String.class);
+        response.getBody();
+        log.info("response:" +response);
+        //log.info("collectors= "+collectors);
 
         return "viewSurvey";
         //return new ResponseEntity<>("response", headers, HttpStatus.OK);
