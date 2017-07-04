@@ -46,6 +46,9 @@ public class SurveyMonkeyController {
 
 
     private static final String collectorUrl="https://api.surveymonkey.net/v3/surveys/118875579/collectors";//https://api.surveymonkey.net/v3/surveys/118875579/collectors
+    private static final String viewSurveyUrl="https://api.surveymonkey.net/v3/surveys/118875579/details";
+    private static final String responseUrl="https://api.surveymonkey.net/v3/collectors/158591453/responses";
+    private static final String viewQuestionsUrl="https://api.surveymonkey.net/v3/surveys/118875579/pages/118875579/questions";
     private static final String fetchSurvey=" /surveys/118875579/responses/bulk";
     private static final String viewSurvey="https://api.surveymonkey.net/v3/surveys/118875579";
 
@@ -104,7 +107,7 @@ public class SurveyMonkeyController {
         JSONObject jsonObject = new JSONObject(jsonStr);
         accessTokenFromPayload  = jsonObject.getString("access_token");
         log.info("Access token = "+accessTokenFromPayload);
-
+        //return "success";
         return new ResponseEntity<>("response", headers, HttpStatus.OK);
     }
 
@@ -112,39 +115,74 @@ public class SurveyMonkeyController {
     public String viewCollectors(HttpServletRequest request){
         request.getSession();
         log.info("**********************"+accessTokenFromPayload);
-          MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
+         MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
        //   parts.add("type","weblink");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-
-        //headers.add("Authorization ","bearer "+accessTokenFromPayload);
         headers.add("Authorization","bearer "+accessTokenFromPayload);
 
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
-        //Object collectors = restTemplate.getForObject(collectorUrl,Object.class,entity);
         ResponseEntity<String> response = restTemplate.exchange(collectorUrl,HttpMethod.GET,entity,String.class);
         response.getBody();
         log.info("response:" +response);
-        //log.info("collectors= "+collectors);
 
-        return "viewSurvey";
-        //return new ResponseEntity<>("response", headers, HttpStatus.OK);
+        return "success";
     }
 
 
     @RequestMapping(value = "/viewSurvey",method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> view(){
-        Object view;
+        log.info("**********************"+accessTokenFromPayload);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.add("bearer ","Authorization: bearer " +access_token);
+        headers.add("Authorization","bearer "+accessTokenFromPayload);
 
-        restTemplate.postForObject(viewSurvey, headers,Object.class);
+        HttpEntity<?> entity = new HttpEntity<>(headers);
 
-        return new ResponseEntity<String>("response", headers, HttpStatus.OK);
+        ResponseEntity<String> response = restTemplate.exchange(viewSurveyUrl,HttpMethod.GET,entity,String.class);
+        response.getBody();
+        log.info("response: "+response);
+
+        return new ResponseEntity<>("can view survey", headers, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/viewResponses",method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<String> viewResponses(HttpServletRequest request){
+        request.getSession();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("Authorization","bearer "+accessTokenFromPayload);
+
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(responseUrl,HttpMethod.GET,entity,String.class);
+        response.getBody();
+        log.info("response: "+response);
+
+        return new ResponseEntity<>("can view response", headers, HttpStatus.OK);
+
+    }
+
+/*    @RequestMapping(value = "/viewQuestions",method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<String> viewQuestions(HttpServletRequest request){
+        request.getSession();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("Authorization","bearer "+accessTokenFromPayload);
+
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(viewQuestionsUrl,HttpMethod.GET,entity,String.class);
+        response.getBody();
+        log.info("response: "+response);
+
+        return new ResponseEntity<>("can view questions", headers, HttpStatus.OK);
+
+    }*/
 
 
 }
