@@ -22,6 +22,8 @@ import tz.co.fasthub.survey.service.SurveyService;
 @RequestMapping(value = "/sms/utc")
 public class SurveyController {
 
+    private SurveyMonkeyController surveyMonkeyController; // 15404
+
     private final SurveyService surveyService;
     private static final Logger log = LoggerFactory.getLogger(SurveyController.class);
     static AbstractApplicationContext context;
@@ -47,7 +49,7 @@ public class SurveyController {
 
         switch (text) {
             case "FastHub":
-                response = "Ready to initiate survey (\n1-Yes \n 2-No \n 0-quit)?";
+                response = surveyMonkeyController.getQsn1();//"Ready to initiate survey (\n1-Yes \n 2-No \n 0-quit)?";
                 break;
             case "1":
                 response="Do you live in dar es salaam?";

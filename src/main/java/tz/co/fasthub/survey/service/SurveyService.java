@@ -9,4 +9,5 @@ public interface SurveyService {
     Survey[] getQuestions();
     Survey[] initQsn();
     void terminateSurvey();
+    Survey save(Survey survey);
 }

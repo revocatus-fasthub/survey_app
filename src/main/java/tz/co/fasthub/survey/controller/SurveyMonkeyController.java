@@ -1,17 +1,18 @@
 package tz.co.fasthub.survey.controller;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import tz.co.fasthub.survey.service.SurveyService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,12 +23,15 @@ import java.io.IOException;
 /**
  * Created by root on 6/22/17.
  */
-@Controller
+@RestController
 @RequestMapping("/survey")
 public class SurveyMonkeyController {
-//http://survey.fasthub.co.tz:8081
+//http://survey.fasthub.co.tz:8081/survey/callback
 
 //id=118875579
+
+    @Autowired
+    SurveyService surveyService;
 
     private static final String oauthLink ="https://api.surveymonkey.net/oauth/authorize?response_type=code&redirect_uri=";
     private static final String redirect_uri="http://127.0.0.1:8081/survey/callback";//http://127.0.0.1:8081/survey/callback  http://survey.fasthub.co.tz:8081/survey/callback https://www.surveymonkey.com
@@ -48,9 +52,9 @@ public class SurveyMonkeyController {
     private static final String collectorUrl="https://api.surveymonkey.net/v3/surveys/118875579/collectors";//https://api.surveymonkey.net/v3/surveys/118875579/collectors
     private static final String viewSurveyUrl="https://api.surveymonkey.net/v3/surveys/118875579/details";
     private static final String responseUrl="https://api.surveymonkey.net/v3/collectors/158591453/responses";
-    private static final String viewQuestionsUrl="https://api.surveymonkey.net/v3/surveys/118875579/pages/118875579/questions";
+    private static final String viewQuestionsUrl="https://api.surveymonkey.net/v3/surveys/118875579/pages/41504730/questions";
     private static final String fetchSurvey=" /surveys/118875579/responses/bulk";
-    private static final String viewSurvey="https://api.surveymonkey.net/v3/surveys/118875579";
+    private static final String qsn1="https://api.surveymonkey.net/v3/surveys/118875579/pages/41504730/questions/130803708";
 
 
     private RestTemplate restTemplate = new RestTemplate();
@@ -107,6 +111,7 @@ public class SurveyMonkeyController {
         JSONObject jsonObject = new JSONObject(jsonStr);
         accessTokenFromPayload  = jsonObject.getString("access_token");
         log.info("Access token = "+accessTokenFromPayload);
+
         //return "success";
         return new ResponseEntity<>("response", headers, HttpStatus.OK);
     }
@@ -115,8 +120,6 @@ public class SurveyMonkeyController {
     public String viewCollectors(HttpServletRequest request){
         request.getSession();
         log.info("**********************"+accessTokenFromPayload);
-         MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
-       //   parts.add("type","weblink");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -166,7 +169,7 @@ public class SurveyMonkeyController {
 
     }
 
-/*    @RequestMapping(value = "/viewQuestions",method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/viewQuestions",method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> viewQuestions(HttpServletRequest request){
         request.getSession();
 
@@ -182,7 +185,22 @@ public class SurveyMonkeyController {
 
         return new ResponseEntity<>("can view questions", headers, HttpStatus.OK);
 
-    }*/
+    }
 
+    @RequestMapping(value = "/qsnOne",method = RequestMethod.GET, produces = "application/json")
+    public String getQsn1(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("Authorization","bearer "+accessTokenFromPayload);
 
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(qsn1,HttpMethod.GET,entity,String.class);
+        response.getBody();
+        log.info("response: "+response);
+
+        return qsn1;
+        //return new ResponseEntity<>("get question 1", headers, HttpStatus.OK);
+
+    }
 }
