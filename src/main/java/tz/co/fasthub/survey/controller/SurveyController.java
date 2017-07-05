@@ -22,7 +22,7 @@ import tz.co.fasthub.survey.service.SurveyService;
 @RequestMapping(value = "/sms/utc")
 public class SurveyController {
 
-    private SurveyMonkeyController surveyMonkeyController; // 15404
+    private SurveyMonkeyController surveyMonkeyController;
 
     private final SurveyService surveyService;
     private static final Logger log = LoggerFactory.getLogger(SurveyController.class);
@@ -48,8 +48,8 @@ public class SurveyController {
         String response = null;
 
         switch (text) {
-            case "FastHub":
-                response = surveyMonkeyController.getQsn1();//"Ready to initiate survey (\n1-Yes \n 2-No \n 0-quit)?";
+            case "FastHub"://surveyMonkeyController.getQsnOne();
+                response = "Ready to initiate survey (\n1-Yes \n 2-No \n 0-quit)?";
                 break;
             case "1":
                 response="Do you live in dar es salaam?";
