@@ -49,7 +49,7 @@ public class SurveyController {
 
         switch (text) {
             case "FastHub"://surveyMonkeyController.getQsnOne();
-                response = "Ready to initiate survey (\n1-Yes \n 2-No \n 0-quit)?";
+                response = surveyMonkeyController.getQsnOne();//"Ready to initiate survey (\n1-Yes \n 2-No \n 0-quit)?";
                 break;
             case "1":
                 response="Do you live in dar es salaam?";

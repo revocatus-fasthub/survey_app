@@ -122,7 +122,7 @@ public class SurveyMonkeyController {
 
     @RequestMapping(value = "/viewSurvey",method = RequestMethod.GET, produces = "application/json")
     public String view(){
-        log.info("**********************"+accessTokenFromPayload);
+        log.info("*********************"+accessTokenFromPayload);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("Authorization","bearer "+accessTokenFromPayload);
@@ -174,9 +174,8 @@ public class SurveyMonkeyController {
     }
 
     @RequestMapping(value = "/qsnOne",method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<String> getQsnOne(HttpServletRequest request){
-        request.getSession();
-
+    public String getQsnOne(){
+        log.info("*******************"+accessTokenFromPayload);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("Authorization","bearer "+accessTokenFromPayload);
@@ -187,8 +186,8 @@ public class SurveyMonkeyController {
         response1.getBody();
         log.info("response: "+response1);
 
-        //return "viewSurvey";
-        return new ResponseEntity<>("qsn 1", headers, HttpStatus.OK);
+        return "viewSurvey";
+        //return new ResponseEntity<>("qsn 1", headers, HttpStatus.OK);
 
     }
 
