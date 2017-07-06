@@ -44,6 +44,11 @@ public class SurveyMonkeyController {
         return "index";
     }
 
+    @RequestMapping(value = "/successPage")
+    public String successPage(){
+        return "viewSurvey";
+    }
+
     private String doGet(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         HttpSession session = request.getSession();
         code=request.getParameter("code");
@@ -90,7 +95,7 @@ public class SurveyMonkeyController {
         JSONObject jsonObject = new JSONObject(jsonStr);
         accessTokenFromPayload  = jsonObject.getString("access_token");
         log.info("Access token = "+ accessTokenFromPayload);
-        return "viewSurvey";
+        return "redirect:/survey/successPage";
         //return new ResponseEntity<>("response", headers, HttpStatus.OK);
     }
 
@@ -116,7 +121,7 @@ public class SurveyMonkeyController {
         log.info("response:" +response);
         //log.info("collectors= "+collectors);
 
-        return "viewSurvey";
+        return "redirect:/survey/successPage";
         //return new ResponseEntity<>("response", headers, HttpStatus.OK);
     }
 
@@ -133,7 +138,7 @@ public class SurveyMonkeyController {
         response.getBody();
         log.info("response: "+response);
 
-        return "viewSurvey";
+        return "redirect:/survey/successPage";
       //  return new ResponseEntity<>("can view survey", headers, HttpStatus.OK);
     }
 
@@ -150,7 +155,7 @@ public class SurveyMonkeyController {
         ResponseEntity<String> response = restTemplate.exchange(responseUrl,HttpMethod.GET,entity,String.class);
         response.getBody();
         log.info("response: "+response);
-        return "viewSurvey";
+        return "redirect:/survey/successPage";
         //return new ResponseEntity<>("can view response", headers, HttpStatus.OK);
 
     }
@@ -168,7 +173,7 @@ public class SurveyMonkeyController {
         response.getBody();
         log.info("response: "+response);
 
-        return "viewSurvey";
+        return "redirect:/survey/successPage";
         //return new ResponseEntity<>("can view questions", headers, HttpStatus.OK);
 
     }
@@ -186,7 +191,7 @@ public class SurveyMonkeyController {
         response1.getBody();
         log.info("response: "+response1);
 
-        return "viewSurvey";
+        return "redirect:/survey/successPage";
         //return new ResponseEntity<>("qsn 1", headers, HttpStatus.OK);
 
     }

@@ -5,8 +5,13 @@ package tz.co.fasthub.survey.constants;
  */
 public class Constant {
 
+    public static final String GW_URL="http://gravity.fasthub.co.tz:8088/fasthub/messaging/json/api";
+    public static final int channel=116275;
+    public static final String password="OWQzOGQ4MWRkZDg3ZWY0NmU4MDQwMWVlNTY2NDY0ZTg5MmI2YjdlOGY5OTg4ZDBjNDJiNzBmZjYyMzg3ZDZiNw==";
+
+
     public static final String oauthLink ="https://api.surveymonkey.net/oauth/authorize?response_type=code&redirect_uri=";
-    public static final String redirect_uri="http://127.0.0.1:8081/survey/callback";//http://127.0.0.1:8081/survey/callback  http://survey.fasthub.co.tz:8081/survey/callback https://www.surveymonkey.com
+    public static final String redirect_uri="http://survey.fasthub.co.tz:8081/survey/callback";//http://127.0.0.1:8081/survey/callback  http://survey.fasthub.co.tz:8081/survey/callback https://www.surveymonkey.com
     public static final String client_id = "g5qjzImSTsuaBTr3JcMUOw";
     public static final String client_secret="225873409898429840227397389705343753331";
     public static final String grant_type = "authorization_code";
@@ -14,8 +19,6 @@ public class Constant {
     public static String accessTokenFromPayload;
     public static String code = null;
     public static final String complete_link="https://www.surveymonkey.com/oauth/authorize?response_type=code&redirect_uri="+redirect_uri+"&client_id="+client_id;
-
-    
 
     public static final String access_authorized="https://api.surveymonkey.com/api_console/oauth2callback?code=";
     public static final String requestTokenUrl = "https://api.surveymonkey.net/oauth/token";
