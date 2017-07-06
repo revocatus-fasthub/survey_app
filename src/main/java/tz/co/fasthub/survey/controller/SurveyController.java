@@ -13,8 +13,12 @@ import org.springframework.web.client.RestTemplate;
 import tz.co.fasthub.survey.constants.Constant;
 import tz.co.fasthub.survey.domain.Channel;
 import tz.co.fasthub.survey.domain.Content;
+import tz.co.fasthub.survey.domain.MessageHandler;
 import tz.co.fasthub.survey.domain.Survey;
 import tz.co.fasthub.survey.service.SurveyService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by root on 6/20/17.
@@ -22,7 +26,8 @@ import tz.co.fasthub.survey.service.SurveyService;
 @RestController
 @RequestMapping(value = "/sms/utc")
 public class SurveyController {
-
+//http://survey.fasthub.co.tz:8081/sms/utc?id=74&serviceNumber=665656&text=Test&msisdn=254791199624&date=2016-05-18&operator=safaricom-soap
+    //http://127.0.0.1:8081/sms/utc?id=74&serviceNumber=0785723360&text=FastHub&msisdn=255754088816&date=2016-05-18&operator=safaricom-soap
     private SurveyMonkeyController surveyMonkeyController;
 
     RestTemplate restTemplate = new RestTemplate();
@@ -30,6 +35,8 @@ public class SurveyController {
     private Channel channelLink = new Channel(Constant.channel, Constant.password);
 
     private Content content;
+
+    String message = "Welcome to TakaTaka Collection Survey \\n1-Yes \\n 2-No \\n 0-quit?";//"Ready to initiate survey \n1-Yes \n 2-No \n 0-quit?";
 
     private final SurveyService surveyService;
     private static final Logger log = LoggerFactory.getLogger(SurveyController.class);
@@ -41,7 +48,7 @@ public class SurveyController {
     }
 
     @RequestMapping(params = {"id", "serviceNumber", "text", "msisdn", "date", "operator"}, method = RequestMethod.GET, produces = "text/plain")
-    public String index (@RequestParam("id") String id,
+    public ResponseEntity<String> index (@RequestParam("id") String id,
                                          @RequestParam("serviceNumber") String serviceNumber,
                                          @RequestParam("text") String text,
                                          @RequestParam("msisdn") String msisdn,
@@ -51,41 +58,44 @@ public class SurveyController {
        /* final HttpHeaders httpHeaders= new HttpHeaders();
         httpHeaders.setContentType(MediaType.TEXT_PLAIN);
       */
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.TEXT_PLAIN);
-        headers.add("id",id);
-
         log.info("received message from gravity: "+text+ " from "+msisdn);
         String response;
 
         switch (text) {
             case "FastHub"://surveyMonkeyController.getQsnOne();
-                String message = "Ready to initiate survey \n1-Yes \n 2-No \n 0-quit?";
-                response = message;
+                response = "Welcome to TakaTaka Collection Survey \n1-Yes \n 2-No \n 0-quit?";
                 break;
             case "1":
-                response="Do you live in dar es salaam?";
+                response = "Do you live in dar es salaam?";
                 break;
             case "2":
-                response="Thank you for your time";
+                response = "Thank you for your time";
                 break;
             case "0":
                 //surveyService.terminateSurvey();
-                response="THANK YOU!";
+                response = "THANK YOU!";
                 break;
             default:
-                response="Invalid response";
+                response = "Invalid response";
                 break;
         }
-        content = new Content(channelLink,response);
+        List<MessageHandler> messages = new ArrayList<>();
+            MessageHandler messageHandler = new MessageHandler(id,response,msisdn,"INFO");
+            messages.add(messageHandler);
 
+        content = new Content(channelLink,messages);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        log.info(String.valueOf(content));
         HttpEntity<Content> entity = new HttpEntity<>(content,headers);
-
+        log.info(String.valueOf(entity));
         Object responseMEssage= restTemplate.postForObject(Constant.GW_URL,entity,Object.class);
         log.info("response from gravity: " +responseMEssage);
 
-        return "redirect: /index";
-        //return new ResponseEntity<String>(response, httpHeaders, HttpStatus.OK);
+        //return "redirect: /index";
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/index")

@@ -2,27 +2,29 @@ package tz.co.fasthub.survey.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.List;
+
 /**
  * Created by root on 6/16/17.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Content {
     private Channel channel;
-    private String question;
+    private List<MessageHandler> messages;
 
     public Content() {
     }
 
-    public Content(Channel channel, String question) {
+    public Content(Channel channel, List<MessageHandler> messages) {
         this.channel = channel;
-        this.question = question;
+        this.messages = messages;
     }
 
     @Override
     public String toString() {
         return "Content{" +
                 "channel=" + channel +
-                ", question='" + question + '\'' +
+                ", messages=" + messages +
                 '}';
     }
 
@@ -34,11 +36,11 @@ public class Content {
         this.channel = channel;
     }
 
-    public String getQuestion() {
-        return question;
+    public List<MessageHandler> getMessages() {
+        return messages;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
+    public void setMessages(List<MessageHandler> messages) {
+        this.messages = messages;
     }
 }

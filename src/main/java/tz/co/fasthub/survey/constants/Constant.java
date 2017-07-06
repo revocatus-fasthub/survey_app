@@ -11,12 +11,12 @@ public class Constant {
 
 
     public static final String oauthLink ="https://api.surveymonkey.net/oauth/authorize?response_type=code&redirect_uri=";
-    public static final String redirect_uri="http://survey.fasthub.co.tz:8081/survey/callback";//http://127.0.0.1:8081/survey/callback  http://survey.fasthub.co.tz:8081/survey/callback https://www.surveymonkey.com
+    public static final String redirect_uri="http://127.0.0.1:8081/survey/callback";//http://127.0.0.1:8081/survey/callback  http://survey.fasthub.co.tz:8081/survey/callback https://www.surveymonkey.com
     public static final String client_id = "g5qjzImSTsuaBTr3JcMUOw";
     public static final String client_secret="225873409898429840227397389705343753331";
     public static final String grant_type = "authorization_code";
     public static String access_token;
-    public static String accessTokenFromPayload;
+    public static String accessTokenFromPayload,expires_in, token_type;
     public static String code = null;
     public static final String complete_link="https://www.surveymonkey.com/oauth/authorize?response_type=code&redirect_uri="+redirect_uri+"&client_id="+client_id;
 

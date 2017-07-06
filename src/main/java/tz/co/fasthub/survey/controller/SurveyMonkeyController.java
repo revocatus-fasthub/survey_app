@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
@@ -11,6 +12,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
+import tz.co.fasthub.survey.domain.Payload;
+import tz.co.fasthub.survey.service.PayloadService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +32,10 @@ public class SurveyMonkeyController {
 //http://survey.fasthub.co.tz:8081
 
 //survey_id=118875579
+    private Payload payload;
+
+    @Autowired
+    PayloadService payloadService;
 
     private static final Logger log = LoggerFactory.getLogger(SurveyMonkeyController.class);
 
@@ -88,13 +95,26 @@ public class SurveyMonkeyController {
         HttpEntity<?> entity = new HttpEntity<Object>(parts, headers);
         log.info(String.valueOf(parts));
 
-        Object payload = restTemplate.postForObject(requestTokenUrl, entity, Object.class);
-        log.info("payload: " + payload);
+        Object payloading = restTemplate.postForObject(requestTokenUrl, entity, Object.class);
+        log.info("payload: " + payloading);
 
-        String jsonStr = String.valueOf(payload);
+        String jsonStr = String.valueOf(payloading);
         JSONObject jsonObject = new JSONObject(jsonStr);
+        //get items from json
         accessTokenFromPayload  = jsonObject.getString("access_token");
+        token_type = jsonObject.getString("token_type");
+        expires_in = jsonObject.getString("expires_in");
+
         log.info("Access token = "+ accessTokenFromPayload);
+        log.info("token_type = "+token_type);
+        log.info("expires_in"+expires_in);
+
+        //save payload to db
+        payload.setAccess_token(accessTokenFromPayload);
+        payload.setExpires_in(jsonObject.getString("expires_in"));
+        payload.setToken_type(jsonObject.getString("token_type"));
+        payloadService.save(payload);
+
         return "redirect:/survey/successPage";
         //return new ResponseEntity<>("response", headers, HttpStatus.OK);
     }
@@ -179,7 +199,7 @@ public class SurveyMonkeyController {
     }
 
     @RequestMapping(value = "/qsnOne",method = RequestMethod.GET, produces = "application/json")
-    public String getQsnOne(){
+    public ResponseEntity<String> getQsnOne() throws JSONException {
         log.info("*******************"+accessTokenFromPayload);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -191,8 +211,15 @@ public class SurveyMonkeyController {
         response1.getBody();
         log.info("response: "+response1);
 
-        return "redirect:/survey/successPage";
-        //return new ResponseEntity<>("qsn 1", headers, HttpStatus.OK);
+        String jsonStr1 = String.valueOf(response1);
+
+        JSONObject jsonObject = new JSONObject(jsonStr1);
+        String question1 = jsonObject.getString("heading");
+        log.info("question 1 states:" +question1);
+
+
+        // return "redirect:/survey/successPage";
+        return new ResponseEntity<>(question1, headers, HttpStatus.OK);
 
     }
 
