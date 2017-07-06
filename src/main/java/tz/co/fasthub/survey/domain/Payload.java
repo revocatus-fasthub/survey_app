@@ -17,6 +17,10 @@ public class Payload {
     private String token_type;
     private String expires_in;
 
+
+    public Payload() {
+    }
+
     public Payload(String access_token, String token_type, String expires_in) {
         this.access_token = access_token;
         this.token_type = token_type;
