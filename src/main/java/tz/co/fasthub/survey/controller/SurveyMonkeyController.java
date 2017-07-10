@@ -1,6 +1,5 @@
 package tz.co.fasthub.survey.controller;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -99,30 +98,30 @@ public class SurveyMonkeyController {
         Payload payloading = restTemplate.postForObject(requestTokenUrl, entity, Payload.class);
         log.info("payload: " + payloading);
 
-        String jsonStr = String.valueOf(payloading);
+        if(payloading!=null) {
+            JSONObject jsonObject = new JSONObject(payloading);
+            // log.info(String.valueOf(jsonStr.trim()));
+            //get items from json
+            accessTokenFromPayload = jsonObject.getString("access_token");
+            token_type = jsonObject.getString("token_type");
+            expires_in = jsonObject.getString("expires_in");
 
-        JSONArray jsonObject = new JSONArray(jsonStr.substring(jsonStr.indexOf('{')));
-       // log.info(String.valueOf(jsonStr.trim()));
-        //get items from json
-        accessTokenFromPayload  = jsonObject.getString(Integer.parseInt("access_token"));
-        token_type = jsonObject.getString(Integer.parseInt("token_type"));
-        expires_in = jsonObject.getString(Integer.parseInt("expires_in"));
+            log.info("Access token = "+accessTokenFromPayload);
+            log.info("token_type = "+token_type);
+            log.info("expires_in = "+expires_in);
 
-        log.info("Access token = "+accessTokenFromPayload);
-        log.info("token_type = "+token_type);
-        log.info("expires_in = "+expires_in);
+            //save payload to db
+            try {
+                payload.setAccess_token(accessTokenFromPayload);
+                payload.setExpires_in(token_type);
+                payload.setToken_type(expires_in);
+                payloadService.save(payload);
 
-        //save payload to db
-        try {
-            payload.setAccess_token(accessTokenFromPayload);
-            payload.setExpires_in(token_type);
-            payload.setToken_type(expires_in);
-            payloadService.save(payload);
-
-        }catch (Exception e){
-            log.info("error... can't save:" +e.getMessage());
+            } catch (Exception e) {
+                log.info("error... : " + e.getMessage());
+                return "redirect:/survey/successPage";
+            }
         }
-
         return "redirect:/survey/successPage";
         //return new ResponseEntity<>("response", headers, HttpStatus.OK);
     }

@@ -16,6 +16,7 @@ public class Constant {
     public static final String client_secret="225873409898429840227397389705343753331";
     public static final String grant_type = "authorization_code";
     public static String access_token;
+    public static String accessTokenFinal;
     public static String accessTokenFromPayload,expires_in, token_type;
     public static String code = null;
     public static final String complete_link="https://www.surveymonkey.com/oauth/authorize?response_type=code&redirect_uri="+redirect_uri+"&client_id="+client_id;
