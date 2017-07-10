@@ -8,4 +8,6 @@ import tz.co.fasthub.survey.domain.Payload;
 public interface PayloadService {
 
     Payload save(Payload payload);
+     Payload getPayloadById(Long id);
+   // Payload getPayloadByAccessToken(String access_token);
 }

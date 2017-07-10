@@ -1,5 +1,6 @@
 package tz.co.fasthub.survey.controller;
 
+import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class SurveyController {
                                          @RequestParam("text") String text,
                                          @RequestParam("msisdn") String msisdn,
                                          @RequestParam("date") String date,
-                                         @RequestParam("operator") String operator) {
+                                         @RequestParam("operator") String operator) throws JSONException {
 
        /* final HttpHeaders httpHeaders= new HttpHeaders();
         httpHeaders.setContentType(MediaType.TEXT_PLAIN);
@@ -63,7 +64,7 @@ public class SurveyController {
 
         switch (text) {
             case "FastHub"://surveyMonkeyController.getQsnOne();
-                response = "Welcome to TakaTaka Collection Survey \n1-Yes \n 2-No \n 0-quit?";
+                response = surveyMonkeyController.getQsnOne()+"\nSend your response to : 0785723360";//"Welcome to TakaTaka Collection Survey \n1-Yes \n 2-No \n 0-quit?";
                 break;
             case "1":
                 response = "Do you live in dar es salaam?";

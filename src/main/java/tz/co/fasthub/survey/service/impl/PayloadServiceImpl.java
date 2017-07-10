@@ -24,4 +24,10 @@ public class PayloadServiceImpl implements PayloadService {
     public Payload save(Payload payload) {
         return payloadRepository.save(payload);
     }
+
+    @Override
+    public Payload getPayloadById(Long id) {
+        return payloadRepository.findOne(id);
+    }
+
 }

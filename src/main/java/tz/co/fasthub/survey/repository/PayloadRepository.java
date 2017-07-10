@@ -6,6 +6,6 @@ import tz.co.fasthub.survey.domain.Payload;
 /**
  * Created by root on 7/4/17.
  */
-public interface PayloadRepository extends JpaRepository<Payload, String>{
+public interface PayloadRepository extends JpaRepository<Payload, Long>{
     Payload findById(Integer id);
 }

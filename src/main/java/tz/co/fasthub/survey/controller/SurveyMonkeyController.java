@@ -9,6 +9,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
@@ -32,13 +33,14 @@ public class SurveyMonkeyController {
 //http://survey.fasthub.co.tz:8081
 
 //survey_id=118875579
-    private Payload payload;
+
 
     @Autowired
     PayloadService payloadService;
 
     private static final Logger log = LoggerFactory.getLogger(SurveyMonkeyController.class);
 
+    private Payload payload = new Payload(access_token,expires_in,token_type);
     private RestTemplate restTemplate = new RestTemplate();
 
     @RequestMapping(value = "/authorizationUrl")
@@ -68,11 +70,9 @@ public class SurveyMonkeyController {
             try {
                 doGet(request,response);
                 requestToken(request,response);
-                return "index";
-                //return "redirect:/survey/viewCollector";
-            } catch (ServletException | IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+               // return "index";
+                return "redirect:/survey/index";
+            } catch (ServletException | IOException | JSONException e) {
                 e.printStackTrace();
             }
 
@@ -100,64 +100,68 @@ public class SurveyMonkeyController {
 
         if(payloading!=null) {
             JSONObject jsonObject = new JSONObject(payloading);
-            // log.info(String.valueOf(jsonStr.trim()));
+
             //get items from json
             accessTokenFromPayload = jsonObject.getString("access_token");
             token_type = jsonObject.getString("token_type");
             expires_in = jsonObject.getString("expires_in");
 
-            log.info("Access token = "+accessTokenFromPayload);
-            log.info("token_type = "+token_type);
-            log.info("expires_in = "+expires_in);
-
             //save payload to db
-            try {
-                payload.setAccess_token(accessTokenFromPayload);
-                payload.setExpires_in(token_type);
-                payload.setToken_type(expires_in);
-                payloadService.save(payload);
+            savingToDb();
 
-            } catch (Exception e) {
-                log.info("error... : " + e.getMessage());
-                return "redirect:/survey/successPage";
-            }
         }
         return "redirect:/survey/successPage";
         //return new ResponseEntity<>("response", headers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/viewCollector",method = RequestMethod.GET)
-    public String viewCollectors(HttpServletRequest request){
+    public void savingToDb(){
+        try {
+            payload.setAccess_token(accessTokenFromPayload);
+            payload.setExpires_in(expires_in);
+            payload.setToken_type(token_type);
+
+            payloadService.save(payload);
+
+        } catch (Exception e) {
+            log.info("error... : " + e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/viewCollector/{id}",method = RequestMethod.GET)
+    public String viewCollectors(@PathVariable Long id, HttpServletRequest request){
+        id= 1L;
         request.getSession();
-        log.info("**********************"+ accessTokenFromPayload);
+        Payload createdPayload = payloadService.getPayloadById(id);
+        log.info("********************** "+ createdPayload.getAccess_token());
         MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
         parts.add("type","weblink");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        try {
+            headers.add("Authorization", "bearer " + createdPayload.getAccess_token());
 
-        //headers.add("Authorization ","bearer "+accessTokenFromPayload);
-        headers.add("Authorization","bearer "+ accessTokenFromPayload);
+            HttpEntity<?> entity = new HttpEntity<>(headers);
 
-        HttpEntity<?> entity = new HttpEntity<>(headers);
-
-
-        //Object collectors = restTemplate.getForObject(collectorUrl,Object.class,entity);
-        ResponseEntity<String> response = restTemplate.exchange(collectorUrl,HttpMethod.GET,entity,String.class);
-        response.getBody();
-        log.info("response:" +response);
-        //log.info("collectors= "+collectors);
+            ResponseEntity<String> response = restTemplate.exchange(collectorUrl, HttpMethod.GET, entity, String.class);
+            response.getBody();
+            log.info("response:" + response);
+        }catch (Exception ex){
+            log.info("Error: "+ex.getMessage());
+        }
 
         return "redirect:/survey/successPage";
         //return new ResponseEntity<>("response", headers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/viewSurvey",method = RequestMethod.GET, produces = "application/json")
-    public String view(){
-        log.info("*********************"+accessTokenFromPayload);
+    @RequestMapping(value = "/viewSurvey/{id}",method = RequestMethod.GET, produces = "application/json")
+    public String view(@PathVariable Long id){
+        id= 1L;
+        Payload createdPayload = payloadService.getPayloadById(id);
+        log.info("*********************"+createdPayload.getAccess_token());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.add("Authorization","bearer "+accessTokenFromPayload);
+        headers.add("Authorization","bearer "+createdPayload.getAccess_token());
 
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
@@ -169,13 +173,15 @@ public class SurveyMonkeyController {
       //  return new ResponseEntity<>("can view survey", headers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/viewResponses",method = RequestMethod.GET, produces = "application/json")
-    public String viewResponses(HttpServletRequest request){
+    @RequestMapping(value = "/viewResponses/{id}",method = RequestMethod.GET, produces = "application/json")
+    public String viewResponses(@PathVariable Long id, HttpServletRequest request){
+        id= 1L;
+        Payload createdPayload = payloadService.getPayloadById(id);
         request.getSession();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.add("Authorization","bearer "+accessTokenFromPayload);
+        headers.add("Authorization","bearer "+createdPayload.getAccess_token());
 
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
@@ -187,12 +193,13 @@ public class SurveyMonkeyController {
 
     }
 
-    @RequestMapping(value = "/viewQuestions",method = RequestMethod.GET, produces = "application/json")
-    public String viewQuestions(){
-
+    @RequestMapping(value = "/viewQuestions/{id}",method = RequestMethod.GET, produces = "application/json")
+    public String viewQuestions(@PathVariable Long id){
+        id= 1L;
+        Payload createdPayload = payloadService.getPayloadById(id);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.add("Authorization","bearer "+accessTokenFromPayload);
+        headers.add("Authorization","bearer "+createdPayload.getAccess_token());
 
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
@@ -205,12 +212,14 @@ public class SurveyMonkeyController {
 
     }
 
-    @RequestMapping(value = "/qsnOne",method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/qsnOne/{id}",method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> getQsnOne() throws JSONException {
-        log.info("*******************"+accessTokenFromPayload);
+        Long id = 1L;
+        Payload createdPayload = payloadService.getPayloadById(id);
+        log.info("*******************"+createdPayload.getAccess_token());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.add("Authorization","bearer "+accessTokenFromPayload);
+        headers.add("Authorization","bearer "+createdPayload.getAccess_token());
 
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
@@ -220,12 +229,12 @@ public class SurveyMonkeyController {
 
         String jsonStr1 = String.valueOf(response1);
 
-        JSONObject jsonObject = new JSONObject(jsonStr1);
-        String question1 = jsonObject.getString("heading");
-        log.info("question 1 states:" +question1);
+        JSONObject jsonObject = new JSONObject(jsonStr1.substring(jsonStr1.indexOf('{')));
+        String question1 = jsonObject.getString("headings");
 
+        log.info("question 1 states: " +question1.substring(question1.indexOf('{')));
 
-        // return "redirect:/survey/successPage";
+        //return "redirect:/survey/successPage";
         return new ResponseEntity<>(question1, headers, HttpStatus.OK);
 
     }
