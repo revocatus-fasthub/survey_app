@@ -26,7 +26,7 @@ public class SurveyServiceImpl implements SurveyService {
 
 
     public Survey[] getQuestions(){
-        Survey qsn1 = new Survey(1,"Do you live in dar es salaam?");
+        Survey qsn1 = new Survey(1,"");//"Do you live in dar es salaam?"
         Survey qsn2 = new Survey(2,"Send 1 when you are ready");
         Survey quit = new Survey(0,"Thank you for your time");
 

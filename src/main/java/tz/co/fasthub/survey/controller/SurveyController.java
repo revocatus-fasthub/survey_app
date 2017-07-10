@@ -61,16 +61,19 @@ public class SurveyController {
       */
         log.info("received message from gravity: "+text+ " from "+msisdn);
         String response;
+        String replyTo="\nSend your response to : 0785723360";
 
         switch (text) {
-            case "FastHub"://surveyMonkeyController.getQsnOne();
-                response = surveyMonkeyController.getQsnOne()+"\nSend your response to : 0785723360";//"Welcome to TakaTaka Collection Survey \n1-Yes \n 2-No \n 0-quit?";
+            case "FastHub"://surveyMonkeyController.getQsnOne() +replyTo;
+                response = surveyMonkeyController.getQsnOne() +"\n"+replyTo;
                 break;
+            case "Fasthub":
+                response = "Welcome to TakaTaka Collection Survey \n1-Yes\n 2-No\n 0-quit? "+replyTo;
             case "1":
-                response = "Do you live in dar es salaam?";
+                response = "Do you live in dar es salaam? "+replyTo;
                 break;
             case "2":
-                response = "Thank you for your time";
+                response = "Thank you for your time ";
                 break;
             case "0":
                 //surveyService.terminateSurvey();

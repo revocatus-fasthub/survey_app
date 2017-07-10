@@ -6,21 +6,21 @@ package tz.co.fasthub.survey.domain;
 
 public class Survey {
     private int id;
-    private String access_token;
+    private String qsn;
 
     public Survey() {
     }
 
-    public Survey(int id, String access_token) {
+    public Survey(int id, String qsn) {
         this.id = id;
-        this.access_token = access_token;
+        this.qsn = qsn;
     }
 
     @Override
     public String toString() {
         return "Survey{" +
                 "id=" + id +
-                ", access_token='" + access_token + '\'' +
+                ", qsn='" + qsn + '\'' +
                 '}';
     }
 
@@ -32,11 +32,11 @@ public class Survey {
         this.id = id;
     }
 
-    public String getAccess_token() {
-        return access_token;
+    public String getqsn() {
+        return qsn;
     }
 
-    public void setAccess_token(String access_token) {
-        this.access_token = access_token;
+    public void setqsn(String qsn) {
+        this.qsn = qsn;
     }
 }
