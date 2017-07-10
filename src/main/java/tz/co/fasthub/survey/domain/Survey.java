@@ -3,39 +3,40 @@ package tz.co.fasthub.survey.domain;
 /**
  * Created by root on 6/20/17.
  */
+
 public class Survey {
-    private int qsnId;
+    private int id;
     private String qsn;
 
     public Survey() {
     }
 
-    public Survey(int qsnId, String qsn) {
-        this.qsnId = qsnId;
+    public Survey(int id, String qsn) {
+        this.id = id;
         this.qsn = qsn;
     }
 
     @Override
     public String toString() {
         return "Survey{" +
-                "qsnId=" + qsnId +
+                "id=" + id +
                 ", qsn='" + qsn + '\'' +
                 '}';
     }
 
-    public int getQsnId() {
-        return qsnId;
+    public int getid() {
+        return id;
     }
 
-    public void setQsnId(int qsnId) {
-        this.qsnId = qsnId;
+    public void setid(int id) {
+        this.id = id;
     }
 
-    public String getQsn() {
+    public String getqsn() {
         return qsn;
     }
 
-    public void setQsn(String qsn) {
+    public void setqsn(String qsn) {
         this.qsn = qsn;
     }
 }
