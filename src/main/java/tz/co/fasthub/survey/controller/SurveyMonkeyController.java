@@ -1,5 +1,6 @@
 package tz.co.fasthub.survey.controller;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -36,7 +37,7 @@ public class SurveyMonkeyController {
 
 
     @Autowired
-    PayloadService payloadService;
+    private PayloadService payloadService;
 
     private static final Logger log = LoggerFactory.getLogger(SurveyMonkeyController.class);
 
@@ -213,7 +214,7 @@ public class SurveyMonkeyController {
     }
 
     @RequestMapping(value = "/qsnOne/{id}",method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<String> getQsnOne() throws JSONException {
+    String getQsnOne() throws JSONException {
         Long id = 1L;
         Payload createdPayload = payloadService.getPayloadById(id);
         log.info("*******************"+createdPayload.getAccess_token());
@@ -230,13 +231,24 @@ public class SurveyMonkeyController {
         String jsonStr1 = String.valueOf(response1);
 
         JSONObject jsonObject = new JSONObject(jsonStr1.substring(jsonStr1.indexOf('{')));
-        String question1 = jsonObject.getString("headings");
 
-        log.info("question 1 states: " +question1.substring(question1.indexOf('{')));
-      //  questionService.save(question1);
-        //return "redirect:/survey/successPage";
-        return new ResponseEntity<>(question1, headers, HttpStatus.OK);
+        JSONObject answers = new JSONObject(jsonObject.getString("answers"));
+        JSONArray choices = answers.getJSONArray("choices");
+        JSONArray jsonArray=jsonObject.getJSONArray("headings");
 
+        String choice = null, choiceNo=null, heading = null;
+        for(int y = 0;y<choices.length();y++){
+            JSONObject innerObj = choices.getJSONObject(y);
+            choice = innerObj.getString("text");
+            log.info("choice= "+choice);
+        }
+        for(int i = 0; i<jsonArray.length(); i++){
+            JSONObject innerObj = jsonArray.getJSONObject(i);
+            heading = innerObj.getString("heading");
+            log.info("heading= "+heading);
+        }
+
+        return heading+"\n"+choice+"\n"+choice;
     }
 
 }
