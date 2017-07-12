@@ -29,6 +29,7 @@ import java.util.List;
 public class SurveyController {
 //http://survey.fasthub.co.tz:8081/sms/utc?id=74&serviceNumber=665656&text=Test&msisdn=254791199624&date=2016-05-18&operator=safaricom-soap
     //http://127.0.0.1:8081/sms/utc?id=74&serviceNumber=0785723360&text=FastHub&msisdn=255754088816&date=2016-05-18&operator=safaricom-soap
+    @Autowired
     private SurveyMonkeyController surveyMonkeyController;
 
     RestTemplate restTemplate = new RestTemplate();
@@ -49,12 +50,12 @@ public class SurveyController {
     }
 
     @RequestMapping(params = {"id", "serviceNumber", "text", "msisdn", "date", "operator"}, method = RequestMethod.GET, produces = "text/plain")
-    public ResponseEntity<String> index (@RequestParam("id") String id,
-                                         @RequestParam("serviceNumber") String serviceNumber,
-                                         @RequestParam("text") String text,
-                                         @RequestParam("msisdn") String msisdn,
-                                         @RequestParam("date") String date,
-                                         @RequestParam("operator") String operator) throws JSONException {
+    public ResponseEntity index (@RequestParam("id") String id,
+                                 @RequestParam("serviceNumber") String serviceNumber,
+                                 @RequestParam("text") String text,
+                                 @RequestParam("msisdn") String msisdn,
+                                 @RequestParam("date") String date,
+                                 @RequestParam("operator") String operator) throws JSONException {
 
        /* final HttpHeaders httpHeaders= new HttpHeaders();
         httpHeaders.setContentType(MediaType.TEXT_PLAIN);
@@ -64,8 +65,8 @@ public class SurveyController {
         String replyTo="\nSend your response to : 0785723360";
 
         switch (text) {
-            case "FastHub"://surveyMonkeyController.getQsnOne() +replyTo;
-                response = surveyMonkeyController.getQsnOne() +"\n"+replyTo;
+            case "FastHub":
+                response = surveyMonkeyController.getQsnOne()+"\n"+replyTo;
                 break;
             case "Fasthub":
                 response = "Welcome to TakaTaka Collection Survey \n1-Yes\n 2-No\n 0-quit? "+replyTo;

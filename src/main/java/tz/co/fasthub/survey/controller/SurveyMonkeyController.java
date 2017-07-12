@@ -1,5 +1,6 @@
 package tz.co.fasthub.survey.controller;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static tz.co.fasthub.survey.constants.Constant.*;
 
@@ -36,7 +38,7 @@ public class SurveyMonkeyController {
 
 
     @Autowired
-    PayloadService payloadService;
+    private PayloadService payloadService;
 
     private static final Logger log = LoggerFactory.getLogger(SurveyMonkeyController.class);
 
@@ -213,7 +215,7 @@ public class SurveyMonkeyController {
     }
 
     @RequestMapping(value = "/qsnOne/{id}",method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<String> getQsnOne() throws JSONException {
+    String getQsnOne() throws JSONException {
         Long id = 1L;
         Payload createdPayload = payloadService.getPayloadById(id);
         log.info("*******************"+createdPayload.getAccess_token());
@@ -228,15 +230,43 @@ public class SurveyMonkeyController {
         log.info("response: "+response1);
 
         String jsonStr1 = String.valueOf(response1);
-
+        final ArrayList<String> choiceList = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(jsonStr1.substring(jsonStr1.indexOf('{')));
-        String question1 = jsonObject.getString("headings");
 
-        log.info("question 1 states: " +question1.substring(question1.indexOf('{')));
-      //  questionService.save(question1);
-        //return "redirect:/survey/successPage";
-        return new ResponseEntity<>(question1, headers, HttpStatus.OK);
+        JSONObject answers = new JSONObject(jsonObject.getString("answers"));
+        JSONArray choices = answers.getJSONArray("choices");
+        JSONArray jsonArray=jsonObject.getJSONArray("headings");
 
+        String choice = null, position=null, heading = null;
+        for(int y = 0;y<choices.length();y++){
+            String list=null;
+            JSONObject innerObj = choices.getJSONObject(y);
+            choice = innerObj.getString("text");
+            position = innerObj.getString("position");
+            list = position+ ". "+choice;
+            log.info(list);
+            choiceList.add(list);
+        }
+
+        for(int i = 0; i<jsonArray.length(); i++){
+            JSONObject innerObj = jsonArray.getJSONObject(i);
+            heading = innerObj.getString("heading");
+            log.info("heading= "+heading);
+        }
+    return heading+"\n" +listCleanUp(choiceList);
     }
 
+    private static String listCleanUp(ArrayList<String> listing){
+        StringBuilder sb = new StringBuilder();
+        for (String str :
+                listing) {
+
+            sb.append(str);
+            if (listing.indexOf(str)!= listing.size()){
+             sb.append("\n");
+            }
+
+        };
+        return sb.toString();
+    }
 }
