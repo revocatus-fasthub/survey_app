@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static tz.co.fasthub.survey.constants.Constant.*;
 
@@ -229,26 +230,43 @@ public class SurveyMonkeyController {
         log.info("response: "+response1);
 
         String jsonStr1 = String.valueOf(response1);
-
+        final ArrayList<String> choiceList = new ArrayList<>();
         JSONObject jsonObject = new JSONObject(jsonStr1.substring(jsonStr1.indexOf('{')));
 
         JSONObject answers = new JSONObject(jsonObject.getString("answers"));
         JSONArray choices = answers.getJSONArray("choices");
         JSONArray jsonArray=jsonObject.getJSONArray("headings");
 
-        String choice = null, choiceNo=null, heading = null;
+        String choice = null, position=null, heading = null;
         for(int y = 0;y<choices.length();y++){
+            String list=null;
             JSONObject innerObj = choices.getJSONObject(y);
             choice = innerObj.getString("text");
-            log.info("choice= "+choice);
+            position = innerObj.getString("position");
+            list = position+ ". "+choice;
+            log.info(list);
+            choiceList.add(list);
         }
+
         for(int i = 0; i<jsonArray.length(); i++){
             JSONObject innerObj = jsonArray.getJSONObject(i);
             heading = innerObj.getString("heading");
             log.info("heading= "+heading);
         }
-
-        return heading+"\n"+choice+"\n"+choice;
+    return heading+"\n" +listCleanUp(choiceList);
     }
 
+    private static String listCleanUp(ArrayList<String> listing){
+        StringBuilder sb = new StringBuilder();
+        for (String str :
+                listing) {
+
+            sb.append(str);
+            if (listing.indexOf(str)!= listing.size()){
+             sb.append("\n");
+            }
+
+        };
+        return sb.toString();
+    }
 }
