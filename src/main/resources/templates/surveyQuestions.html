@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Survey | Questions</title>
+</head>
+<body>
+
+<ol>
+    <li th:each="qsn:${qsnList}" th:text="${qsn.qsnList}">Friend</li>
+</ol>
+
+
+</body>
+</html>
