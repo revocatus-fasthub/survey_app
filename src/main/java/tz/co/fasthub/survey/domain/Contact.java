@@ -1,5 +1,6 @@
 package tz.co.fasthub.survey.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,18 +16,21 @@ public class Contact {
     private String href;
     private String first_name;
     private String last_name;
-    private String contactId;
+    @Column(name = "contactId")
+    private String id;
     private String email;
+    private String phoneNumber;
 
     public Contact() {
     }
 
-    public Contact(String href, String first_name, String last_name, String contactId, String email) {
+    public Contact(String href, String first_name, String last_name, String id, String email,String phoneNumber) {
         this.href = href;
         this.first_name = first_name;
         this.last_name = last_name;
-        this.contactId = contactId;
+        this.id = id;
         this.email = email;
+        this.phoneNumber = phoneNumber;
     }
 
     @Override
@@ -36,11 +40,11 @@ public class Contact {
                 ", href='" + href + '\'' +
                 ", first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
-                ", contactId=" + contactId +
+                ", id=" + id +
                 ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
-
 
     public Long getDbId() {
         return DbId;
@@ -74,12 +78,12 @@ public class Contact {
         this.last_name = last_name;
     }
 
-    public String getcontactId() {
-        return contactId;
+    public String getId() {
+        return id;
     }
 
-    public void setcontactId(String contactId) {
-        this.contactId = contactId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -88,6 +92,14 @@ public class Contact {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhoneNumber() {//255689328984@fasthub.com
+        return getEmail().substring(0,11);
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = getEmail().substring(0,11);
     }
 }
 

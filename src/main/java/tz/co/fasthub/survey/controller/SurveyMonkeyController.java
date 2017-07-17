@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 import tz.co.fasthub.survey.domain.Contact;
+import tz.co.fasthub.survey.domain.ContactHandler;
 import tz.co.fasthub.survey.domain.Payload;
 import tz.co.fasthub.survey.service.ContactService;
 import tz.co.fasthub.survey.service.PayloadService;
@@ -50,7 +51,7 @@ public class SurveyMonkeyController {
       final ArrayList<String> contactArray = new ArrayList<>();
 
       private Payload payload = new Payload(access_token,expires_in,token_type);
-    private Contact contact = new Contact(href,first_name,last_name,contactId,email);
+    private Contact contact = new Contact(href,first_name,last_name,contactId,email,phoneNumber);
     private RestTemplate restTemplate = new RestTemplate();
 
     @RequestMapping(value = "/authorizationUrl")
@@ -352,60 +353,15 @@ public class SurveyMonkeyController {
 
           HttpEntity<?> entity = new HttpEntity<>(headers);
 
-          ResponseEntity<String> contactResponse = restTemplate.exchange(allContacts,HttpMethod.GET,entity, String.class);
-
-
-          // Contact contactDomain = restTemplate.exchange(allContacts, HttpMethod.GET,entity, Contact.class);
-          //contactss.getBody();
+          ResponseEntity<ContactHandler> contactResponse = restTemplate.exchange(allContacts,HttpMethod.GET,entity, ContactHandler.class);
+          ContactHandler handler = contactResponse.getBody();
           log.info("response:" + contactResponse);
-
-          //get contact from array
-          String jsonStr1 = String.valueOf(contactResponse);
-          String list=null;
-          JSONObject jsonObject = new JSONObject(jsonStr1.substring(jsonStr1.indexOf('{')));
-          JSONArray choices = jsonObject.getJSONArray("data");
-
-          for(int y = 0;y<choices.length();y++) {
-
-              JSONObject innerObj = choices.getJSONObject(y);
-
-              href=innerObj.getString("href");
-              first_name=innerObj.getString("first_name");
-              last_name=innerObj.getString("last_name");
-              contactId = innerObj.getString("id");
-              email = innerObj.getString("email");
-
-              list =contactId + " " + email+ " "+href+", "+first_name+" "+last_name;
-              log.info(list);
-              savingContactToDb(contact);
-              contactArray.add(list);
-
-
-          }
-          //getting contacts from array and save to Db
-
-
+          contactService.save(handler.getData());
 
          // log.info("contact: "+contactArray);
 
           return "redirect:/survey/successPage";
           //return new ResponseEntity<>("response", headers, HttpStatus.OK);
-      }
-
-      private void savingContactToDb(Contact contact){
-          try {
-              contact.setcontactId(contactId);
-              contact.setHref(href);
-              contact.setEmail(email);
-              contact.setFirst_name(first_name);
-              contact.setLast_name(last_name);
-
-             // contactService.save(contactArray);
-                contactService.save(contact);
-
-          } catch (Exception e) {
-              log.info("error... : " + e.getMessage());
-          }
       }
 
 

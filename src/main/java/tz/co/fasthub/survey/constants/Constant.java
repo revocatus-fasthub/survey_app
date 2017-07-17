@@ -26,7 +26,7 @@ public class Constant {
     public static String access_token;
 
     public static String accessTokenFromPayload,expires_in, token_type;
-    public static String contactId, href, first_name, last_name,email;
+    public static String contactId, href, first_name, last_name,email,phoneNumber;
 
     public static final ArrayList<String> qsnList = new ArrayList<>();
 

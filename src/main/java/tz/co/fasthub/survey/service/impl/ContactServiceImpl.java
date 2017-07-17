@@ -6,6 +6,8 @@ import tz.co.fasthub.survey.domain.Contact;
 import tz.co.fasthub.survey.repository.ContactRepository;
 import tz.co.fasthub.survey.service.ContactService;
 
+import java.util.ArrayList;
+
 /**
  * Created by root on 7/14/17.
  */
@@ -21,12 +23,8 @@ public class ContactServiceImpl implements ContactService {
 
 
     @Override
-    public Contact save(Contact contact) {
+    public Iterable<Contact> save(ArrayList<Contact> contact) {
         return contactRepository.save(contact);
     }
 
-    @Override
-    public Contact getContactById(Long id) {
-        return contactRepository.getOne(id);
-    }
 }
