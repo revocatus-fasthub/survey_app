@@ -13,7 +13,7 @@
         <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-success"></h3>
 
 
-        <form class="form-horizontal" th:object="${answer}" th:action="@{/answerpage/answer}" method="post">
+        <form class="form-horizontal" th:object="${answer}" th:action="@{/answerpage/answer/}" method="post">
             <div class="form-group">
                 <div class="col-sm-10">
                     Position : <input type="text" th:rows="4" th:field="*{position}"/>

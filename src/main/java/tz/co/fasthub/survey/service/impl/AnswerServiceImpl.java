@@ -31,19 +31,19 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Answer save(Answer answer) {
+    public Answer save(Answer answer, Long id) {
+        answer.setQuestion(questionService.getQsnById(id));
         return answerRepository.save(answer);
     }
 
     @Override
     public Answer getAnswerById(Long id) {
-        answer.setQuestion(questionService.getQsnById(id));
         return answerRepository.findOne(id);
      }
 
     @Override
     public Answer saveByQnsId(Answer ans, Question qsn) {
-         questionService.getQsnById(qsn.getId());
+       //  questionService.getQsnById(qsn.getId());
         return  answerRepository.save(ans);
     }
 

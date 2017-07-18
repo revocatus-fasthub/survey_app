@@ -8,7 +8,7 @@ import tz.co.fasthub.survey.domain.Question;
  */
 public interface AnswerService {
     
-    Answer save(Answer answer);
+    Answer save(Answer answer, Long id);
     Answer getAnswerById(Long id);
     Answer saveByQnsId(Answer ans, Question qsn);
 
