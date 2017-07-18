@@ -2,6 +2,7 @@ package tz.co.fasthub.survey.constants;
 
 import org.springframework.web.client.RestTemplate;
 import tz.co.fasthub.survey.domain.Channel;
+import tz.co.fasthub.survey.domain.Question;
 
 import java.util.ArrayList;
 
@@ -50,4 +51,6 @@ public class Constant {
     public static final String fetchSurvey=" /surveys/118875579/responses/bulk";
     public static final String viewSurvey="https://api.surveymonkey.net/v3/surveys/118875579";
 
+
+    public static Question savedQuestion =  new Question();
 }

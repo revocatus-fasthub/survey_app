@@ -15,7 +15,6 @@ import tz.co.fasthub.survey.service.AnswerService;
 import tz.co.fasthub.survey.service.QuestionService;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 
 /**
  * Created by root on 7/17/17.
@@ -63,8 +62,11 @@ public class AnswerController {
 
     // New talent
 
-    @RequestMapping("/addanswer")
-    public String newAnswer(Model model) {
+    @RequestMapping("/addanswer/{id}")
+    public String newAnswer(@PathVariable Long id, Model model) {
+       // id = savedQuestion.getId();
+
+      //  model.addAttribute("question", questionService.getQsnById(id) );
         model.addAttribute("answer", new Answer());
         return "addAnswer";
     }
@@ -73,15 +75,12 @@ public class AnswerController {
 
     @RequestMapping(value = "/answer", method = RequestMethod.POST)
     public String saveAnswer(@Valid Answer answer, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        final ArrayList<String> ansList = new ArrayList<>();
-        String list = null;
-        model.addAttribute("Answer", answer);
         if(result.hasErrors()){
             return "addAnswer";
         }
-
-
+       // id = savedQuestion.getId();
         Answer savedAnswers = answerService.save(answer);
+        model.addAttribute("Answer", answer);
 
         redirectAttributes.addFlashAttribute("flash.message", "Answers Successfully Saved!");
         return "index";

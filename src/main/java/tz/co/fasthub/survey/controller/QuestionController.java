@@ -14,6 +14,8 @@ import tz.co.fasthub.survey.validator.TalentValidator;
 
 import javax.validation.Valid;
 
+import static tz.co.fasthub.survey.constants.Constant.savedQuestion;
+
 /**
  * Created by root on 7/17/17.
  */
@@ -73,7 +75,7 @@ public class QuestionController {
     // Save talent to database
 
     @RequestMapping(value = "question", method = RequestMethod.POST)
-    public String saveQuestion(@Valid Question question, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String saveQuestion(@Valid Question question, Long id, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         model.addAttribute("Question", question);
         talentValidator.validate(question,result);
         if(result.hasErrors()){
@@ -81,10 +83,11 @@ public class QuestionController {
             return "addQuestion";
         }
 
-        Question savedQuestion = questionService.save(question);
+        savedQuestion = questionService.save(question);
+        id=savedQuestion.getId();
 
-        redirectAttributes.addFlashAttribute("flash.message", "Question Successfully Saved!");
-        return "redirect:answerpage/addanswer";
+        redirectAttributes.addFlashAttribute("flash.message", "Question "+id+" Successfully Saved!");
+        return "redirect:answerpage/addanswer/"+id;
 
     }
 
