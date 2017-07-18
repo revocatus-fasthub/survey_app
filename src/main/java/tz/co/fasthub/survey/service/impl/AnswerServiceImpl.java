@@ -1,6 +1,7 @@
 package tz.co.fasthub.survey.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 import tz.co.fasthub.survey.domain.Answer;
 import tz.co.fasthub.survey.repository.AnswerRepository;
@@ -14,6 +15,9 @@ import tz.co.fasthub.survey.service.QuestionService;
 public class AnswerServiceImpl implements AnswerService {
     
     private final AnswerRepository answerRepository;
+
+    @Autowired
+    private NamedParameterJdbcTemplate jdbcTemplate;
 
     @Autowired
     private final QuestionService questionService;
@@ -31,13 +35,11 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public Answer getAnswerById(Long id) {
-        return answerRepository.getOne(id);
-    }
+        return answerRepository.findOne(id);
+     }
 
     @Override
-    public Answer saveByQnsId(Answer ans, Long qsnId) {
-        questionService.getQsnById(qsnId);
-
+    public Answer saveByQnsId(Answer ans) {
         return  answerRepository.save(ans);
     }
 

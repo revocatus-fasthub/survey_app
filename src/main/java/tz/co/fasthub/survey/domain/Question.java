@@ -16,8 +16,7 @@ public class Question {
     @Version
     private Long version;
 
-
-    @OneToOne(mappedBy = "answerId")
+    @OneToOne(mappedBy = "question")
     private Answer answer;
 
     public Question() {

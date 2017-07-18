@@ -18,16 +18,16 @@ public class Answer {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "qsnId")
-    private Question answerId;
+    private Question question;
 
     public Answer() {
     }
 
-    public Answer(String ans, int sequence, String position, Question answerId) {
+    public Answer(String ans, int sequence, String position, Question question) {
         this.ans = ans;
         this.sequence = sequence;
         this.position = position;
-        this.answerId = answerId;
+        this.question = question;
     }
 
     public Long getId() {
@@ -63,10 +63,10 @@ public class Answer {
     }
 
     public Question getQuestion() {
-        return answerId;
+        return question;
     }
 
     public void setQuestion(Question question) {
-        this.answerId = question;
+        this.question = question;
     }
 }

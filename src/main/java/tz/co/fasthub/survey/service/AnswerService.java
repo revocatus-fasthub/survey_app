@@ -9,7 +9,7 @@ public interface AnswerService {
     
     Answer save(Answer answer);
     Answer getAnswerById(Long id);
-    Answer saveByQnsId(Answer ans, Long qsnId);
+    Answer saveByQnsId(Answer ans);
 
 
     Iterable<Answer> listAllAnswers();

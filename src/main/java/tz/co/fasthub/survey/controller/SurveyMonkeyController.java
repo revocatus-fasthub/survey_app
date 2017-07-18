@@ -268,7 +268,7 @@ public class SurveyMonkeyController {
     return heading+"\n" +listCleanUp(choiceList);
     }
 
-    private static String listCleanUp(ArrayList<String> listing){
+    public String listCleanUp(ArrayList<String> listing){
         StringBuilder sb = new StringBuilder();
         for (String str :
                 listing) {

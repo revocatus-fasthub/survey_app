@@ -1,5 +1,7 @@
 package tz.co.fasthub.survey.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import tz.co.fasthub.survey.service.AnswerService;
 import tz.co.fasthub.survey.service.QuestionService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 /**
  * Created by root on 7/17/17.
@@ -20,6 +23,11 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/answerpage")
 public class AnswerController {
+
+    private static final Logger log = LoggerFactory.getLogger(AnswerController.class);
+
+    @Autowired
+    private SurveyMonkeyController surveyMonkeyController;
 
     private final AnswerService answerService;
 
@@ -55,24 +63,26 @@ public class AnswerController {
 
     // New talent
 
-    @RequestMapping("/addanswer/{id}")
-    public String newAnswer(@PathVariable Long qsnId, Model model) {
-        questionService.getQsnById(qsnId);
+    @RequestMapping("/addanswer")
+    public String newAnswer(Model model) {
         model.addAttribute("answer", new Answer());
         return "addAnswer";
     }
 
     // Save talent to database
 
-    @RequestMapping(value = "/answer/{id}", method = RequestMethod.POST)
-    public String saveAnswer(@PathVariable Long qsnId, @Valid Answer answer, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        questionService.getQsnById(qsnId);
-
+    @RequestMapping(value = "/answer", method = RequestMethod.POST)
+    public String saveAnswer(@Valid Answer answer, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+        final ArrayList<String> ansList = new ArrayList<>();
+        String list = null;
         model.addAttribute("Answer", answer);
         if(result.hasErrors()){
             return "addAnswer";
         }
-        Answer savedAnswers = answerService.saveByQnsId(answer,qsnId);
+
+
+        Answer savedAnswers = answerService.save(answer);
+
         redirectAttributes.addFlashAttribute("flash.message", "Answers Successfully Saved!");
         return "index";
 

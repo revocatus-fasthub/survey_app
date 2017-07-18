@@ -27,7 +27,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question getQsnById(Long id) {
-        return questionRepository.getOne(id);
+        return questionRepository.findOne(id);
     }
 
     @Override
