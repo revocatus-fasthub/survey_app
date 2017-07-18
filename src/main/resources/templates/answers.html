@@ -29,9 +29,9 @@
                 <td th:text="${answer.position}">position</td>
                 <td th:text="${answer.sequence}">sequence</td>
                 <td th:text="${answer.question}">qsn Id</td><td>
-                <a th:href="${ '/answer/' + answer.id}">View</a></td>
-                <td><a th:href="${'/answer/edit/' + answer.id}">Edit</a></td>
-                <td><a th:href="${'/answer/delete/' + answer.id}">Delete</a></td>
+                <a th:href="${ '/answerpage/answer/' + answer.id}">View</a></td>
+                <td><a th:href="${'/answerpage/answer/edit/' + answer.id}">Edit</a></td>
+                <td><a th:href="${'/answerpage/answer/delete/' + answer.id}">Delete</a></td>
             </tr>
         </table>
 

@@ -15,6 +15,8 @@ import tz.co.fasthub.survey.service.AnswerService;
 import tz.co.fasthub.survey.service.QuestionService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 import static tz.co.fasthub.survey.constants.Constant.savedQuestion;
 
@@ -33,6 +35,8 @@ public class AnswerController {
     private final AnswerService answerService;
 
     private final QuestionService questionService;
+
+    private static List<Answer> answerArrayList = new ArrayList<Answer>();
 
     @Autowired
     public AnswerController(AnswerService answerService, QuestionService questionService) {
@@ -80,6 +84,7 @@ public class AnswerController {
         if(result.hasErrors()){
             return "addAnswer";
         }
+        answerArrayList.add(answer);
         id = savedQuestion.getId();
         Answer savedAnswers = answerService.save(answer,id);
         model.addAttribute("Answer", answer);
