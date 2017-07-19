@@ -14,7 +14,6 @@ public class Answer {
     private Long id;
     private String ans;
     private int sequence;
-    private String position;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "qsnId")
@@ -23,10 +22,9 @@ public class Answer {
     public Answer() {
     }
 
-    public Answer(String ans, int sequence, String position, Question question) {
+    public Answer(String ans, int sequence, Question question) {
         this.ans = ans;
         this.sequence = sequence;
-        this.position = position;
         this.question = question;
     }
 
@@ -52,14 +50,6 @@ public class Answer {
 
     public void setSequence(int sequence) {
         this.sequence = sequence;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
     }
 
     public Question getQuestion() {

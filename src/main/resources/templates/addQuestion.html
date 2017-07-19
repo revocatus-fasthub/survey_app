@@ -2,34 +2,46 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-    <title>Spring Boot Example</title>
+    <title>Add Question</title>
 
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
 <div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
-    <h2>Question Details</h2>
-    <div>
-        <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-success"></h3>
+    <div class="row">
+        <div class="col-md-9 col-md-offset-3">
+            <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-success"></h3>
 
-        <form class="form-horizontal" th:object="${question}" th:action="@{/question}" method="post">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Qsn:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{qsn}"/>
+            <form autocomplete="off" action="#" th:action="@{/question}" th:object="${question}" method="post" class="form-horizontal" role="form">
+
+                <h2>Create Your Question Here</h2>
+
+                <input type="hidden" th:field="*{id}"/>
+                <input type="hidden" th:field="*{version}"/>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        Question: <input type="text" class="form-control" th:field="*{qsn}"/>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Sequence:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" th:field="*{sequence}"/>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        Sequence: <input type="text" class="form-control" th:field="*{sequence}"/>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <button type="submit" class="btn btn-default">Submit</button>
-            </div>
-        </form>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
     </div>
+
 </div>
 
 </body>

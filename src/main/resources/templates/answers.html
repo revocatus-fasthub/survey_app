@@ -1,12 +1,14 @@
-
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-    <title>Spring Boot Exemple</title>
+    <title>Answers</title>
 
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
 <div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
     <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-success"></h3>
 
@@ -16,7 +18,6 @@
             <tr>
                 <th>Id</th>
                 <th>Answer </th>
-                <th>Position</th>
                 <th>Sequence</th>
                 <th>Qsn_Id</th>
                 <th>View</th>
@@ -26,7 +27,6 @@
             <tr th:each="answer : ${answers}">
                 <td th:text="${answer.id}"><a href="/answer/${answer.id}">Id</a></td>
                 <td th:text="${answer.ans}">answer </td>
-                <td th:text="${answer.position}">position</td>
                 <td th:text="${answer.sequence}">sequence</td>
                 <td th:text="${answer.question}">qsn Id</td><td>
                 <a th:href="${ '/answerpage/answer/' + answer.id}">View</a></td>

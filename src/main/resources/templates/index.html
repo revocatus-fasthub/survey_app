@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
+
     <title>Index</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
-<h2>Good Morning</h2>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+<h2>Welcome To Survey Questionnaire</h2>
 <ul>
 
     <li><p> <a th:href="@{'/addQuestion'}"> Add Questions</a></p></li>
     <li><p> <a th:href="@{'/questions'}"> List all questions</a></p></li>
 
-<li><p> <a th:href="@{'/survey/viewSurvey/1'}"> View Survey</a></p></li>
-<li><p> <a th:href="@{'/survey/viewCollector/1'}"> View Collector</a></p></li>
+    <!--
+    <li><p> <a th:href="@{'/survey/viewSurvey/1'}"> View Survey</a></p></li>
+    <li><p> <a th:href="@{'/survey/viewCollector/1'}"> View Collector</a></p></li>
     <li><p> <a th:href="@{'/survey/viewResponses/1'}"> View Response</a></p></li>
     <li><p> <a th:href="@{'/survey/viewQuestions/1'}"> View Questions</a></p></li>
     <li><p> <a th:href="@{'/survey/qsnOne/1'}"> get Question one</a></p></li>
@@ -19,10 +25,10 @@
     <li><p> <a th:href="@{'/survey/responseList/1'}"> response List </a></p></li>
     <li><p> <a th:href="@{'/survey/allContactList/1'}"> View Contact List </a></p></li>
     <li><p> <a th:href="@{'/survey/getAllContact/1'}">View All Contacts </a></p></li>
-
+    -->
 </ul>
 
 
-
+</div>
 </body>
 </html>

@@ -1,12 +1,14 @@
-
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-    <title>Spring Boot Exemple</title>
+    <title>Questions</title>
 
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
 <div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
     <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-success"></h3>
 
@@ -23,8 +25,8 @@
             </tr>
             <tr th:each="question : ${questions}">
                 <td th:text="${question.id}"><a href="/question/${question.id}">Id</a></td>
-                <td th:text="${question.qsn}">Product Id</td>
-                <td th:text="${question.sequence}">descirption</td>
+                <td th:text="${question.qsn}">Qsn Id</td>
+                <td th:text="${question.sequence}">sequence</td>
                 <td><a th:href="${ '/question/' + question.id}">View</a></td>
                 <td><a th:href="${'/question/edit/' + question.id}">Edit</a></td>
                 <td><a th:href="${'/question/delete/' + question.id}">Delete</a></td>
