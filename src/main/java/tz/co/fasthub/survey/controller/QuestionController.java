@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import tz.co.fasthub.survey.domain.Answer;
 import tz.co.fasthub.survey.domain.Question;
+import tz.co.fasthub.survey.service.AnswerService;
 import tz.co.fasthub.survey.service.QuestionService;
 import tz.co.fasthub.survey.validator.TalentValidator;
 
@@ -23,6 +25,7 @@ import static tz.co.fasthub.survey.constants.Constant.savedQuestion;
 public class QuestionController {
 
     private final QuestionService questionService;
+    private final AnswerService answerService;
 
     private TalentValidator talentValidator;
 
@@ -35,8 +38,9 @@ public class QuestionController {
     }
 
     @Autowired
-    public QuestionController(QuestionService questionService, TalentValidator talentValidator) {
+    public QuestionController(QuestionService questionService, AnswerService answerService, TalentValidator talentValidator) {
         this.questionService = questionService;
+        this.answerService = answerService;
         this.talentValidator = talentValidator;
     }
 
@@ -51,8 +55,10 @@ public class QuestionController {
     // View a specific question by its id
 
     @RequestMapping("question/{id}")
-    public String showQuestion(@PathVariable Long id, Model model) {
+    public String showQuestion(@PathVariable Long id, @Valid Answer answer, Model model) {
+        model.addAttribute("answer", answerService.getAnswerById(id));
         model.addAttribute("question", questionService.getQsnById(id));
+        model.addAttribute("answer", answer);
         return "questionShow";
     }
 

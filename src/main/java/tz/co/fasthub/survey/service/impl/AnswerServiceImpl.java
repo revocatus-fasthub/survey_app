@@ -49,7 +49,7 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public Answer getAnswerByQsnId(Long id) {
-        questionService.getQsnById(id);
+      //  questionService.getQsnById(id);
         return answerRepository.findOne(id);
     }
 
