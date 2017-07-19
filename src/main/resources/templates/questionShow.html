@@ -64,11 +64,11 @@
     <form autocomplete="off" action="#" th:action="@{/answerpage/answer/}" th:object="${answer}" method="post" class="form-horizontal" role="form">
 
         <div class="form-group">
-            <div class="col-sm-9">
-                Choice: <input type="text" class="form-control" th:field="*{ans}" />
+            <label class="col-sm-2 control-label">Choice:</label>
+            <div class="col-md-5 col-md-offset-0">
+                <input type="text" class="form-control" th:field="*{ans}" /><br/>
+                <button type="submit" class="btn btn-primary">Add Choice</button>
             </div>
-
-            <button type="submit" class="btn btn-primary">Add Choice</button>
         </div>
 
 

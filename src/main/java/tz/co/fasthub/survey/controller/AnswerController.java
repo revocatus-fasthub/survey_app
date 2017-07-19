@@ -95,27 +95,4 @@ public class AnswerController {
 
     }
 
-    // Delete talent by its id
-/*
-    @RequestMapping("talent/delete/{id}")//, @PathVariable Integer id
-    public String deleteTalent(@PathVariable Integer id, RedirectAttributes redirectAttributes) throws NotFoundException {
-        if(id!=null){
-            AnswerService.deleteTalent(id);
-            deleteTwitterTalentAccount(Long.valueOf(id),redirectAttributes);
-        }
-        //twitterTalentAccountService.deleteTalentById(id);
-        redirectAttributes.addFlashAttribute("flash.message", "Talent Successfully Deleted!");
-        return "redirect:/talents";
-    }*/
-/*
-    @RequestMapping("talent/deleteTwitterTalent/{id}")//
-    public String deleteTwitterTalentAccount(@PathVariable Long id, RedirectAttributes redirectAttributes) throws NotFoundException {
-        twitterTalentAccountService.deleteTalentById(id);
-        if(id!=null){
-            redirectAttributes.addFlashAttribute("flash.message", "Talent Successfully Deleted!");
-            return "redirect:/talents";
-        }
-        redirectAttributes.addFlashAttribute("flash.message", "This Twitter Talent Account with id "+twitterTalentAccountService.getTalentById(id)+" doesn't exist");
-        return "redirect:/talents";
-    }*/
 }
