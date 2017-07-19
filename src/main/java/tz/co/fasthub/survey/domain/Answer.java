@@ -15,7 +15,7 @@ public class Answer {
     private String ans;
     private int sequence;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "qsnId")
     private Question question;
 

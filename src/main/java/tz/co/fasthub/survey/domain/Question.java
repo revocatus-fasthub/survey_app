@@ -1,6 +1,7 @@
 package tz.co.fasthub.survey.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by root on 7/17/17.
@@ -16,8 +17,8 @@ public class Question {
     @Version
     private Long version;
 
-    @OneToOne(mappedBy = "question")
-    private Answer answer;
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answer;
 
     public Question() {
     }
@@ -62,11 +63,11 @@ public class Question {
         this.sequence = sequence;
     }
 
-    public Answer getAnswer() {
+    public List<Answer> getAnswer() {
         return answer;
     }
 
-    public void setAnswer(Answer answer) {
+    public void setAnswer(List<Answer> answer) {
         this.answer = answer;
     }
 

@@ -87,7 +87,8 @@ public class QuestionController {
         id=savedQuestion.getId();
 
         redirectAttributes.addFlashAttribute("flash.message", "Question "+id+" Successfully Saved!");
-        return "redirect:answerpage/addanswer/"+id;
+       return "redirect:question/{id}";
+        // return "redirect:answerpage/addanswer/"+id;
 
     }
 

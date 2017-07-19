@@ -37,3 +37,44 @@
 
 </body>
 </html>
+
+
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>Add Answers</title>
+
+</head>
+<body>
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-9 col-md-offset-3">
+            <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-success"></h3>
+            <form autocomplete="off" action="#" th:action="@{/answerpage/answer/}" th:object="${answer}" method="post" class="form-horizontal" role="form">
+
+                <h2>Create Your Answers Here</h2>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        Answer 1: <input type="text" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <p>
+                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                        </p>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
