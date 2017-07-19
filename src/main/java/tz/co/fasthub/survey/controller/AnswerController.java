@@ -36,8 +36,6 @@ public class AnswerController {
 
     private final QuestionService questionService;
 
-    private static List<Answer> answerArrayList = new ArrayList<Answer>();
-
     @Autowired
     public AnswerController(AnswerService answerService, QuestionService questionService) {
         this.answerService = answerService;
@@ -45,7 +43,8 @@ public class AnswerController {
     }
 
     @RequestMapping(value = "/answers", method = RequestMethod.GET)
-    public String listAnswers(Model model, Integer id) {
+    public String listAnswers(Model model) {
+
         model.addAttribute("answers", answerService.listAllAnswers());
         return "answers";
     }
@@ -84,6 +83,28 @@ public class AnswerController {
         if(result.hasErrors()){
             return "addAnswer";
         }
+        List<Answer> answerArrayList = new ArrayList<Answer>();
+     /*   for(int i =0; i<answerArrayList.size(); i++){
+            id = savedQuestion.getId();
+            Answer savedAnser = answerService.save(answer,id);
+        }*/
+
+       /* String answer1 = answer.getAns();
+        String position1 = answer.getPosition();
+        String savedAns= position1+answer1;
+        log.info(savedAns);
+     */   //List<Answer> answerArrayList = new ArrayList<Answer>();
+       // for(Answer ans : answerArrayList){
+            //id = savedQuestion.getId();
+          //  Answer savedAnswers = answerService.save(answer,id);
+       // }
+      //  answer.setAns(answerArrayList);
+        /*for(int i=0; i<5;i++){
+            answerArrayList.add(new Answer());
+
+
+        }*/
+        //answer.setAns(answerArrayList);
         answerArrayList.add(answer);
         id = savedQuestion.getId();
         Answer savedAnswers = answerService.save(answer,id);

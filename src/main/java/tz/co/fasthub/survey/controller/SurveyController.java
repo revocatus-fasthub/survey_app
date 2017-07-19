@@ -1,6 +1,7 @@
 package tz.co.fasthub.survey.controller;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tz.co.fasthub.survey.constants.Constant;
-import tz.co.fasthub.survey.domain.Content;
-import tz.co.fasthub.survey.domain.MessageHandler;
-import tz.co.fasthub.survey.domain.Survey;
+import tz.co.fasthub.survey.domain.*;
+import tz.co.fasthub.survey.service.AnswerService;
+import tz.co.fasthub.survey.service.QuestionService;
 import tz.co.fasthub.survey.service.SurveyService;
 
 import java.util.ArrayList;
@@ -32,14 +33,19 @@ public class SurveyController {
     @Autowired
     private SurveyMonkeyController surveyMonkeyController;
 
+    private final QuestionService questionService;
+
+    private final AnswerService answerService;
 
     private final SurveyService surveyService;
 
     private static final Logger log = LoggerFactory.getLogger(SurveyController.class);
 
     @Autowired
-    public SurveyController(SurveyService surveyService) {
+    public SurveyController(SurveyService surveyService, QuestionService questionService, AnswerService answerService) {
         this.surveyService = surveyService;
+        this.questionService = questionService;
+        this.answerService = answerService;
     }
 
     @RequestMapping(params = {"id", "serviceNumber", "text", "msisdn", "date", "operator"}, method = RequestMethod.GET, produces = "text/plain")
@@ -51,27 +57,34 @@ public class SurveyController {
                                  @RequestParam("operator") String operator) throws JSONException {
 
         log.info("received message from gravity: "+text+ " from "+msisdn);
-        String response;
+        String response = null;
         String replyTo="\nSend your response to : 0785723360";
 
         switch (text) {
             case "FastHub":
-                response = surveyMonkeyController.loopQsns() +replyTo;//surveyMonkeyController.getQsnOne()+"\n"+replyTo;
+              //  response = surveyMonkeyController.loopQsns() +replyTo;//surveyMonkeyController.getQsnOne()+"\n"+replyTo;
+              Question qsn = questionService.getQsnById(14L);
+          //      List<Answer> answer = answerService.getAnswerByQsnId(14L);
+             // log.info(String.valueOf(answer));
+              JSONObject array = new JSONObject(qsn);
+                String qsn1 = array.getString("qsn");
+                response = qsn1;//answerService.getAnswerById(8L);
+
                 break;
             case "Fasthub":
-                response = "Welcome to TakaTaka Collection Survey. Ready to initiate survey? \n1-Yes\n 2-No\n 0-quit? "+replyTo;
+           //     response = "Welcome to TakaTaka Collection Survey. Ready to initiate survey? \n1-Yes\n 2-No\n 0-quit? "+replyTo;
             case "1":
-                response = "Do you live in dar es salaam? "+replyTo;
+             //   response = "Do you live in dar es salaam? "+replyTo;
                 break;
             case "2":
-                response = "Thank you for your time ";
+               // response = "Thank you for your time ";
                 break;
             case "0":
                 //surveyService.terminateSurvey();
-                response = "THANK YOU!";
+                //response = "THANK YOU!";
                 break;
             default:
-                response = "Invalid response";
+                //response = "Invalid response";
                 break;
         }
         List<MessageHandler> messages = new ArrayList<>();

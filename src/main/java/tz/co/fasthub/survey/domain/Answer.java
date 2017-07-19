@@ -1,13 +1,16 @@
 package tz.co.fasthub.survey.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by root on 7/17/17.
  */
 
 @Entity
-public class Answer {
+public class Answer implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     @GeneratedValue
     @Id
@@ -16,7 +19,7 @@ public class Answer {
     private int sequence;
     private String position;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, targetEntity = Question.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "qsnId")
     private Question question;
 
@@ -63,6 +66,7 @@ public class Answer {
     }
 
     public Question getQuestion() {
+
         return question;
     }
 

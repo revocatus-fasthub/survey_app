@@ -48,6 +48,12 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
+    public Answer getAnswerByQsnId(Long id) {
+        questionService.getQsnById(id);
+        return answerRepository.findOne(id);
+    }
+
+    @Override
     public Iterable<Answer> listAllAnswers() {
         return answerRepository.findAll();
     }

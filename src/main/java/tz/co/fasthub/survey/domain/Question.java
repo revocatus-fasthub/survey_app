@@ -10,13 +10,14 @@ public class Question {
 
     @GeneratedValue
     @Id
+    @Column(name = "id", updatable = false,insertable = false)
     private Long id;
     private String qsn;
     private int sequence;
     @Version
     private Long version;
 
-    @OneToOne(mappedBy = "question")
+    @OneToMany(mappedBy = "question")
     private Answer answer;
 
     public Question() {
