@@ -15,9 +15,8 @@ import tz.co.fasthub.survey.service.AnswerService;
 import tz.co.fasthub.survey.service.QuestionService;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
+import static tz.co.fasthub.survey.constants.Constant.savedAnswer;
 import static tz.co.fasthub.survey.constants.Constant.savedQuestion;
 
 /**
@@ -79,40 +78,20 @@ public class AnswerController {
     // Save talent to database
 
     @RequestMapping(value = "/answer", method = RequestMethod.POST)
-    public String saveAnswer(Long id, @Valid Answer answer, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String saveAnswer(@Valid Answer answer, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if(result.hasErrors()){
             return "addAnswer";
         }
-        List<Answer> answerArrayList = new ArrayList<Answer>();
-     /*   for(int i =0; i<answerArrayList.size(); i++){
-            id = savedQuestion.getId();
-            Answer savedAnser = answerService.save(answer,id);
-        }*/
+        Long id = savedQuestion.getId();
+        savedAnswer = answerService.save(answer, id);
 
-       /* String answer1 = answer.getAns();
-        String position1 = answer.getPosition();
-        String savedAns= position1+answer1;
-        log.info(savedAns);
-     */   //List<Answer> answerArrayList = new ArrayList<Answer>();
-       // for(Answer ans : answerArrayList){
-            //id = savedQuestion.getId();
-          //  Answer savedAnswers = answerService.save(answer,id);
-       // }
-      //  answer.setAns(answerArrayList);
-        /*for(int i=0; i<5;i++){
-            answerArrayList.add(new Answer());
+        //  List<Answer> answerArrayList = new ArrayList<Answer>();
+    //    answerArrayList.add(answer);
 
+     //   model.addAttribute("Answer", answer);
 
-        }*/
-        //answer.setAns(answerArrayList);
-        answerArrayList.add(answer);
-        id = savedQuestion.getId();
-        Answer savedAnswers = answerService.save(answer,id);
-        model.addAttribute("Answer", answer);
-
-
-        redirectAttributes.addFlashAttribute("flash.message", "Answers Successfully Saved!");
-        return "redirect:/answerpage/answers";
+        redirectAttributes.addFlashAttribute("flash.message.answer", "Answers Successfully Saved!");
+        return "redirect:question/"+ id;
 
     }
 

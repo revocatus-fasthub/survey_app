@@ -1,6 +1,7 @@
 package tz.co.fasthub.survey.constants;
 
 import org.springframework.web.client.RestTemplate;
+import tz.co.fasthub.survey.domain.Answer;
 import tz.co.fasthub.survey.domain.Channel;
 import tz.co.fasthub.survey.domain.Question;
 
@@ -53,4 +54,5 @@ public class Constant {
 
 
     public static Question savedQuestion =  new Question();
+    public static Answer savedAnswer = new Answer();
 }

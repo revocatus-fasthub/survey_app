@@ -48,9 +48,16 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Answer getAnswerByQsnId(Long id) {
-      //  questionService.getQsnById(id);
-        return answerRepository.findOne(id);
+    public Iterable<Answer> getAnswerByQsnId(Long id) {
+        String revo = "SELECT * FROM `answer`WHERE qsn_id = "+id;
+  /*
+        jdbcTemplate.query(revo,,);
+        getSimpleJdbcTemplate().queryForInt(sqlCount, new Object[0]);
+*/
+
+
+        questionService.getQsnById(id);
+        return answerRepository.findAll();
     }
 
     @Override

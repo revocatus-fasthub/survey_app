@@ -11,7 +11,7 @@ public interface AnswerService {
     Answer save(Answer answer, Long id);
     Answer getAnswerById(Long id);
     Answer saveByQnsId(Answer ans, Question qsn);
-    Answer getAnswerByQsnId(Long id);
+    Iterable<Answer> getAnswerByQsnId(Long id);
 
 
     Iterable<Answer> listAllAnswers();

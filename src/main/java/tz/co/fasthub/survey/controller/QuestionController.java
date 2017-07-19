@@ -55,8 +55,10 @@ public class QuestionController {
     // View a specific question by its id
 
     @RequestMapping("question/{id}")
-    public String showQuestion(@PathVariable Long id, @Valid Answer answer, Model model) {
-        model.addAttribute("answer", answerService.getAnswerById(id));
+    public String showQuestion(@PathVariable Long id, Long ansId, @Valid Answer answer, Model model) {
+        //ansId = answerService.getAnswerById()
+       //model.addAttribute("answer",answerService.getAnswerByQsnId(id));
+        //  model.addAttribute("answer", answerService.getAnswerById(ansId));
         model.addAttribute("question", questionService.getQsnById(id));
         model.addAttribute("answer", answer);
         return "questionShow";
@@ -81,19 +83,19 @@ public class QuestionController {
     // Save question to database
 
     @RequestMapping(value = "question", method = RequestMethod.POST)
-    public String saveQuestion(@Valid Question question, Long id, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String saveQuestion(@Valid Question question, @Valid Answer answer, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         model.addAttribute("Question", question);
         talentValidator.validate(question,result);
         if(result.hasErrors()){
-            redirectAttributes.addFlashAttribute("flash.message", "Error!");
+            redirectAttributes.addFlashAttribute("flash.message.question", "Error!");
             return "addQuestion";
         }
 
         savedQuestion = questionService.save(question);
-        id=savedQuestion.getId();
+        Long id = savedQuestion.getId();
 
-        redirectAttributes.addFlashAttribute("flash.message", "Question "+id+" Successfully Saved!");
-       return "redirect:question/{id}";
+        redirectAttributes.addFlashAttribute("flash.message.question", "Question "+ id +" Successfully Saved!");
+       return "redirect:question/"+id;
         // return "redirect:answerpage/addanswer/"+id;
 
     }
