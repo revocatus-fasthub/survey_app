@@ -48,7 +48,7 @@ public class QuestionController {
         return "questions";
     }
 
-    // View a specific talent by its id
+    // View a specific question by its id
 
     @RequestMapping("question/{id}")
     public String showQuestion(@PathVariable Long id, Model model) {
@@ -64,7 +64,7 @@ public class QuestionController {
         return "questionEditForm";
     }
 
-    // New talent
+    // New question
 
     @RequestMapping("/addQuestion")
     public String newQuestion(Model model) {
@@ -72,7 +72,7 @@ public class QuestionController {
         return "addQuestion";
     }
 
-    // Save talent to database
+    // Save question to database
 
     @RequestMapping(value = "question", method = RequestMethod.POST)
     public String saveQuestion(@Valid Question question, Long id, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
@@ -87,31 +87,10 @@ public class QuestionController {
         id=savedQuestion.getId();
 
         redirectAttributes.addFlashAttribute("flash.message", "Question "+id+" Successfully Saved!");
-        return "redirect:answerpage/addanswer/"+id;
+       return "redirect:question/{id}";
+        // return "redirect:answerpage/addanswer/"+id;
 
     }
 
-    // Delete talent by its id
-/*
-    @RequestMapping("talent/delete/{id}")//, @PathVariable Integer id
-    public String deleteTalent(@PathVariable Integer id, RedirectAttributes redirectAttributes) throws NotFoundException {
-        if(id!=null){
-            questionService.deleteTalent(id);
-            deleteTwitterTalentAccount(Long.valueOf(id),redirectAttributes);
-        }
-        //twitterTalentAccountService.deleteTalentById(id);
-        redirectAttributes.addFlashAttribute("flash.message", "Talent Successfully Deleted!");
-        return "redirect:/talents";
-    }*/
-/*
-    @RequestMapping("talent/deleteTwitterTalent/{id}")//
-    public String deleteTwitterTalentAccount(@PathVariable Long id, RedirectAttributes redirectAttributes) throws NotFoundException {
-        twitterTalentAccountService.deleteTalentById(id);
-        if(id!=null){
-            redirectAttributes.addFlashAttribute("flash.message", "Talent Successfully Deleted!");
-            return "redirect:/talents";
-        }
-        redirectAttributes.addFlashAttribute("flash.message", "This Twitter Talent Account with id "+twitterTalentAccountService.getTalentById(id)+" doesn't exist");
-        return "redirect:/talents";
-    }*/
+
 }

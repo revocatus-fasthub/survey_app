@@ -1,35 +1,30 @@
 package tz.co.fasthub.survey.domain;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * Created by root on 7/17/17.
  */
 
 @Entity
-public class Answer implements Serializable{
-
-    private static final long serialVersionUID = 1L;
+public class Answer {
 
     @GeneratedValue
     @Id
     private Long id;
     private String ans;
     private int sequence;
-    private String position;
 
-    @ManyToOne(cascade = CascadeType.ALL, targetEntity = Question.class, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "qsnId")
     private Question question;
 
     public Answer() {
     }
 
-    public Answer(String ans, int sequence, String position, Question question) {
+    public Answer(String ans, int sequence, Question question) {
         this.ans = ans;
         this.sequence = sequence;
-        this.position = position;
         this.question = question;
     }
 
@@ -57,16 +52,7 @@ public class Answer implements Serializable{
         this.sequence = sequence;
     }
 
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
     public Question getQuestion() {
-
         return question;
     }
 
