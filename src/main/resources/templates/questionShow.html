@@ -35,50 +35,28 @@
     </div>
 
 
-<div>
-    <h3 th:if="${#vars['flash.message.answer']}" th:text="${#vars['flash.message.answer']}" class="alert alert-success"></h3>
-    <h2>Answer Details</h2>
-    <div>
-        <form class="form-horizontal">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Answer Id:</label>
-                <div class="col-sm-10">
-                    <p class="form-control-static" th:text="${answer.id}">Qsn Id</p></div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Choice:</label>
-                <div class="col-sm-10">
-                    <p class="form-control-static" th:text="${answer.ans}">Question</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Sequence:</label>
-                <div class="col-sm-10">
-                    <p class="form-control-static" th:text="${answer.sequence}">Sequence</p>
-                </div>
-            </div>
-        </form>
+    <br/>
+
+    <h2>Answer List</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>Answer </th>
+                <th>Sequence</th>
+                <th>Qsn_Id</th>
+            </tr>
+            <tr th:each="answer : ${answers}">
+                <td th:text="${answer.id}"><a href="/answer/${answer.id}">Id</a></td>
+                <td th:text="${answer.ans}">answer </td>
+                <td th:text="${answer.sequence}">sequence</td>
+                <td th:text="${answer.question}">qsn Id</td>
+            </tr>
+        </table>
+
     </div>
 
 
-    <form autocomplete="off" action="#" th:action="@{/answerpage/answer/}" th:object="${answer}" method="post" class="form-horizontal" role="form">
 
-        <div class="form-group">
-            <label class="col-sm-2 control-label">Choice:</label>
-            <div class="col-md-5 col-md-offset-0">
-                <input type="text" class="form-control" th:field="*{ans}" /><br/>
-                <button type="submit" class="btn btn-primary">Add Choice</button>
-            </div>
-        </div>
-
-
-    </form>
-
-</div>
-
-
-
-</div>
 
 </body>
 </html>
