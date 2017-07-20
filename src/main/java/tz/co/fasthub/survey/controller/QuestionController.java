@@ -60,7 +60,6 @@ public class QuestionController {
        //model.addAttribute("answer",answerService.getAnswerByQsnId(id));
         //  model.addAttribute("answer", answerService.getAnswerById(ansId));
         model.addAttribute("question", questionService.getQsnById(id));
-        model.addAttribute("answer", answerService.getAnswerById(id));
         return "questionShow";
     }
 

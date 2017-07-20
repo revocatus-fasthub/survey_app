@@ -33,11 +33,11 @@
             </div>
         </form>
     </div>
-
-
     <br/>
-
     <h2>Answer List</h2>
+
+
+
         <table class="table table-striped">
             <tr>
                 <th>Id</th>
@@ -46,7 +46,7 @@
                 <th>Qsn_Id</th>
             </tr>
             <tr th:each="answer : ${answers}">
-                <td th:text="${answer.id}"><a href="/answer/${answer.id}">Id</a></td>
+                <td th:text="${answer.id}">Id</td>
                 <td th:text="${answer.ans}">answer </td>
                 <td th:text="${answer.sequence}">sequence</td>
                 <td th:text="${answer.question}">qsn Id</td>
@@ -54,9 +54,6 @@
         </table>
 
     </div>
-
-
-
 
 </body>
 </html>
