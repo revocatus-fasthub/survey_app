@@ -59,6 +59,10 @@ public class AnswerServiceImpl implements AnswerService {
         return answerRepository.findAll();
     }
 
+    @Override
+    public void deleteAnswer(Answer id) {
+        answerRepository.delete(id);
+    }
 
 
 

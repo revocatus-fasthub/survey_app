@@ -63,7 +63,6 @@ public class QuestionController {
         Long id = question.getId();
         if(answer.getAns()!=null) {
             savedAnswer = answerService.saveByQnsId(answer, question);
-            log.info(String.valueOf(savedAnswer));
         }
 
         model.addAttribute("answers", answerService.getAnswerByQsnId(question));

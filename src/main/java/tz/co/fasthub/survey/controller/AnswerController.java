@@ -68,24 +68,9 @@ public class AnswerController {
         return "addAnswer";
     }
 
-    // Save talent to database
-/*
-    @RequestMapping(value = "/answer", method = RequestMethod.POST)
-    public String saveAnswer(@Valid Answer answer, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        if(result.hasErrors()){
-            return "addAnswer";
-        }
-        Long id = savedQuestion.getId();
-        savedAnswer = answerService.save(answer);
-
-        //  List<Answer> answerArrayList = new ArrayList<Answer>();
-    //    answerArrayList.add(answer);
-
-        model.addAttribute("Answer", answer);
-
-        redirectAttributes.addFlashAttribute("flash.message.answer", "Answers Successfully Saved!");
-        return "question/"+ id;
-
-    }*/
-
+    @RequestMapping("answer/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        answerService.deleteAnswer(answerService.getAnswerById(id));
+        return "questionShow";
+    }
 }

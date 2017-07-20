@@ -43,14 +43,19 @@
             <tr>
                 <th>Id</th>
                 <th>Answer </th>
+                <th>Position</th>
                 <th>Sequence</th>
                 <th>Qsn_Id</th>
+                <th colspan="2" align="center">Action</th>
             </tr>
             <tr th:each="answer : ${answers}">
                 <td th:text="${answer.id}">Id</td>
                 <td th:text="${answer.ans}">answer </td>
+                <td th:text="${answer.position}">position</td>
                 <td th:text="${answer.sequence}">sequence</td>
                 <td th:text="${answer.question.id}">qsn Id</td>
+                <td><a th:href="${'/answerpage/answer/edit/' + answer.id}">Edit</a></td>
+                <td><a th:href="${'/answerpage/answer/delete/' + answer.id}">Delete</a></td>
             </tr>
         </table>
 
@@ -63,7 +68,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Choice:</label>
                 <div class="col-md-5 col-md-offset-0">
-                    <input type="text" class="form-control" th:field="*{ans}"/><br/> <!--th:field="*{ans}"-->
+                    <input type="text" class="form-control" placeholder="add new choice" th:field="*{ans}"/><br/> <!--th:field="*{ans}"-->
                     <button type="submit" class="btn btn-primary">Add Choice</button>
                 </div>
             </div>
