@@ -10,10 +10,10 @@ import java.util.List;
  */
 public interface AnswerService {
     
-    Answer save(Answer answer, Long id);
+    Answer save(Answer answer);
     Answer getAnswerById(Long id);
-    Answer saveByQnsId(Answer ans, Question qsn);
-    Iterable<Answer> getAnswerByQsnId(Long id);
-
+    Answer saveByQnsId(Answer answer, Question qsnId);
+    List<Answer> getAnswerByQsnId(Question qsnId);
     Iterable<Answer> listAllAnswers();
+    void deleteAnswer(Answer id);
 }

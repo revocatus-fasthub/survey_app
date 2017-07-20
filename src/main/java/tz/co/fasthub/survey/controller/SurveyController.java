@@ -64,11 +64,15 @@ public class SurveyController {
             case "FastHub":
               //  response = surveyMonkeyController.loopQsns() +replyTo;//surveyMonkeyController.getQsnOne()+"\n"+replyTo;
               Question qsn = questionService.getQsnById(14L);
+              log.info(String.valueOf(qsn));
           //      List<Answer> answer = answerService.getAnswerByQsnId(14L);
              // log.info(String.valueOf(answer));
               JSONObject array = new JSONObject(qsn);
                 String qsn1 = array.getString("qsn");
-                response = qsn1;//answerService.getAnswerById(8L);
+              answerService.getAnswerByQsnId(qsn);
+
+
+                response = qsn1+"\n"+answerService.getAnswerByQsnId(qsn);//answerService.getAnswerById(8L);
 
                 break;
             case "Fasthub":

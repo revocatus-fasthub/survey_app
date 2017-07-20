@@ -1,5 +1,7 @@
 package tz.co.fasthub.survey.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import tz.co.fasthub.survey.validator.TalentValidator;
 
 import javax.validation.Valid;
 
+import static tz.co.fasthub.survey.constants.Constant.savedAnswer;
 import static tz.co.fasthub.survey.constants.Constant.savedQuestion;
 
 /**
@@ -28,6 +31,8 @@ public class QuestionController {
     private final AnswerService answerService;
 
     private TalentValidator talentValidator;
+
+    private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
 
     public TalentValidator getTalentValidator(){
         return talentValidator;
@@ -46,21 +51,24 @@ public class QuestionController {
 
     @RequestMapping(value = "/questions", method = RequestMethod.GET)
     public String list(Model model, Integer id) {
-      //  questionService.getQnsBySequence(id);
         model.addAttribute("questions", questionService.listAllTalent());
-        //model.addAttribute("questions", questionService.getQsnByDescendingId(id));
         return "questions";
     }
 
-    // View a specific question by its id
+    // View a specific question and answers by its id
 
-    @RequestMapping("question/{id}")
-    public String showQuestion(@PathVariable Long id, Long ansId, @Valid Answer answer, Model model) {
-        //ansId = answerService.getAnswerById()
-       //model.addAttribute("answer",answerService.getAnswerByQsnId(id));
-        //  model.addAttribute("answer", answerService.getAnswerById(ansId));
-        model.addAttribute("question", questionService.getQsnById(id));
-        model.addAttribute("answer", answerService.getAnswerById(id));
+    @RequestMapping("question/{qsnid}")
+    public String showQuestion(@PathVariable Long qsnid, @Valid Answer answer, Model model, RedirectAttributes redirectAttributes) {
+        Question question = questionService.getQsnById(qsnid);
+        Long id = question.getId();
+        if(answer.getAns()!=null) {
+            savedAnswer = answerService.saveByQnsId(answer, question);
+        }
+
+        model.addAttribute("answers", answerService.getAnswerByQsnId(question));
+        model.addAttribute("question", questionService.getQsnById(qsnid));
+        redirectAttributes.addFlashAttribute("flash.message.answer", "Answers Successfully Saved!");
+
         return "questionShow";
     }
 
@@ -90,13 +98,11 @@ public class QuestionController {
             redirectAttributes.addFlashAttribute("flash.message.question", "Error!");
             return "addQuestion";
         }
-
         savedQuestion = questionService.save(question);
         Long id = savedQuestion.getId();
 
         redirectAttributes.addFlashAttribute("flash.message.question", "Question "+ id +" Successfully Saved!");
        return "redirect:question/"+id;
-        // return "redirect:answerpage/addanswer/"+id;
 
     }
 
