@@ -61,12 +61,6 @@ public class Answer {
     }
 
     public void setPosition(int position) {
-        for(int i=1;i<=10;i++){
-            if(position<5){
-                position++;
-            }
-        }
-
         this.position = position;
     }
 
