@@ -114,10 +114,10 @@ public class QuestionController {
         Question selectedQuestion = questionService.getQnsBySequence1(id);
         Question questionBeforeSelectedQsn = null;
         Question questionAfterSelectedQsn = null;
-
+    log.info("direction" + direction);
         log.info("sequence before = " + selectedQuestion.getSequence());
         if (selectedQuestion != null) {
-            List<Question> questions = questionService.listAllQuestionsByDesc();
+            List<Question> questions = questionService.listAllQuestionsByAsc();
             for (int i = 0; i < questions.size(); i++) {
                 if (questions.get(i).equals(selectedQuestion)) {
 
