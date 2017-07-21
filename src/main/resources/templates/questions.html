@@ -19,6 +19,8 @@
                 <th>Id</th>
                 <th>Question </th>
                 <th>Sequence</th>
+                <th></th>
+                <th></th>
                 <th>View</th>
                 <th>Edit</th>
                 <th>Delete</th>
@@ -27,7 +29,11 @@
                 <td th:text="${question.id}"><a href="/question/${question.id}">Id</a></td>
                 <td th:text="${question.qsn}">Qsn Id</td>
                 <td th:text="${question.sequence}">sequence</td>
-                <td><a th:href="${ '/question/' + question.id}">View</a></td>
+
+               <td> <a th:text="${question.sequence}" th:href="${'/questionSequence1/' + question.id}">sequence</a></td>
+               <td> <a th:text="${question.sequence}" th:href="${'/questionSequence2/' + question.id}">sequence</a></td>
+
+                <td><a th:href="${'/question/' + question.id}">View</a></td>
                 <td><a th:href="${'/question/edit/' + question.id}">Edit</a></td>
                 <td><a th:href="${'/question/delete/' + question.id}">Delete</a></td>
             </tr>

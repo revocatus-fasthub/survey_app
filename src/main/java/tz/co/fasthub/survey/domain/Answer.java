@@ -1,13 +1,11 @@
 package tz.co.fasthub.survey.domain;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import tz.co.fasthub.survey.repository.AnswerRepository;
 import tz.co.fasthub.survey.service.AnswerService;
 import tz.co.fasthub.survey.service.QuestionService;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * Created by root on 7/17/17.
@@ -40,6 +38,17 @@ public class Answer {
         this.question = question;
     }
 
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "id=" + id +
+                ", ans='" + ans + '\'' +
+                ", sequence=" + sequence +
+                ", position=" + position +
+                ", question=" + question +
+                '}';
+    }
+
     public Long getId() {
         return id;
     }
@@ -69,19 +78,7 @@ public class Answer {
     }
 
     public void setPosition(int position) {
-        System.out.println(position);
-        if(this.getId()==0){
-            Question qs = questionService.getQsnById(this.getId());
-            if(qs != null){
-                List<Answer> answers = answerService.getAnswerByQsnId(qs);
-                if(!answers.isEmpty()){
-                    this.position = answers.size()+1;
-                }
-            }
-        }else{
             this.position = position;
-        }
-
     }
 
     public Question getQuestion() {

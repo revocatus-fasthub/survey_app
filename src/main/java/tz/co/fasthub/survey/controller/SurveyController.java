@@ -1,7 +1,6 @@
 package tz.co.fasthub.survey.controller;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,16 +62,9 @@ public class SurveyController {
         switch (text) {
             case "FastHub":
               //  response = surveyMonkeyController.loopQsns() +replyTo;//surveyMonkeyController.getQsnOne()+"\n"+replyTo;
-              Question qsn = questionService.getQsnById(14L);
-              log.info(String.valueOf(qsn));
-          //      List<Answer> answer = answerService.getAnswerByQsnId(14L);
-             // log.info(String.valueOf(answer));
-              JSONObject array = new JSONObject(qsn);
-                String qsn1 = array.getString("qsn");
-              answerService.getAnswerByQsnId(qsn);
-
-
-                response = qsn1+"\n"+answerService.getAnswerByQsnId(qsn);//answerService.getAnswerById(8L);
+              Question qsn = questionService.getQsnById(1L);
+              List<Answer> answer = answerService.getAnswerByQsnId(qsn);
+              response = qsn+"\n"+answer+replyTo;
 
                 break;
             case "Fasthub":

@@ -51,7 +51,8 @@ public class QuestionController {
 
     @RequestMapping(value = "/questions", method = RequestMethod.GET)
     public String list(Model model, Integer id) {
-        model.addAttribute("questions", questionService.listAllTalent());
+        model.addAttribute("questions", questionService.listAllQuestionsByDesc());
+        //model.addAttribute("questions", questionService.listAllQuestionsByDesc());
         return "questions";
     }
 
@@ -62,9 +63,9 @@ public class QuestionController {
         Question question = questionService.getQsnById(qsnid);
         Long id = question.getId();
         if(answer.getAns()!=null) {
+            log.info(answer.toString());
             savedAnswer = answerService.saveByQnsId(answer, question);
         }
-
         model.addAttribute("answers", answerService.getAnswerByQsnId(question));
         model.addAttribute("question", questionService.getQsnById(qsnid));
         redirectAttributes.addFlashAttribute("flash.message.answer", "Answers Successfully Saved!");
@@ -106,5 +107,27 @@ public class QuestionController {
 
     }
 
+    @RequestMapping(value = "questionSequence1/{id}", method = RequestMethod.GET)
+    public String viewSequence1 (@PathVariable int id){
+        log.info("qsnArray1: "+questionService.getQnsBySequence1(id) );
+        log.info("id1: "+id);
+        return "redirect:/questions";
+    }
+
+
+    @RequestMapping(value = "questionSequence2/{id}", method = RequestMethod.GET)
+    public String viewSequence2 (@PathVariable int id){
+        questionService.getQnsBySequence2(id);
+        log.info("qsnArray2: "+questionService.getQnsBySequence2(id) );
+        log.info("id2: "+id);
+        return "redirect:/questions";
+    }
+
+  /*  @RequestMapping("product/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        questionService.deleteQuestion(id);
+        return "redirect:/questions";
+    }
+*/
 
 }

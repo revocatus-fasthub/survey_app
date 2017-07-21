@@ -13,7 +13,6 @@ public class Question {
     @Id
     private Long id;
     private String qsn;
-    @GeneratedValue
     private int sequence;
     @Version
     private Long version;
