@@ -18,6 +18,8 @@ import tz.co.fasthub.survey.validator.TalentValidator;
 
 import javax.validation.Valid;
 
+import java.util.List;
+
 import static tz.co.fasthub.survey.constants.Constant.savedAnswer;
 import static tz.co.fasthub.survey.constants.Constant.savedQuestion;
 
@@ -111,9 +113,17 @@ public class QuestionController {
     public String viewSequence (@PathVariable int id, @PathVariable String direction){
         String up = "up",down = "down";
         if(direction.equals(up)){
-            if(questionService.getQnsBySequence(id)!=null){
-                
-                log.info("direction = "+up);
+            Question question = questionService.getQnsBySequence1(id);
+            log.info("sequence before = "+question.getSequence());
+            if(question!=null){
+                List<Question> questions = questionService.listAllQuestionsByDesc();
+                for (int x=0;x<questions.size();x--) {
+                    question.setSequence(question.getSequence() + 1);
+                    questionService.save(question);
+                    break;
+                }   log.info("direction = "+up); log.info("sequence after = "+question.getSequence());
+            }else {
+                log.info("its already the first qsn");
             }
 
         }else if(direction.equals(down)) {
