@@ -26,12 +26,14 @@ public class QuestionServiceImpl implements QuestionService {
     public Question save(Question question) {
             if(question.getQsn() != null) {
                 List<Question> questions = listAllQuestionsByDesc();
-                for (Question question1:questions) {
-                    question.setSequence(question1.getSequence() + 1);
-                    break;
+                if(!questions.isEmpty()){
+                    for (Question question1:questions) {
+                        question.setSequence(question1.getSequence() + 1);
+                        break;
+                    }
+                }else {
+                    question.setSequence(1);
                 }
-            }else {
-                question.setSequence(1);
             }
         return questionRepository.save(question);
     }

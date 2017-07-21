@@ -51,7 +51,7 @@ public class QuestionController {
 
     @RequestMapping(value = "/questions", method = RequestMethod.GET)
     public String list(Model model, Integer id) {
-        model.addAttribute("questions", questionService.listAllQuestionsByDesc());
+        model.addAttribute("questions", questionService.listAllQuestionsByAsc());
         //model.addAttribute("questions", questionService.listAllQuestionsByDesc());
         return "questions";
     }
@@ -107,21 +107,26 @@ public class QuestionController {
 
     }
 
-    @RequestMapping(value = "questionSequence1/{id}", method = RequestMethod.GET)
-    public String viewSequence1 (@PathVariable int id){
-        log.info("qsnArray1: "+questionService.getQnsBySequence1(id) );
-        log.info("id1: "+id);
+    @RequestMapping(value = "questionSequence/{id}/{direction}", method = RequestMethod.GET)
+    public String viewSequence (@PathVariable int id, @PathVariable String direction){
+        String up = "up",down = "down";
+        if(direction.equals(up)){
+            if(questionService.getQnsBySequence(id)!=null){
+                
+                log.info("direction = "+up);
+            }
+
+        }else if(direction.equals(down)) {
+            log.info("direction = down");
+        }else {
+            log.info("hamnaga kitu");
+        }
+
+        log.info("qsnArray: "+questionService.getQnsBySequence1(id) );
+        log.info("id: "+id);
         return "redirect:/questions";
     }
 
-
-    @RequestMapping(value = "questionSequence2/{id}", method = RequestMethod.GET)
-    public String viewSequence2 (@PathVariable int id){
-        questionService.getQnsBySequence2(id);
-        log.info("qsnArray2: "+questionService.getQnsBySequence2(id) );
-        log.info("id2: "+id);
-        return "redirect:/questions";
-    }
 
   /*  @RequestMapping("product/delete/{id}")
     public String delete(@PathVariable Long id) {
