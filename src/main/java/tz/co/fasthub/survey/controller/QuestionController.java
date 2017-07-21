@@ -121,7 +121,9 @@ public class QuestionController {
                 for (int i = 0; i < questions.size(); i++) {
                     if(questions.get(i).equals(selectedQuestion)){
                         if(i>=0 || direction.equals(down)){
-                            questionBeforeSelectedQsn=questions.get(i-1);
+                            if (i==0) {
+                                questionBeforeSelectedQsn=questions.get(i-1);
+                            }else
                             if (questions.size()!=(questions.indexOf(questions.get(i))+1)){
                                 questionAfterSelectedQsn=questions.get(i+1);
                             }else{
