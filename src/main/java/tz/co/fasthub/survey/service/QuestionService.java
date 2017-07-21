@@ -22,4 +22,5 @@ public interface QuestionService {
 
     List<Question> listAllQuestionsByAsc();
 
+    Question saveBySequence(Question question);
 }

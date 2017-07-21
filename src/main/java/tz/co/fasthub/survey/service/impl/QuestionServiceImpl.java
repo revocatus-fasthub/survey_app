@@ -24,7 +24,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question save(Question question) {
-            if(question.getQsn() != null) {
+            if(question.getId()== null) {
                 List<Question> questions = listAllQuestionsByDesc();
                 if(!questions.isEmpty()){
                     for (Question question1:questions) {
@@ -81,6 +81,12 @@ public class QuestionServiceImpl implements QuestionService {
     public List<Question> listAllQuestionsByAsc() {
 
         return questionRepository.findAllByOrderBySequenceAsc();
+    }
+
+    @Override
+    public Question saveBySequence(Question question) {
+
+        return questionRepository.save(question);
     }
 
 

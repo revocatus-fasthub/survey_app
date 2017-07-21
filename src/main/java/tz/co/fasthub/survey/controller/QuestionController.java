@@ -17,7 +17,6 @@ import tz.co.fasthub.survey.service.QuestionService;
 import tz.co.fasthub.survey.validator.TalentValidator;
 
 import javax.validation.Valid;
-
 import java.util.List;
 
 import static tz.co.fasthub.survey.constants.Constant.savedAnswer;
@@ -112,25 +111,51 @@ public class QuestionController {
     @RequestMapping(value = "questionSequence/{id}/{direction}", method = RequestMethod.GET)
     public String viewSequence (@PathVariable int id, @PathVariable String direction){
         String up = "up",down = "down";
-        if(direction.equals(up)){
-            Question question = questionService.getQnsBySequence1(id);
-            log.info("sequence before = "+question.getSequence());
-            if(question!=null){
-                List<Question> questions = questionService.listAllQuestionsByDesc();
-                for (int x=0;x<questions.size();x--) {
-                    question.setSequence(question.getSequence() + 1);
-                    questionService.save(question);
-                    break;
-                }   log.info("direction = "+up); log.info("sequence after = "+question.getSequence());
-            }else {
-                log.info("its already the first qsn");
-            }
+            Question selectedQuestion = questionService.getQnsBySequence1(id);
+            Question questionBeforeSelectedQsn = null;
+            Question questionAfterSelectedQsn =null;
 
-        }else if(direction.equals(down)) {
-            log.info("direction = down");
-        }else {
-            log.info("hamnaga kitu");
-        }
+            log.info("sequence before = "+selectedQuestion.getSequence());
+            if(selectedQuestion!=null){
+               List<Question> questions = questionService.listAllQuestionsByDesc();
+                for (int i = 0; i < questions.size(); i++) {
+                    if(questions.get(i).equals(selectedQuestion)){
+                        if(i>=0 || direction.equals(down)){
+                            questionBeforeSelectedQsn=questions.get(i-1);
+                            if (questions.size()!=(questions.indexOf(questions.get(i))+1)){
+                                questionAfterSelectedQsn=questions.get(i+1);
+                            }else{
+                                questionAfterSelectedQsn=questions.get(i);
+                            }
+                                if(direction.equals(up)){
+
+                                    selectedQuestion.setSequence(selectedQuestion.getSequence() - 1);
+                                    questionBeforeSelectedQsn.setSequence(questionBeforeSelectedQsn.getSequence()+1);
+                                }else {
+                                    if(questions.size()!=(questions.indexOf(questions.get(i))+1)) {
+                                        selectedQuestion.setSequence(selectedQuestion.getSequence() + 1);
+                                        questionAfterSelectedQsn.setSequence(questionAfterSelectedQsn.getSequence() - 1);
+                                    }
+                                }
+
+                        }else {
+                            questionAfterSelectedQsn=questions.get(i);
+                        }
+
+                    }
+
+                }
+
+               if(selectedQuestion!=null){
+                   questionService.save(selectedQuestion);
+               }
+                if(questionBeforeSelectedQsn!=null){
+                    questionService.save(questionBeforeSelectedQsn);
+                }
+                if(questionAfterSelectedQsn!=null){
+                    questionService.save(questionAfterSelectedQsn);
+                }
+              }
 
         log.info("qsnArray: "+questionService.getQnsBySequence1(id) );
         log.info("id: "+id);
