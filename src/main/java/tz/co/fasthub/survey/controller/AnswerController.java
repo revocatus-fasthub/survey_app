@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import tz.co.fasthub.survey.domain.Answer;
 import tz.co.fasthub.survey.service.AnswerService;
 import tz.co.fasthub.survey.service.QuestionService;
@@ -57,7 +58,7 @@ public class AnswerController {
         return "answerEditForm";
     }
 
-    // New talent
+    // New ANswer
 
     @RequestMapping("/addanswer/{id}")
     public String newAnswer(@PathVariable Long id, Model model) {
@@ -68,9 +69,15 @@ public class AnswerController {
         return "addAnswer";
     }
 
-    @RequestMapping("answer/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    @RequestMapping("answer/delete")
+    public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         answerService.deleteAnswer(answerService.getAnswerById(id));
+        if(id!=null){
+            redirectAttributes.addFlashAttribute("flash.message.answer", "Answer Successfully Deleted!");
+            return "questionShow";
+        }
+        redirectAttributes.addFlashAttribute("flash.message", "This Answer with id "+answerService.getAnswerById(id)+" doesn't exist");
+
         return "questionShow";
     }
 }

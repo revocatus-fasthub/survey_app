@@ -17,6 +17,7 @@ import tz.co.fasthub.survey.service.QuestionService;
 import tz.co.fasthub.survey.validator.TalentValidator;
 
 import javax.validation.Valid;
+import java.util.List;
 
 import static tz.co.fasthub.survey.constants.Constant.savedAnswer;
 import static tz.co.fasthub.survey.constants.Constant.savedQuestion;
@@ -51,7 +52,8 @@ public class QuestionController {
 
     @RequestMapping(value = "/questions", method = RequestMethod.GET)
     public String list(Model model, Integer id) {
-        model.addAttribute("questions", questionService.listAllTalent());
+        model.addAttribute("questions", questionService.listAllQuestionsByAsc());
+        //model.addAttribute("questions", questionService.listAllQuestionsByDesc());
         return "questions";
     }
 
@@ -62,9 +64,9 @@ public class QuestionController {
         Question question = questionService.getQsnById(qsnid);
         Long id = question.getId();
         if(answer.getAns()!=null) {
+            log.info(answer.toString());
             savedAnswer = answerService.saveByQnsId(answer, question);
         }
-
         model.addAttribute("answers", answerService.getAnswerByQsnId(question));
         model.addAttribute("question", questionService.getQsnById(qsnid));
         redirectAttributes.addFlashAttribute("flash.message.answer", "Answers Successfully Saved!");
@@ -106,5 +108,67 @@ public class QuestionController {
 
     }
 
+    @RequestMapping(value = "questionSequence/{id}/{direction}", method = RequestMethod.GET)
+    public String viewSequence (@PathVariable int id, @PathVariable String direction){
+        String up = "up",down = "down";
+            Question selectedQuestion = questionService.getQnsBySequence1(id);
+            Question questionBeforeSelectedQsn = null;
+            Question questionAfterSelectedQsn =null;
+
+            log.info("sequence before = "+selectedQuestion.getSequence());
+            if(selectedQuestion!=null){
+               List<Question> questions = questionService.listAllQuestionsByDesc();
+                for (int i = 0; i < questions.size(); i++) {
+                    if(questions.get(i).equals(selectedQuestion)){
+                        if(i>=0 || direction.equals(down)){
+                            questionBeforeSelectedQsn=questions.get(i-1);
+                            if (questions.size()!=(questions.indexOf(questions.get(i))+1)){
+                                questionAfterSelectedQsn=questions.get(i+1);
+                            }else{
+                                questionAfterSelectedQsn=questions.get(i);
+                            }
+                            
+                                if(direction.equals(up)){
+
+                                    selectedQuestion.setSequence(selectedQuestion.getSequence() - 1);
+                                    questionBeforeSelectedQsn.setSequence(questionBeforeSelectedQsn.getSequence()+1);
+                                }else {
+                                    if(questions.size()!=(questions.indexOf(questions.get(i))+1)) {
+                                        selectedQuestion.setSequence(selectedQuestion.getSequence() + 1);
+                                        questionAfterSelectedQsn.setSequence(questionAfterSelectedQsn.getSequence() - 1);
+                                    }
+                                }
+
+                        }else {
+                            questionAfterSelectedQsn=questions.get(i);
+                        }
+
+                    }
+
+                }
+
+               if(selectedQuestion!=null){
+                   questionService.save(selectedQuestion);
+               }
+                if(questionBeforeSelectedQsn!=null){
+                    questionService.save(questionBeforeSelectedQsn);
+                }
+                if(questionAfterSelectedQsn!=null){
+                    questionService.save(questionAfterSelectedQsn);
+                }
+              }
+
+        log.info("qsnArray: "+questionService.getQnsBySequence1(id) );
+        log.info("id: "+id);
+        return "redirect:/questions";
+    }
+
+
+  /*  @RequestMapping("product/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        questionService.deleteQuestion(id);
+        return "redirect:/questions";
+    }
+*/
 
 }

@@ -13,7 +13,6 @@ public class Question {
     @Id
     private Long id;
     private String qsn;
-    @GeneratedValue
     private int sequence;
     @Version
     private Long version;
@@ -29,6 +28,20 @@ public class Question {
         this.sequence = sequence;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Question question = (Question) o;
+
+        return id.equals(question.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 
     @Override
     public String toString() {

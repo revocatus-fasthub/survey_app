@@ -10,5 +10,9 @@ import java.util.List;
  * Created by root on 7/17/17.
  */
 public interface AnswerRepository extends CrudRepository<Answer, Long> {
-   List<Answer> findAllByQuestion(Question qsnId);
+
+   List<Answer> findAllByQuestionOrderByPositionDesc(Question qsnId);
+  // List<Answer> orderByPositionDesc();
+
+   //order by position descending
 }

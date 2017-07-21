@@ -6,6 +6,8 @@ import tz.co.fasthub.survey.domain.Question;
 import tz.co.fasthub.survey.repository.QuestionRepository;
 import tz.co.fasthub.survey.service.QuestionService;
 
+import java.util.List;
+
 /**
  * Created by root on 7/17/17.
  */
@@ -22,6 +24,17 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question save(Question question) {
+            if(question.getId()== null) {
+                List<Question> questions = listAllQuestionsByDesc();
+                if(!questions.isEmpty()){
+                    for (Question question1:questions) {
+                        question.setSequence(question1.getSequence() + 1);
+                        break;
+                    }
+                }else {
+                    question.setSequence(1);
+                }
+            }
         return questionRepository.save(question);
     }
 
@@ -32,7 +45,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question getQsnByAscendingId(int sequence) {
-        return questionRepository.findAllByOrderByIdAsc();
+        return null;//questionRepository.findAllByOrderBySequence();
     }
 
     @Override
@@ -45,9 +58,35 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository.findAllByOrderByIdDesc(id);
     }
 
+
     @Override
-    public Iterable<Question> listAllTalent() {
-        return questionRepository.findAll();
+    public Question getQnsBySequence1(Integer id) {
+        return questionRepository.findOne(Long.valueOf(id));
+    }
+
+    @Override
+    public Question getQnsBySequence2(Integer id) {
+        return questionRepository.findOne(Long.valueOf(id));
+    }
+
+
+    @Override
+    public List<Question> listAllQuestionsByDesc() {
+
+        return questionRepository.findAllByOrderBySequenceDesc();
+    }
+
+
+    @Override
+    public List<Question> listAllQuestionsByAsc() {
+
+        return questionRepository.findAllByOrderBySequenceAsc();
+    }
+
+    @Override
+    public Question saveBySequence(Question question) {
+
+        return questionRepository.save(question);
     }
 
 

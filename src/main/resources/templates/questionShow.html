@@ -36,7 +36,7 @@
 
 
     <div>
-        <h3 th:if="${#vars['flash.message.answer']}" th:text="${#vars['flash.message.answer']}" class="alert alert-success"></h3>
+
         <h2>Answer Details</h2>
 
         <table class="table table-striped">
@@ -55,7 +55,7 @@
                 <td th:text="${answer.sequence}">sequence</td>
                 <td th:text="${answer.question.id}">qsn Id</td>
                 <td><a th:href="${'/answerpage/answer/edit/' + answer.id}">Edit</a></td>
-                <td><a th:href="${'/answerpage/answer/delete/' + answer.id}">Delete</a></td>
+                <td><a th:href="${'/answerpage/answer/delete'}">Delete</a></td>
             </tr>
         </table>
 
@@ -63,6 +63,7 @@
 
 <br/><hr/>
     <div class="container">
+        <h3 th:if="${#vars['flash.message.answer']}" th:text="${#vars['flash.message.answer']}" class="alert alert-success"></h3>
         <form autocomplete="off" action="#" th:action="@{/question/{id}(id=${question.id})}" th:object="${answer}" method="post" class="form-horizontal" role="form">
 
             <div class="form-group">

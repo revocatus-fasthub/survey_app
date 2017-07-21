@@ -1,6 +1,10 @@
 package tz.co.fasthub.survey.domain;
 
 
+import tz.co.fasthub.survey.repository.AnswerRepository;
+import tz.co.fasthub.survey.service.AnswerService;
+import tz.co.fasthub.survey.service.QuestionService;
+
 import javax.persistence.*;
 
 /**
@@ -14,7 +18,6 @@ public class Answer {
     @Id
     private Long id;
     private String ans;
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int sequence;
     private int position;
 
@@ -22,6 +25,9 @@ public class Answer {
     @JoinColumn(name = "qsnId")
     private Question question;
 
+    private static AnswerRepository answerRepository;
+    private static AnswerService answerService;
+    private static QuestionService questionService;
     public Answer() {
     }
 
@@ -30,6 +36,17 @@ public class Answer {
         this.sequence = sequence;
         this.position=position;
         this.question = question;
+    }
+
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "id=" + id +
+                ", ans='" + ans + '\'' +
+                ", sequence=" + sequence +
+                ", position=" + position +
+                ", question=" + question +
+                '}';
     }
 
     public Long getId() {
@@ -61,13 +78,7 @@ public class Answer {
     }
 
     public void setPosition(int position) {
-        for(int i=1;i<=10;i++){
-            if(position<5){
-                position++;
-            }
-        }
-
-        this.position = position;
+            this.position = position;
     }
 
     public Question getQuestion() {
