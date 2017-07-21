@@ -127,6 +127,7 @@ public class QuestionController {
                             }else{
                                 questionAfterSelectedQsn=questions.get(i);
                             }
+                            
                                 if(direction.equals(up)){
 
                                     selectedQuestion.setSequence(selectedQuestion.getSequence() - 1);
