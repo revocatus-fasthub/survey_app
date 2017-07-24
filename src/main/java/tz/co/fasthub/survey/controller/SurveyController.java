@@ -61,10 +61,17 @@ public class SurveyController {
 
         switch (text) {
             case "FastHub":
+                final ArrayList<String> ansList = new ArrayList<>();
               //  response = surveyMonkeyController.loopQsns() +replyTo;//surveyMonkeyController.getQsnOne()+"\n"+replyTo;
               Question qsn = questionService.getQsnById(1L);
+                String qsns = qsn.getQsn();
               List<Answer> answer = answerService.getAnswerByQsnId(qsn);
-              response = qsn+"\n"+answer+replyTo;
+                String ans=null, position=null,list = null;
+                for (int i = 0; i < answer.size(); i++) {
+                //  position = jsonObject.getString("position");
+                }
+              response=qsns+"?"+"\n"+answer+"\n"+replyTo;
+              log.info(response);
 
                 break;
             case "Fasthub":
@@ -102,31 +109,6 @@ public class SurveyController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    ResponseEntity post(@RequestParam("id") String id,
-                        @RequestParam("serviceNumber") String serviceNumber,
-                        @RequestParam("text") String text,
-                        @RequestParam("msisdn") String msisdn,
-                        @RequestParam("date") String date,
-                        @RequestParam("operator") String operator, String response){
-
-        List<MessageHandler> messages = new ArrayList<>();
-        MessageHandler messageHandler = new MessageHandler(id,response,msisdn,"INFO");
-        messages.add(messageHandler);
-
-        Content content = new Content(Constant.channelLink, messages);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        log.info(String.valueOf(content));
-        HttpEntity<Content> entity = new HttpEntity<>(content,headers);
-        log.info(String.valueOf(entity));
-        Object responseMEssage= restTemplate.postForObject(Constant.GW_URL,entity,Object.class);
-        log.info("response from gravity: " +responseMEssage);
-
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/index")
     public String index(){
         return "index";
@@ -140,4 +122,16 @@ public class SurveyController {
     public Survey[] getQuestions(){
         return surveyService.getQuestions();
     }
+
+    public String loopingQuestions(){
+        String userResponse = null; Question qsn = new Question();
+        if(userResponse.equals(2)|| userResponse.equals(3)){
+            qsn = questionService.getQsnById(2L);
+            qsn.getQsn();
+            //pull answers from qsn 2
+        }
+        return qsn.getQsn();
+    }
+
+
 }

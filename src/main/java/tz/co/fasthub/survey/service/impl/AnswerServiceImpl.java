@@ -74,6 +74,11 @@ public class AnswerServiceImpl implements AnswerService {
         return answerRepository.findAllByQuestionOrderByPositionDesc(qsnId);
     }
 
+    public Iterable<Answer> getAnswerByQsnIdAll(Long id) {
+
+        return answerRepository.findAll();
+    }
+
     @Override
     public Iterable<Answer> listAllAnswers() {
         return answerRepository.findAll();

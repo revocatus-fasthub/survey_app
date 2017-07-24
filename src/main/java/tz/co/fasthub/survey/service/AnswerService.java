@@ -16,6 +16,6 @@ public interface AnswerService {
     List<Answer> getAnswerByQsnId(Question qsnId);
     Iterable<Answer> listAllAnswers();
 
-
+    Iterable<Answer> getAnswerByQsnIdAll(Long id);
     void deleteAnswer(Answer id);
 }
