@@ -210,8 +210,8 @@ public class QuestionController {
 
                     }else if (direction.equals(down)){
                         if (answers.size()!=(answers.indexOf(answers.get(i)) - 1)){
-                            selectedAnswer.setPosition(selectedAnswer.getPosition()+1);
-                            answerAfterSelectedAns.setPosition(answerAfterSelectedAns.getPosition()-1);
+                            selectedAnswer.setPosition(selectedAnswer.getPosition() - 1);
+                            answerAfterSelectedAns.setPosition(answerAfterSelectedAns.getPosition() + 1);
 
                         }
 
@@ -245,5 +245,6 @@ public class QuestionController {
         questionService.deleteQuestion(id);
         return "redirect:/questions";
     }
+    // to gokjhygtfred
 
 }
