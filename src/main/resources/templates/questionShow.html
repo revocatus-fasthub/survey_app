@@ -57,8 +57,9 @@
 
                 <td> <a th:text="Up" th:href="${'/answerPosition/' + answer.id+'/'+'up'}">Move Up</a></td>
                 <td> <a th:text="Down" th:href="${'/answerPosition/' + answer.id+'/'+'down'}">Move Down</a></td>
+<!--   <td><a th:href="${'/answerpage/answer/edit/' + answer.id}">Edit</a></td>  -->
+                <td><a th:href="${'/question/' + question.id}">Edit</a></td>
 
-                <td><a th:href="${'/answerpage/answer/edit/' + answer.id}">Edit</a></td>
             </tr>
         </table>
 

@@ -64,15 +64,30 @@ public class QuestionController {
         Question question = questionService.getQsnById(qsnid);
         Long id = question.getId();
         if (answer.getAns() != null) {
-            log.info(answer.toString());
             savedAnswer = answerService.saveByQnsId(answer, question);
         }
+
         model.addAttribute("answers", answerService.getAnswerByQsnId(question));
         model.addAttribute("question", questionService.getQsnById(qsnid));
         redirectAttributes.addFlashAttribute("flash.message.answer", "Answers Successfully Saved!");
 
         return "questionShow";
     }
+
+    @RequestMapping(value = "answer", method = RequestMethod.POST)
+    public String saveAnswer(@Valid Answer answer, Model model, RedirectAttributes redirectAttributes){
+        Question question = questionService.getQsnById(answer.getQuestion().getId());
+        log.info("qsnid: "+question.getId());
+
+
+        log.info(answer.toString());
+            savedAnswer = answerService.saveByQnsId(answer, question);
+        model.addAttribute("answers", answerService.getAnswerByQsnId(question));
+        model.addAttribute("question", questionService.getQsnById(question.getId()));
+        redirectAttributes.addFlashAttribute("flash.message.answer", "Answer Successfully Saved!");
+        return "redirect:/question/"+question.getId();
+    }
+
 
     //Edit by its id
 
@@ -81,6 +96,8 @@ public class QuestionController {
         model.addAttribute("question", questionService.getQsnById(id));
         return "questionEditForm";
     }
+
+
 
     // New question
 
@@ -130,10 +147,7 @@ public class QuestionController {
     public String viewSequence(@PathVariable int id, @PathVariable String direction) {
         String up = "up", down = "down";
         Question selectedQuestion = questionService.getQnsBySequence1(id);
-        Question questionBeforeSelectedQsn = null;
-        Question questionAfterSelectedQsn = null;
-    log.info("direction" + direction);
-        log.info("sequence before = " + selectedQuestion.getSequence());
+        Question questionBeforeSelectedQsn = null, questionAfterSelectedQsn = null;
         if (selectedQuestion != null) {
             List<Question> questions = questionService.listAllQuestionsByAsc();
             for (int i = 0; i < questions.size(); i++) {
@@ -192,20 +206,18 @@ public class QuestionController {
 
 
     @RequestMapping(value = "answerPosition/{id}/{direction}", method = RequestMethod.GET)
-    public String viewPosition(@PathVariable Long id, @PathVariable String direction) {
+    public String answerSequence(@PathVariable Long id, @PathVariable String direction, Question question) {
         String up = "up", down = "down";
 
         Answer selectedAnswer = answerService.getAnswerById(id);
         Long qsnID = selectedAnswer.getQuestion().getId();
-        Answer answerBeforeSelectedAns = null;
-        Answer answerAfterSelectedAns = null;
-        log.info("direction" + direction);
-        log.info("position before = " + selectedAnswer.getPosition());
+
+        Answer answerBeforeSelectedAns = null, answerAfterSelectedAns = null;
         if (selectedAnswer != null) {
             List<Answer> answers = answerService.listAllAnswersByDesc();
             for (int i = 0; i < answers.size(); i++) {
                 if (answers.get(i).equals(selectedAnswer)) {
-
+                    log.info("*");
                     if (i==0){
                         answerBeforeSelectedAns=answers.get(i);
                     }else {
@@ -221,15 +233,15 @@ public class QuestionController {
 
                     if (direction.equals(up)) {
                         if (i > 0) {
-                            selectedAnswer.setPosition(selectedAnswer.getPosition() + 1);
-                            answerBeforeSelectedAns.setPosition(answerBeforeSelectedAns.getPosition() - 1);
+                            selectedAnswer.setPosition(selectedAnswer.getPosition() - 1);
+                            answerBeforeSelectedAns.setPosition(answerBeforeSelectedAns.getPosition() + 1);
                         }
 
 
                     }else if (direction.equals(down)){
-                        if (answers.size()!=(answers.indexOf(answers.get(i)) - 1)){
-                            selectedAnswer.setPosition(selectedAnswer.getPosition() - 1);
-                            answerAfterSelectedAns.setPosition(answerAfterSelectedAns.getPosition() + 1);
+                        if (answers.size()!=(answers.indexOf(answers.get(i))+1)){
+                            selectedAnswer.setPosition(selectedAnswer.getPosition()+1);
+                            answerAfterSelectedAns.setPosition(answerAfterSelectedAns.getPosition()-1);
 
                         }
 
@@ -252,8 +264,6 @@ public class QuestionController {
             }
         }
 
-        log.info("ansArray: " + answerService.getAnswerById(id));
-        log.info("id: " + id);
         return "redirect:/question/"+qsnID;
     }
 

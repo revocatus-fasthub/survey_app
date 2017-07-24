@@ -38,6 +38,18 @@ public class Answer {
         this.question = question;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Answer answer = (Answer) o;
+
+        return id.equals(answer.id);
+    }
+
+
     @Override
     public String toString() {
         return "Answer{" +

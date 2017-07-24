@@ -19,4 +19,5 @@ public interface AnswerService {
 
     Iterable<Answer> getAnswerByQsnIdAll(Long id);
     void deleteAnswer(Answer id);
+
 }

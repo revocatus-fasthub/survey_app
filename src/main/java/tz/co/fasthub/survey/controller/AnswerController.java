@@ -54,6 +54,7 @@ public class AnswerController {
     @RequestMapping("answer/edit/{id}")
     public String editAnswer(@PathVariable Long id, Model model) {
         model.addAttribute("answer", answerService.getAnswerById(id));
+       // model.addAttribute("question", questionService.getQsnById());
         return "answerEditForm";
     }
 
