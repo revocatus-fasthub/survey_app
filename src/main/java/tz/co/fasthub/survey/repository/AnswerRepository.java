@@ -14,5 +14,7 @@ public interface AnswerRepository extends CrudRepository<Answer, Long> {
    List<Answer> findAllByQuestionOrderByPositionDesc(Question qsnId);
   // List<Answer> orderByPositionDesc();
 
+     List<Answer> findAllByOrderByPositionDesc();
+
    //order by position descending
 }

@@ -173,6 +173,73 @@ public class QuestionController {
     }
 
 
+    @RequestMapping(value = "answerPosition/{id}/{direction}", method = RequestMethod.GET)
+    public String viewPosition(@PathVariable Long id, @PathVariable String direction) {
+        String up = "up", down = "down";
+
+        Answer selectedAnswer = answerService.getAnswerById(id);
+        Long qsnID = selectedAnswer.getQuestion().getId();
+        Answer answerBeforeSelectedAns = null;
+        Answer answerAfterSelectedAns = null;
+        log.info("direction" + direction);
+        log.info("position before = " + selectedAnswer.getPosition());
+        if (selectedAnswer != null) {
+            List<Answer> answers = answerService.listAllAnswersByDesc();
+            for (int i = 0; i < answers.size(); i++) {
+                if (answers.get(i).equals(selectedAnswer)) {
+
+                    if (i==0){
+                        answerBeforeSelectedAns=answers.get(i);
+                    }else {
+                        answerBeforeSelectedAns=answers.get(i+1);
+                    }
+
+                    if (answers.size()==(answers.indexOf(answers.get(i))-1)){
+                        answerAfterSelectedAns=selectedAnswer;
+                    }else {
+                        answerAfterSelectedAns=answers.get(i-1);
+                    }
+
+
+                    if (direction.equals(up)) {
+                        if (i > 0) {
+                            selectedAnswer.setPosition(selectedAnswer.getPosition() + 1);
+                            answerBeforeSelectedAns.setPosition(answerBeforeSelectedAns.getPosition() - 1);
+                        }
+
+
+                    }else if (direction.equals(down)){
+                        if (answers.size()!=(answers.indexOf(answers.get(i))-1)){
+                            selectedAnswer.setPosition(selectedAnswer.getPosition()-1);
+                            answerAfterSelectedAns.setPosition(answerAfterSelectedAns.getPosition()+1);
+
+                        }
+
+                    }
+
+                    break;
+
+                }
+
+            }
+
+            if (selectedAnswer != null) {
+                answerService.save(selectedAnswer);
+            }
+            if (answerBeforeSelectedAns != null) {
+                answerService.save(answerBeforeSelectedAns);
+            }
+            if (answerAfterSelectedAns != null) {
+                answerService.save(answerAfterSelectedAns);
+            }
+        }
+
+        log.info("ansArray: " + answerService.getAnswerById(id));
+        log.info("id: " + id);
+        return "redirect:/question/"+qsnID;
+    }
+
+
     @RequestMapping("question/delete/{id}")
     public String delete(@PathVariable Long id) {
         questionService.deleteQuestion(id);
