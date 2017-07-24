@@ -12,8 +12,6 @@ import tz.co.fasthub.survey.domain.Answer;
 import tz.co.fasthub.survey.service.AnswerService;
 import tz.co.fasthub.survey.service.QuestionService;
 
-import java.util.List;
-
 /**
  * Created by root on 7/17/17.
  */
