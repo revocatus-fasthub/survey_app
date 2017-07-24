@@ -46,7 +46,9 @@
                 <th>Position</th>
                 <th>Sequence</th>
                 <th>Qsn_Id</th>
-                <th colspan="2" align="center">Action</th>
+                <th>Move Up</th>
+                <th>Move Down</th>
+                <th>Edit</th>
             </tr>
             <tr th:each="answer : ${answers}">
                 <td th:text="${answer.id}">Id</td>
@@ -54,8 +56,11 @@
                 <td th:text="${answer.position}">position</td>
                 <td th:text="${answer.sequence}">sequence</td>
                 <td th:text="${answer.question.id}">qsn Id</td>
+
+                <td> <a th:text="Up" th:href="${'/answerPosition/' + answer.id+'/'+'up'}">Move Up</a></td>
+                <td> <a th:text="Down" th:href="${'/answerPosition/' + answer.id+'/'+'down'}">Move Down</a></td>
+
                 <td><a th:href="${'/answerpage/answer/edit/' + answer.id}">Edit</a></td>
-                <td><a th:href="${'/answerpage/answer/delete'}">Delete</a></td>
             </tr>
         </table>
 

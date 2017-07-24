@@ -89,5 +89,10 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository.save(question);
     }
 
+    @Override
+    public void deleteQuestion(Long id) {
+        questionRepository.delete(id);
+    }
+
 
 }

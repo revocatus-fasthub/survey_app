@@ -8,10 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import tz.co.fasthub.survey.domain.Answer;
 import tz.co.fasthub.survey.service.AnswerService;
 import tz.co.fasthub.survey.service.QuestionService;
+
+import java.util.List;
 
 /**
  * Created by root on 7/17/17.
@@ -39,7 +40,7 @@ public class AnswerController {
     public String listAnswers(Model model) {
 
         model.addAttribute("answers", answerService.listAllAnswers());
-        return "answers";
+        return "questionShow";
     }
 
     // View a specific talent by its id
@@ -62,22 +63,10 @@ public class AnswerController {
 
     @RequestMapping("/addanswer/{id}")
     public String newAnswer(@PathVariable Long id, Model model) {
-       // id = savedQuestion.getId();
-
-      //  model.addAttribute("question", questionService.getQsnById(id) );
         model.addAttribute("answer", new Answer());
         return "addAnswer";
     }
 
-    @RequestMapping("answer/delete")
-    public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        answerService.deleteAnswer(answerService.getAnswerById(id));
-        if(id!=null){
-            redirectAttributes.addFlashAttribute("flash.message.answer", "Answer Successfully Deleted!");
-            return "questionShow";
-        }
-        redirectAttributes.addFlashAttribute("flash.message", "This Answer with id "+answerService.getAnswerById(id)+" doesn't exist");
 
-        return "questionShow";
-    }
+
 }

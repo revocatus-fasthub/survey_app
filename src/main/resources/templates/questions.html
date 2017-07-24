@@ -19,8 +19,8 @@
                 <th>Id</th>
                 <th>Question </th>
                 <th>Sequence</th>
-                <th></th>
-                <th></th>
+                <th>Move Up</th>
+                <th>Move Down</th>
                 <th>View</th>
                 <th>Edit</th>
                 <th>Delete</th>
@@ -30,8 +30,8 @@
                 <td th:text="${question.qsn}">Qsn Id</td>
                 <td th:text="${question.sequence}">sequence</td>
 
-               <td> <a th:text="Up" th:href="${'/questionSequence/' + question.id+'/'+'up'}">sequence</a></td>
-               <td> <a th:text="Down" th:href="${'/questionSequence/' + question.id+'/'+'down'}">sequence</a></td>
+               <td> <a th:text="Up" th:href="${'/questionSequence/' + question.id+'/'+'up'}">Move Up</a></td>
+               <td> <a th:text="Down" th:href="${'/questionSequence/' + question.id+'/'+'down'}">Move Down</a></td>
 
                 <td><a th:href="${'/question/' + question.id}">View</a></td>
                 <td><a th:href="${'/question/edit/' + question.id}">Edit</a></td>

@@ -85,6 +85,11 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
+    public List<Answer> listAllAnswersByDesc() {
+        return answerRepository.findAllByOrderByPositionDesc();
+    }
+
+    @Override
     public void deleteAnswer(Answer id) {
         answerRepository.delete(id);
     }
