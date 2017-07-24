@@ -127,7 +127,7 @@ public class QuestionController {
                             }else{
                                 questionAfterSelectedQsn=questions.get(i);
                             }
-                            
+
                                 if(direction.equals(up)){
 
                                     selectedQuestion.setSequence(selectedQuestion.getSequence() - 1);
@@ -135,7 +135,7 @@ public class QuestionController {
                                 }else {
                                     if(questions.size()!=(questions.indexOf(questions.get(i))+1)) {
                                         selectedQuestion.setSequence(selectedQuestion.getSequence() + 1);
-                                        questionAfterSelectedQsn.setSequence(questionAfterSelectedQsn.getSequence() - 1);
+                                        questionAfterSelectedQsn.setSequence(questionAfterSelectedQsn.getSequence()- 1);
                                     }
                                 }
 
