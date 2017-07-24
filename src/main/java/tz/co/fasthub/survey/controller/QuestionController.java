@@ -90,6 +90,24 @@ public class QuestionController {
         return "addQuestion";
     }
 
+    //save edited question
+
+    @RequestMapping(value = "editedQuestion", method = RequestMethod.POST)
+    public String saveEditedQuestion(@Valid Question question, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+        model.addAttribute("Question", question);
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("flash.message.question", "Error!");
+            return "addQuestion";
+        }
+        savedQuestion = questionService.update(question);
+        Long id = savedQuestion.getId();
+
+        redirectAttributes.addFlashAttribute("flash.message.question", "Question " + id + " Successfully Updated!");
+        return "redirect:question/" + id;
+
+    }
+
+
     // Save question to database
 
     @RequestMapping(value = "question", method = RequestMethod.POST)
@@ -245,6 +263,4 @@ public class QuestionController {
         questionService.deleteQuestion(id);
         return "redirect:/questions";
     }
-    // to gokjhygtfred
-
 }

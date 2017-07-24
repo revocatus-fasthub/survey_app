@@ -89,6 +89,13 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository.save(question);
     }
 
+
+    @Override
+    public Question update(Question question) {
+        question.setSequence(question.getSequence());
+        return questionRepository.save(question);
+    }
+
     @Override
     public void deleteQuestion(Long id) {
         questionRepository.delete(id);

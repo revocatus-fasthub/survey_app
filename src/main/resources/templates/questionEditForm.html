@@ -13,7 +13,7 @@
 
     <div class="row">
         <div class="col-md-9 col-md-offset-3">
-            <form autocomplete="off" action="#" th:action="@{/question}" th:object="${question}" method="post" class="form-horizontal" role="form">
+            <form autocomplete="off" action="#" th:action="@{/editedQuestion}" th:object="${question}" method="post" class="form-horizontal" role="form">
 
                 <h2>Edit Question</h2>
 
@@ -22,8 +22,19 @@
 
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <input type="text" th:field="*{qsn}" placeholder="First Name" class="form-control" />
+                        <label class="col-sm-2 control-label">Question</label>
+                            <input type="text" th:field="*{qsn}" placeholder="Question" class="form-control" />
                         <label th:if="${#fields.hasErrors('qsn')}" th:errors="*{qsn}" class="validation-message"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <label class="col-sm-2 control-label">Sequence
+                            <input type="text" th:field="*{sequence}" placeholder="Sequence" class="form-control" />
+                        </label>
+
+                        <label th:if="${#fields.hasErrors('sequence')}" th:errors="*{sequence}" class="validation-message"></label>
                     </div>
                 </div>
 

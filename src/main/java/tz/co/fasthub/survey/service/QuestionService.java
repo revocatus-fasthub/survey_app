@@ -24,5 +24,7 @@ public interface QuestionService {
 
     Question saveBySequence(Question question);
 
+    Question update(Question question);
+
     void deleteQuestion(Long id);
 }
