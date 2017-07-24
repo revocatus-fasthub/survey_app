@@ -245,5 +245,6 @@ public class QuestionController {
         questionService.deleteQuestion(id);
         return "redirect:/questions";
     }
+    // to gokjhygtfred
 
 }
