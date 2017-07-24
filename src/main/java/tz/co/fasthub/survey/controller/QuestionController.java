@@ -35,12 +35,12 @@ public class QuestionController {
 
     private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
 
-    public TalentValidator getTalentValidator(){
+    public TalentValidator getTalentValidator() {
         return talentValidator;
     }
 
-    public void setTalentValidator(TalentValidator talentValidator){
-        this.talentValidator=talentValidator;
+    public void setTalentValidator(TalentValidator talentValidator) {
+        this.talentValidator = talentValidator;
     }
 
     @Autowired
@@ -63,7 +63,7 @@ public class QuestionController {
     public String showQuestion(@PathVariable Long qsnid, @Valid Answer answer, Model model, RedirectAttributes redirectAttributes) {
         Question question = questionService.getQsnById(qsnid);
         Long id = question.getId();
-        if(answer.getAns()!=null) {
+        if (answer.getAns() != null) {
             log.info(answer.toString());
             savedAnswer = answerService.saveByQnsId(answer, question);
         }
@@ -95,71 +95,80 @@ public class QuestionController {
     @RequestMapping(value = "question", method = RequestMethod.POST)
     public String saveQuestion(@Valid Question question, @Valid Answer answer, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         model.addAttribute("Question", question);
-        talentValidator.validate(question,result);
-        if(result.hasErrors()){
+        talentValidator.validate(question, result);
+        if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("flash.message.question", "Error!");
             return "addQuestion";
         }
         savedQuestion = questionService.save(question);
         Long id = savedQuestion.getId();
 
-        redirectAttributes.addFlashAttribute("flash.message.question", "Question "+ id +" Successfully Saved!");
-       return "redirect:question/"+id;
+        redirectAttributes.addFlashAttribute("flash.message.question", "Question " + id + " Successfully Saved!");
+        return "redirect:question/" + id;
 
     }
 
     @RequestMapping(value = "questionSequence/{id}/{direction}", method = RequestMethod.GET)
-    public String viewSequence (@PathVariable int id, @PathVariable String direction){
-        String up = "up",down = "down";
-            Question selectedQuestion = questionService.getQnsBySequence1(id);
-            Question questionBeforeSelectedQsn = null;
-            Question questionAfterSelectedQsn =null;
+    public String viewSequence(@PathVariable int id, @PathVariable String direction) {
+        String up = "up", down = "down";
+        Question selectedQuestion = questionService.getQnsBySequence1(id);
+        Question questionBeforeSelectedQsn = null;
+        Question questionAfterSelectedQsn = null;
+    log.info("direction" + direction);
+        log.info("sequence before = " + selectedQuestion.getSequence());
+        if (selectedQuestion != null) {
+            List<Question> questions = questionService.listAllQuestionsByAsc();
+            for (int i = 0; i < questions.size(); i++) {
+                if (questions.get(i).equals(selectedQuestion)) {
 
-            log.info("sequence before = "+selectedQuestion.getSequence());
-            if(selectedQuestion!=null){
-               List<Question> questions = questionService.listAllQuestionsByDesc();
-                for (int i = 0; i < questions.size(); i++) {
-                    if(questions.get(i).equals(selectedQuestion)){
-                        if(i>=0 || direction.equals(down)){
-                            questionBeforeSelectedQsn=questions.get(i-1);
-                            if (questions.size()!=(questions.indexOf(questions.get(i))+1)){
-                                questionAfterSelectedQsn=questions.get(i+1);
-                            }else{
-                                questionAfterSelectedQsn=questions.get(i);
-                            }
+                    if (i==0){
+                        questionBeforeSelectedQsn=questions.get(i);
+                    }else {
+                        questionBeforeSelectedQsn=questions.get(i-1);
+                    }
 
-                                if(direction.equals(up)){
+                    if (questions.size()==(questions.indexOf(questions.get(i))+1)){
+                        questionAfterSelectedQsn=selectedQuestion;
+                    }else {
+                        questionAfterSelectedQsn=questions.get(i+1);
+                    }
 
-                                    selectedQuestion.setSequence(selectedQuestion.getSequence() - 1);
-                                    questionBeforeSelectedQsn.setSequence(questionBeforeSelectedQsn.getSequence()+1);
-                                }else {
-                                    if(questions.size()!=(questions.indexOf(questions.get(i))+1)) {
-                                        selectedQuestion.setSequence(selectedQuestion.getSequence() + 1);
-                                        questionAfterSelectedQsn.setSequence(questionAfterSelectedQsn.getSequence()- 1);
-                                    }
-                                }
 
-                        }else {
-                            questionAfterSelectedQsn=questions.get(i);
+                    if (direction.equals(up)) {
+                        if (i > 0) {
+                            selectedQuestion.setSequence(selectedQuestion.getSequence() - 1);
+                            questionBeforeSelectedQsn.setSequence(questionBeforeSelectedQsn.getSequence() + 1);
+                        }
+
+
+                    }else if (direction.equals(down)){
+                        if (questions.size()!=(questions.indexOf(questions.get(i))+1)){
+                            selectedQuestion.setSequence(selectedQuestion.getSequence()+1);
+                            questionAfterSelectedQsn.setSequence(questionAfterSelectedQsn.getSequence()-1);
+
                         }
 
                     }
 
+                    break;
+
                 }
 
-               if(selectedQuestion!=null){
-                   questionService.save(selectedQuestion);
-               }
-                if(questionBeforeSelectedQsn!=null){
-                    questionService.save(questionBeforeSelectedQsn);
-                }
-                if(questionAfterSelectedQsn!=null){
-                    questionService.save(questionAfterSelectedQsn);
-                }
-              }
+            }
 
-        log.info("qsnArray: "+questionService.getQnsBySequence1(id) );
-        log.info("id: "+id);
+            if (selectedQuestion != null) {
+                questionService.save(selectedQuestion);
+            }
+            if (questionBeforeSelectedQsn != null) {
+                questionService.save(questionBeforeSelectedQsn);
+            }
+            if (questionAfterSelectedQsn != null) {
+                questionService.save(questionAfterSelectedQsn);
+            }
+        }
+
+        log.info("qsnArray: " + questionService.getQnsBySequence1(id));
+        log.info("id: " + id);
         return "redirect:/questions";
     }
 

@@ -38,10 +38,6 @@ public class Question {
         return id.equals(question.id);
     }
 
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
 
     @Override
     public String toString() {
