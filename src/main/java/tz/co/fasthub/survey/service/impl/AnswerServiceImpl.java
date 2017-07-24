@@ -47,9 +47,8 @@ public class AnswerServiceImpl implements AnswerService {
     public Answer saveByQnsId(Answer answer, Question qsnId) {
         answer.setQuestion(qsnId);
         if(qsnId.getId()!=null){
-            Question qs = questionService.getQsnById(qsnId.getId());
-            if(qs != null){
-                List<Answer> answers = getAnswerByQsnId(qs);
+            if(qsnId != null){
+                List<Answer> answers = listAllAnswersByDesc(qsnId);
                 if(!answers.isEmpty()){
                     for (Answer answer1 : answers) {
                         answer.setPosition(answer1.getPosition()+1);
@@ -71,7 +70,7 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public List<Answer> getAnswerByQsnId(Question qsnId) {
 
-        return answerRepository.findAllByQuestionOrderByPositionDesc(qsnId);
+        return answerRepository.findAllByQuestionOrderByPositionAsc(qsnId);
     }
 
     public Iterable<Answer> getAnswerByQsnIdAll(Long id) {
@@ -85,8 +84,8 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public List<Answer> listAllAnswersByDesc() {
-        return answerRepository.findAllByOrderByPositionDesc();
+    public List<Answer> listAllAnswersByDesc(Question qsnId) {
+        return answerRepository.findAllByQuestionOrderByPositionDesc(qsnId);
     }
 
     @Override

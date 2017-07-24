@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface AnswerRepository extends CrudRepository<Answer, Long> {
 
+   List<Answer> findAllByQuestionOrderByPositionAsc(Question qsnId);
    List<Answer> findAllByQuestionOrderByPositionDesc(Question qsnId);
-   List<Answer> findAllByOrderByPositionDesc();
 }
