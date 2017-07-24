@@ -74,7 +74,7 @@ public class QuestionController {
         return "questionShow";
     }
 
-    //Edit/Update by its id
+    //Edit by its id
 
     @RequestMapping("question/edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
@@ -173,11 +173,10 @@ public class QuestionController {
     }
 
 
-  /*  @RequestMapping("product/delete/{id}")
+    @RequestMapping("question/delete/{id}")
     public String delete(@PathVariable Long id) {
         questionService.deleteQuestion(id);
         return "redirect:/questions";
     }
-*/
 
 }
