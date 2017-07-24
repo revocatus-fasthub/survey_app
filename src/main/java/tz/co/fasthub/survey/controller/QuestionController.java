@@ -191,27 +191,27 @@ public class QuestionController {
                     if (i==0){
                         answerBeforeSelectedAns=answers.get(i);
                     }else {
-                        answerBeforeSelectedAns=answers.get(i+1);
+                        answerBeforeSelectedAns=answers.get(i-1);
                     }
 
-                    if (answers.size()==(answers.indexOf(answers.get(i))-1)){
+                    if (answers.size()==(answers.indexOf(answers.get(i))+1)){
                         answerAfterSelectedAns=selectedAnswer;
                     }else {
-                        answerAfterSelectedAns=answers.get(i-1);
+                        answerAfterSelectedAns=answers.get(i+1);
                     }
 
 
                     if (direction.equals(up)) {
                         if (i > 0) {
                             selectedAnswer.setPosition(selectedAnswer.getPosition() + 1);
-                            answerBeforeSelectedAns.setPosition(answerBeforeSelectedAns.getPosition() - 1);
+                            answerBeforeSelectedAns.setPosition(answerBeforeSelectedAns.getPosition() + 1);
                         }
 
 
                     }else if (direction.equals(down)){
-                        if (answers.size()!=(answers.indexOf(answers.get(i))-1)){
-                            selectedAnswer.setPosition(selectedAnswer.getPosition()-1);
-                            answerAfterSelectedAns.setPosition(answerAfterSelectedAns.getPosition()+1);
+                        if (answers.size()!=(answers.indexOf(answers.get(i))+1)){
+                            selectedAnswer.setPosition(selectedAnswer.getPosition()+1);
+                            answerAfterSelectedAns.setPosition(answerAfterSelectedAns.getPosition()-1);
 
                         }
 
