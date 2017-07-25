@@ -25,8 +25,8 @@ public class CustomerTransactionServiceImpl implements CustomerTransactionServic
 
 
     @Override
-    public Iterable<CustomerTransaction> listAllCustomerTransaction() {
-        return customerTransactionRepository.findAllByOrderByIdDesc();
+    public Iterable<CustomerTransaction> listAllCustomerTransactionByAttendedDesc(boolean attended) {
+        return customerTransactionRepository.findByAttendedOrderByIdDesc(attended);
     }
 
     @Override

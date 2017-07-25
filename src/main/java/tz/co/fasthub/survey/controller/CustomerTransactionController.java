@@ -38,7 +38,7 @@ public class CustomerTransactionController {
      */
     @RequestMapping(value = "/customerTransactions", method = RequestMethod.GET)
     public String list(Model model) {
-            model.addAttribute("customerTransactions", customerTransactionService.listAllCustomerTransaction());
+            model.addAttribute("customerTransactions", customerTransactionService.listAllCustomerTransactionByAttendedDesc(true));
         return "customerTransactionList";
     }
 
