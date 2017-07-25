@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tz.co.fasthub.survey.domain.Customer;
 import tz.co.fasthub.survey.domain.CustomerTransaction;
-import tz.co.fasthub.survey.domain.Question;
 import tz.co.fasthub.survey.repository.CustomerTransactionRepository;
 import tz.co.fasthub.survey.service.CustomerTransactionService;
 

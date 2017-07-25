@@ -12,7 +12,7 @@
 
     <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-success"></h3>
 
-    <div th:if="${not #lists.isEmpty(questions)}">
+    <div th:if="${not #lists.isEmpty(customerTransactions)}">
         <h2>Customer Transaction List</h2>
         <table class="table table-striped">
             <tr>
@@ -21,7 +21,6 @@
                 <th>Question</th>
                 <th>Answer</th>
                 <th>Timestamp</th>
-                <th>Attended</th>
                 <th>View</th>
                 <th>Edit</th>
                 <th>Delete</th>
@@ -32,7 +31,6 @@
                 <td th:text="${customerTransaction.question.qsn}">Question</td>
                 <td th:text="${customerTransaction.answer.ans}">Answer</td>
                 <td th:text="${customerTransaction.timestamp}">timestamp</td>
-                <td th:text="${customerTransaction.attended}">attended</td>
 
 
                 <td><a th:href="${'/customerTransaction/' + customerTransaction.id}">View</a></td>
