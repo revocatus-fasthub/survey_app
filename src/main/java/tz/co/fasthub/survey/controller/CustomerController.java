@@ -3,9 +3,11 @@ package tz.co.fasthub.survey.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import tz.co.fasthub.survey.domain.Customer;
 import tz.co.fasthub.survey.service.CustomerService;
 
@@ -14,7 +16,6 @@ import tz.co.fasthub.survey.service.CustomerService;
  */
 @Controller
 public class CustomerController {
-
 
     private CustomerService customerService;
 
@@ -49,6 +50,12 @@ public class CustomerController {
         return "customerShow";
     }
 
+    /**
+     * Edit Customer.
+     *
+     * @param model
+     * @return
+     */
     @RequestMapping("customer/edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
         model.addAttribute("customer", customerService.getCustomerById(id));
@@ -74,8 +81,13 @@ public class CustomerController {
      * @return
      */
     @RequestMapping(value = "customer", method = RequestMethod.POST)
-    public String saveCustomer(Customer customer) {
+    public String saveCustomer(Customer customer, RedirectAttributes redirectAttributes, BindingResult result) {
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("flash.message.customer", "Error!");
+            return "customerForm";
+        }
         customerService.saveCustomer(customer);
+        redirectAttributes.addFlashAttribute("flash.message.customer", "Customer Successfully Registered!");
         return "redirect:/customer/" + customer.getId();
     }
 
@@ -86,8 +98,9 @@ public class CustomerController {
      * @return
      */
     @RequestMapping("customer/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         customerService.deleteCustomer(id);
+        redirectAttributes.addAttribute("flash.message.customer", "Customer Successfully Deleted!");
         return "redirect:/customers";
     }
 
