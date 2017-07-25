@@ -1,6 +1,13 @@
 package tz.co.fasthub.survey.domain;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.validation.Constraint;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Created by root on 7/25/17.
@@ -11,19 +18,25 @@ public class Customer {
     @GeneratedValue
     @Id
     private Long id;
+    @NotNull
+    @Column(unique = true)
     private String msisdn;
     private String email;
 
-    @OneToOne(mappedBy = "customer")
-    private CustomerTransaction customerTransaction;
+    @OneToMany(mappedBy = "customer")
+    @Cascade(CascadeType.ALL)
+    private List<CustomerTransaction> customerTransaction;
 
     public Customer() {
     }
 
-    public Customer(String msisdn, String email, CustomerTransaction customerTransaction) {
+    public Customer(String msisdn) {
+        this.msisdn = msisdn;
+    }
+
+    public Customer(String msisdn, String email) {
         this.msisdn = msisdn;
         this.email = email;
-        this.customerTransaction = customerTransaction;
     }
 
     @Override
@@ -32,7 +45,6 @@ public class Customer {
                 "id=" + id +
                 ", msisdn='" + msisdn + '\'' +
                 ", email='" + email + '\'' +
-                ", customerTransaction=" + customerTransaction +
                 '}';
     }
 
@@ -60,11 +72,4 @@ public class Customer {
         this.email = email;
     }
 
-    public CustomerTransaction getCustomerTransaction() {
-        return customerTransaction;
-    }
-
-    public void setCustomerTransaction(CustomerTransaction customerTransaction) {
-        this.customerTransaction = customerTransaction;
-    }
 }

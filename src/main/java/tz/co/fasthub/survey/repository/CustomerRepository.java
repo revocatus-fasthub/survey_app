@@ -7,4 +7,5 @@ import tz.co.fasthub.survey.domain.Customer;
  * Created by root on 7/25/17.
  */
 public interface CustomerRepository extends CrudRepository<Customer, Long>{
+    Customer findCustomerByMsisdn(String msisdn);
 }

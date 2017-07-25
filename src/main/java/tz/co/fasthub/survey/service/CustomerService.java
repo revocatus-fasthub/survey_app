@@ -12,6 +12,8 @@ public interface CustomerService {
 
     Customer getCustomerById(Long id);
 
+    Customer getCustomerByMsisdn(String msisdn);
+
     Customer saveCustomer(Customer customer);
 
     void deleteCustomer(Long id);

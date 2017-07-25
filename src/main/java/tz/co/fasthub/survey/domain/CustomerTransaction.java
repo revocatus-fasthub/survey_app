@@ -1,7 +1,7 @@
 package tz.co.fasthub.survey.domain;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Created by root on 7/25/17.
@@ -13,24 +13,28 @@ public class CustomerTransaction {
     @Id
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "msisdn")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "question")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "question_id")
     private Question question;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "answer")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "answer_id")
     private Answer answer;
+    private Date timestamp= new Date();
 
-    private Date timestamp;
-
-    @JoinColumn(name = "attended")
-    private Boolean attended;
+    private Boolean attended=false;
 
     public CustomerTransaction() {
+    }
+
+
+    public CustomerTransaction(Customer customer, Question question) {
+        this.customer = customer;
+        this.question = question;
     }
 
     public CustomerTransaction(Customer customer, Question question, Answer answer, Date timestamp, Boolean attended) {

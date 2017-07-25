@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestClientException;
 import tz.co.fasthub.survey.constants.Constant;
 import tz.co.fasthub.survey.domain.*;
-import tz.co.fasthub.survey.service.AnswerService;
-import tz.co.fasthub.survey.service.QuestionService;
-import tz.co.fasthub.survey.service.SurveyService;
+import tz.co.fasthub.survey.service.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,19 +31,23 @@ public class SurveyController {
     @Autowired
     private SurveyMonkeyController surveyMonkeyController;
 
-    private final QuestionService questionService;
+    private  QuestionService questionService;
 
-    private final AnswerService answerService;
+    private  AnswerService answerService;
 
-    private final SurveyService surveyService;
+    private  SurveyService surveyService;
+    private  CustomerService customerService;
+    private CustomerTransactionService customerTransactionService;
 
     private static final Logger log = LoggerFactory.getLogger(SurveyController.class);
 
     @Autowired
-    public SurveyController(SurveyService surveyService, QuestionService questionService, AnswerService answerService) {
+    public SurveyController(SurveyService surveyService, QuestionService questionService, AnswerService answerService, CustomerService customerService, CustomerTransactionService customerTransactionService) {
         this.surveyService = surveyService;
         this.questionService = questionService;
         this.answerService = answerService;
+        this.customerService = customerService;
+        this.customerTransactionService = customerTransactionService;
     }
 
     @RequestMapping(params = {"id", "serviceNumber", "text", "msisdn", "date", "operator"}, method = RequestMethod.GET, produces = "text/plain")
@@ -57,56 +60,121 @@ public class SurveyController {
 
         log.info("received message from gravity: "+text+ " from "+msisdn);
         String response = null;
-        String replyTo="\nSend your response to : 0785723360";
 
-        switch (text) {
-            case "FastHub":
-                final ArrayList<String> ansList = new ArrayList<>();
-              //  response = surveyMonkeyController.loopQsns() +replyTo;//surveyMonkeyController.getQsnOne()+"\n"+replyTo;
-              Question qsn = questionService.getQsnById(1L);
-                String qsns = qsn.getQsn();
-              List<Answer> answer = answerService.getAnswerByQsnId(qsn);
-                String ans=null, position=null,list = null;
-                for (int i = 0; i < answer.size(); i++) {
-                //  position = jsonObject.getString("position");
+
+        Customer customer=customerService.getCustomerByMsisdn(msisdn);
+        CustomerTransaction customerTransaction = null;
+        Answer lastSentAnswer=null;
+
+
+        if (customer!=null){
+            customerTransaction=customerTransactionService.getOneTransactionByCustomerDesc(customer,false);
+
+            if (customerTransaction!=null){
+                Answer answer=answerService.getAllByQuestionAndPosition(customerTransaction.getQuestion(),parseIntInput(text));
+                if (answer!=null){
+                    if (customerTransaction.getAnswer()!=null){
+                        response = fetchNextQuestion(customerTransaction);
+                    }   else {
+                        customerTransaction.setAnswer(answer);
+                        customerTransaction.setAttended(true);
+                        response = fetchNextQuestion(customerTransaction);
+                    }
+                }else {
+                    response="Sorry Invalid input , try again";
                 }
-              response=qsns+"?"+"\n"+answer+"\n"+replyTo;
-              log.info(response);
+            }else {
+                Question questionOne=questionService.getQnOneBySequence();
+                if (questionOne!=null) {
+                    response = this.getQuestionOne(questionOne);
+                }else {
+                    response="Sorry , no questions";
+                }
+            }
+        }else {
+            customer=new Customer(msisdn);
+            Customer createdCustomer=customerService.saveCustomer(customer);
+            Question questionOne=questionService.getQnOneBySequence();
 
-                break;
-            case "Fasthub":
-           //     response = "Welcome to TakaTaka Collection Survey. Ready to initiate survey? \n1-Yes\n 2-No\n 0-quit? "+replyTo;
-            case "1":
-             //   response = "Do you live in dar es salaam? "+replyTo;
-                break;
-            case "2":
-               // response = "Thank you for your time ";
-                break;
-            case "0":
-                //surveyService.terminateSurvey();
-                //response = "THANK YOU!";
-                break;
-            default:
-                //response = "Invalid response";
-                break;
+            if (questionOne!=null) {
+                response = this.getQuestionOne(questionOne);
+                customerTransaction=new CustomerTransaction(createdCustomer,questionOne);
+            }else {
+                response="Sorry , no questions";
+            }
+
         }
-        List<MessageHandler> messages = new ArrayList<>();
-            MessageHandler messageHandler = new MessageHandler(id,response,msisdn,"INFO");
+
+        if (customerTransaction!=null) {
+            customerTransactionService.saveCustomerTransaction(customerTransaction);
+        }
+
+
+        if (response!=null) {
+            sendAMessageToGravity(id, msisdn, response, serviceNumber);
+        }
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    private String fetchNextQuestion(CustomerTransaction customerTransaction) {
+        String response = null;
+        try {
+            Question nextQuestionquestion=questionService.getNextQuestion(customerTransaction.getQuestion());
+            if (nextQuestionquestion!=null){
+                response=answerService.getAnswerByQuestion(nextQuestionquestion);
+                customerTransactionService.saveCustomerTransaction(new CustomerTransaction(customerTransaction.getCustomer(),nextQuestionquestion));
+
+            }else {
+                response="Thank you. No more questions";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
+
+    public static int parseIntInput(String intInput) {
+
+        int returnResult = 0;
+        try {
+            returnResult = Integer.parseInt(intInput);
+        } catch (NumberFormatException e) {
+            e.getMessage();
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
+        return returnResult;
+
+    }
+    private String getQuestionOne(Question question) {
+        String response=null;
+        if (question!=null) {
+            response=answerService.getAnswerByQuestion(question);
+        }
+        return response;
+    }
+
+    private static void sendAMessageToGravity(String id, String msisdn, String response, String serviceNumber) {
+        try {
+            List<MessageHandler> messages = new ArrayList<>();
+            MessageHandler messageHandler = new MessageHandler(id,response,msisdn,serviceNumber);
             messages.add(messageHandler);
 
-        Content content = new Content(Constant.channelLink, messages);
+            Content content = new Content(Constant.channelLink, messages);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
 
-        log.info(String.valueOf(content));
-        HttpEntity<Content> entity = new HttpEntity<>(content,headers);
-        log.info(String.valueOf(entity));
-        Object responseMEssage= restTemplate.postForObject(Constant.GW_URL,entity,Object.class);
-        log.info("response from gravity: " +responseMEssage);
-
-        //return "redirect: /index";
-        return new ResponseEntity(HttpStatus.OK);
+            log.info(String.valueOf(content));
+            HttpEntity<Content> entity = new HttpEntity<>(content,headers);
+            log.info(String.valueOf(entity));
+            Object responseMEssage= restTemplate.postForObject(Constant.GW_URL,entity,Object.class);
+            log.info("response from gravity: " +responseMEssage);
+        } catch (RestClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @RequestMapping(value = "/index")

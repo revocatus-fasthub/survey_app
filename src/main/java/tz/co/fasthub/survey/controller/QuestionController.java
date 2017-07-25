@@ -19,7 +19,6 @@ import tz.co.fasthub.survey.validator.TalentValidator;
 import javax.validation.Valid;
 import java.util.List;
 
-import static tz.co.fasthub.survey.constants.Constant.fetchSurvey;
 import static tz.co.fasthub.survey.constants.Constant.savedAnswer;
 import static tz.co.fasthub.survey.constants.Constant.savedQuestion;
 
@@ -146,7 +145,7 @@ public class QuestionController {
 
     @RequestMapping(value = "questionSequence/{id}/{direction}", method = RequestMethod.GET)
     public String viewSequence(@PathVariable int id, @PathVariable String direction) {
-        Question selectedQuestion = questionService.getQnsBySequence1(id);
+        Question selectedQuestion = questionService.getQsnById(Long.valueOf(id));
         Question questionBeforeSelectedQsn = null, questionAfterSelectedQsn = null;
         if (selectedQuestion != null) {
             List<Question> questions = questionService.listAllQuestionsByAsc();
@@ -199,8 +198,6 @@ public class QuestionController {
             }
         }
 
-        log.info("qsnArray: " + questionService.getQnsBySequence1(id));
-        log.info("id: " + id);
         return "redirect:/questions";
     }
 

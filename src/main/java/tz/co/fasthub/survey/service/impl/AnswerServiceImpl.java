@@ -89,6 +89,29 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
+    public String getAnswerByQuestion(Question question) {
+        if (question!=null&&question.getAnswer()!=null) {
+            StringBuilder stringBuilder =  new StringBuilder();
+            stringBuilder.append(question.getQsn());
+            stringBuilder.append("\n");
+            for (Answer answer: question.getAnswer()){
+                stringBuilder.append(answer.getPosition());
+                stringBuilder.append(".");
+                stringBuilder.append(answer.getAns());
+                stringBuilder.append("\n");
+            }
+            return stringBuilder.toString();
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public Answer getAllByQuestionAndPosition(Question question, int position) {
+        return answerRepository.findAnswerByQuestionAndPosition(question,position);
+    }
+
+    @Override
     public void deleteAnswer(Answer id) {
         answerRepository.delete(id);
     }
