@@ -55,30 +55,20 @@ public class CustomerTransactionController {
         return "customerTransactionShow";
     }
 
-    @RequestMapping("customerTransaction/edit/{id}")
+    /*@RequestMapping("customerTransaction/edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
         model.addAttribute("customerTransaction", customerTransactionService.getCustomerTransactionById(id));
         return "customerTransactionform";
     }
 
-    /**
-     * New customerTransaction.
-     *
-     * @param model
-     * @return
-     */
+    //* New customerTransaction.
     @RequestMapping("customerTransaction/new")
     public String newCustomerTransaction(Model model) {
         model.addAttribute("customerTransaction", new CustomerTransaction());
         return "customerTransactionform";
-    }
+    }*/
 
-    /**
-     * Save customerTransaction to database.
-     *
-     * @param customerTransaction
-     * @return
-     */
+    //*Save customerTransaction to database.
     @RequestMapping(value = "customerTransaction", method = RequestMethod.POST)
     public String saveCustomerTransaction(CustomerTransaction customerTransaction, Customer customer,
                                           Answer answer, Question question) {
