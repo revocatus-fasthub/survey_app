@@ -19,6 +19,7 @@ import tz.co.fasthub.survey.validator.TalentValidator;
 import javax.validation.Valid;
 import java.util.List;
 
+import static tz.co.fasthub.survey.constants.Constant.fetchSurvey;
 import static tz.co.fasthub.survey.constants.Constant.savedAnswer;
 import static tz.co.fasthub.survey.constants.Constant.savedQuestion;
 
@@ -145,7 +146,6 @@ public class QuestionController {
 
     @RequestMapping(value = "questionSequence/{id}/{direction}", method = RequestMethod.GET)
     public String viewSequence(@PathVariable int id, @PathVariable String direction) {
-        String up = "up", down = "down";
         Question selectedQuestion = questionService.getQnsBySequence1(id);
         Question questionBeforeSelectedQsn = null, questionAfterSelectedQsn = null;
         if (selectedQuestion != null) {
@@ -160,20 +160,20 @@ public class QuestionController {
                     }
 
                     if (questions.size()==(questions.indexOf(questions.get(i))+1)){
-                        questionAfterSelectedQsn=selectedQuestion;
+                        questionAfterSelectedQsn=questions.get(i);
                     }else {
                         questionAfterSelectedQsn=questions.get(i+1);
                     }
 
 
-                    if (direction.equals(up)) {
+                    if (direction.equals("up")) {
                         if (i > 0) {
                             selectedQuestion.setSequence(selectedQuestion.getSequence() - 1);
                             questionBeforeSelectedQsn.setSequence(questionBeforeSelectedQsn.getSequence() + 1);
                         }
 
 
-                    }else if (direction.equals(down)){
+                    }else if (direction.equals("down")){
                         if (questions.size()!=(questions.indexOf(questions.get(i))+1)){
                             selectedQuestion.setSequence(selectedQuestion.getSequence()+1);
                             questionAfterSelectedQsn.setSequence(questionAfterSelectedQsn.getSequence()-1);
@@ -205,19 +205,18 @@ public class QuestionController {
     }
 
 
-    @RequestMapping(value = "answerPosition/{id}/{direction}", method = RequestMethod.GET)
-    public String answerSequence(@PathVariable Long id, @PathVariable String direction, Question question) {
+    @RequestMapping(value = "answerPosition/{question_id}/{answer_id}/{direction}", method = RequestMethod.GET)
+    public String answerSequence(@PathVariable Long question_id,@PathVariable Long answer_id, @PathVariable String direction, Question question) {
         String up = "up", down = "down";
 
-        Answer selectedAnswer = answerService.getAnswerById(id);
-        Long qsnID = selectedAnswer.getQuestion().getId();
+        Answer selectedAnswer = answerService.getAnswerById(answer_id);
+        Question featchedQuetion = selectedAnswer.getQuestion();
 
         Answer answerBeforeSelectedAns = null, answerAfterSelectedAns = null;
         if (selectedAnswer != null) {
-            List<Answer> answers = answerService.listAllAnswersByDesc();
+            List<Answer> answers = answerService.getAnswerByQsnId(featchedQuetion);
             for (int i = 0; i < answers.size(); i++) {
                 if (answers.get(i).equals(selectedAnswer)) {
-                    log.info("*");
                     if (i==0){
                         answerBeforeSelectedAns=answers.get(i);
                     }else {
@@ -264,7 +263,7 @@ public class QuestionController {
             }
         }
 
-        return "redirect:/question/"+qsnID;
+        return "redirect:/question/"+featchedQuetion.getId();
     }
 
 
