@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface CustomerTransactionRepository extends CrudRepository<CustomerTransaction ,Long>{
     List<CustomerTransaction> findAllByCustomerAndAttendedOrderByIdDesc(Customer customer, boolean attended);
-    List<CustomerTransaction> findAllByAttendedByOrderByIdDesc(boolean attended);
+    List<CustomerTransaction> findAllByOrderByIdDesc();
 }

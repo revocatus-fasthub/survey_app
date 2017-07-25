@@ -25,9 +25,8 @@ public class CustomerTransactionController {
 
     private static final Logger log = LoggerFactory.getLogger(CustomerTransactionController.class);
 
-
     @Autowired
-    public void setCustomerTransactionService(CustomerTransactionService customerTransactionService) {
+    public CustomerTransactionController(CustomerTransactionService customerTransactionService) {
         this.customerTransactionService = customerTransactionService;
     }
 
@@ -39,7 +38,7 @@ public class CustomerTransactionController {
      */
     @RequestMapping(value = "/customerTransactions", method = RequestMethod.GET)
     public String list(Model model) {
-            model.addAttribute("customerTransactions", customerTransactionService.listAllCustomerTransaction(true));
+            model.addAttribute("customerTransactions", customerTransactionService.listAllCustomerTransaction());
         return "customerTransactionList";
     }
 

@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class CustomerTransactionServiceImpl implements CustomerTransactionService {
 
-    private final CustomerTransactionRepository customerTransactionRepository;
+    private  CustomerTransactionRepository customerTransactionRepository;
 
     @Autowired
     public CustomerTransactionServiceImpl(CustomerTransactionRepository customerTransactionRepository) {
@@ -25,8 +25,8 @@ public class CustomerTransactionServiceImpl implements CustomerTransactionServic
 
 
     @Override
-    public Iterable<CustomerTransaction> listAllCustomerTransaction(boolean attended) {
-        return customerTransactionRepository.findAllByAttendedByOrderByIdDesc(attended);
+    public Iterable<CustomerTransaction> listAllCustomerTransaction() {
+        return customerTransactionRepository.findAllByOrderByIdDesc();
     }
 
     @Override
