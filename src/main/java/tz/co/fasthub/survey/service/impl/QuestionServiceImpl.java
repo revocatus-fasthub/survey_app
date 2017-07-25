@@ -39,6 +39,27 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public Question getNextQuestion(Question currentCurrent){
+
+        List<Question> questions = listAllQuestionsByAsc();
+        if(!questions.isEmpty()){
+            boolean detector=false;
+            for (Question question1:questions) {
+                if (detector){
+                    return question1;
+                }
+                if (question1.equals(currentCurrent)){
+                    detector=true;
+                }
+
+            }
+        }else {
+            return null;
+        }
+        return null;
+    }
+
+    @Override
     public Question getQsnById(Long id) {
         return questionRepository.findOne(id);
     }
@@ -58,15 +79,14 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository.findAllByOrderByIdDesc(id);
     }
 
-
     @Override
-    public Question getQnsBySequence1(Integer id) {
-        return questionRepository.findOne(Long.valueOf(id));
-    }
+    public Question getQnOneBySequence() {
 
-    @Override
-    public Question getQnsBySequence2(Integer id) {
-        return questionRepository.findOne(Long.valueOf(id));
+        List<Question> questions = questionRepository.findAllByOrderBySequenceAsc();
+        for (Question question : questions) {
+            return question;
+        }
+        return null;
     }
 
 

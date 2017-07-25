@@ -10,13 +10,15 @@ import java.util.List;
 public interface QuestionService {
 
     Question save(Question question);
+
+    Question getNextQuestion(Question currentCurrent);
+
     Question getQsnById(Long id);
     Question getQsnByAscendingId(int sequence);
     Question getQsnByDescendingId(int sequence);
     Question getQnsBySequence(Integer id);
 
-    Question getQnsBySequence1(Integer id);
-    Question getQnsBySequence2(Integer id);
+    Question getQnOneBySequence();
 
     List<Question> listAllQuestionsByDesc();
 

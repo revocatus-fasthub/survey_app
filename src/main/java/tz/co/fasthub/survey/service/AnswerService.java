@@ -16,6 +16,8 @@ public interface AnswerService {
     List<Answer> getAnswerByQsnId(Question qsnId);
     Iterable<Answer> listAllAnswers();
     List<Answer> listAllAnswersByDesc(Question qsnId);
+    String getAnswerByQuestion(Question question);
+    Answer getAllByQuestionAndPosition(Question question, int position);
 
     Iterable<Answer> getAnswerByQsnIdAll(Long id);
     void deleteAnswer(Answer id);

@@ -6,6 +6,7 @@ import tz.co.fasthub.survey.service.AnswerService;
 import tz.co.fasthub.survey.service.QuestionService;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by root on 7/17/17.
@@ -25,8 +26,8 @@ public class Answer {
     @JoinColumn(name = "qsnId")
     private Question question;
 
-    @OneToOne(mappedBy = "answer")
-    private CustomerTransaction customerTransaction;
+    @OneToMany(mappedBy = "answer")
+    private List<CustomerTransaction> customerTransaction;
 
     private static AnswerRepository answerRepository;
     private static AnswerService answerService;
@@ -34,12 +35,22 @@ public class Answer {
     public Answer() {
     }
 
-    public Answer(String ans, int sequence, int position, Question question, CustomerTransaction customerTransaction) {
+    public Answer(String ans, int sequence, int position, Question question) {
         this.ans = ans;
         this.sequence = sequence;
         this.position = position;
         this.question = question;
-        this.customerTransaction = customerTransaction;
+    }
+
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "id=" + id +
+                ", ans='" + ans + '\'' +
+                ", sequence=" + sequence +
+                ", position=" + position +
+                ", question=" + question +
+                '}';
     }
 
     @Override
@@ -53,17 +64,7 @@ public class Answer {
     }
 
 
-    @Override
-    public String toString() {
-        return "Answer{" +
-                "id=" + id +
-                ", ans='" + ans + '\'' +
-                ", sequence=" + sequence +
-                ", position=" + position +
-                ", question=" + question +
-                ", customerTransaction=" + customerTransaction +
-                '}';
-    }
+
 
     public Long getId() {
         return id;
@@ -105,15 +106,6 @@ public class Answer {
         this.question = question;
     }
 
-
-    public CustomerTransaction getCustomerTransaction() {
-        return customerTransaction;
-    }
-
-    public void setCustomerTransaction(CustomerTransaction customerTransaction) {
-        this.customerTransaction = customerTransaction;
-    }
-
     public static AnswerRepository getAnswerRepository() {
         return answerRepository;
     }
@@ -137,4 +129,5 @@ public class Answer {
     public static void setQuestionService(QuestionService questionService) {
         Answer.questionService = questionService;
     }
+
 }

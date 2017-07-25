@@ -30,9 +30,18 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public Customer getCustomerByMsisdn(Customer customer) {
-        return customerRepository.findOneByMsisdn(customer);
+    public Customer getCustomerByMsisdn(String msisdn) {
+
+        Customer customer= null;
+        try {
+            customer = customerRepository.findCustomerByMsisdn(msisdn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return customer;
     }
+
 
     @Override
     public Customer saveCustomer(Customer customer) {

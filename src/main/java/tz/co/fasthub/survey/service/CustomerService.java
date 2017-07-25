@@ -12,7 +12,7 @@ public interface CustomerService {
 
     Customer getCustomerById(Long id);
 
-    Customer getCustomerByMsisdn(Customer customer);
+    Customer getCustomerByMsisdn(String msisdn);
 
     Customer saveCustomer(Customer customer);
 

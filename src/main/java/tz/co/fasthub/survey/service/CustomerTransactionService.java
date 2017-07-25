@@ -1,5 +1,6 @@
 package tz.co.fasthub.survey.service;
 
+import tz.co.fasthub.survey.domain.Customer;
 import tz.co.fasthub.survey.domain.CustomerTransaction;
 
 /**
@@ -8,6 +9,10 @@ import tz.co.fasthub.survey.domain.CustomerTransaction;
 public interface CustomerTransactionService {
 
     Iterable<CustomerTransaction> listAllCustomerTransaction();
+
+    CustomerTransaction getOneTransactionByCustomerDesc(Customer customer, boolean attended);
+
+    Iterable<CustomerTransaction> lisAllByCustomerAndAttended(Customer customer, boolean attended);
 
     CustomerTransaction getCustomerTransactionById(Long id);
 
