@@ -1,10 +1,16 @@
 package tz.co.fasthub.survey.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import tz.co.fasthub.survey.domain.CustomerTransaction;
+import tz.co.fasthub.survey.repository.CustomerTransactionRepository;
+import tz.co.fasthub.survey.service.CustomerTransactionService;
+
 /**
  * Created by root on 7/25/17.
  */
-/*
-@Service("customerTransactionService")
+
+@Service
 public class CustomerTransactionServiceImpl implements CustomerTransactionService {
 
     private final CustomerTransactionRepository customerTransactionRepository;
@@ -34,5 +40,4 @@ public class CustomerTransactionServiceImpl implements CustomerTransactionServic
     public void deleteCustomerTransaction(Long id) {
         customerTransactionRepository.delete(id);
     }
-
-}*/
+}
