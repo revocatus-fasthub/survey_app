@@ -8,7 +8,7 @@ import tz.co.fasthub.survey.domain.CustomerTransaction;
  */
 public interface CustomerTransactionService {
 
-    Iterable<CustomerTransaction> listAllCustomerTransaction();
+    Iterable<CustomerTransaction> listAllCustomerTransaction(boolean attended);
 
     CustomerTransaction getOneTransactionByCustomerDesc(Customer customer, boolean attended);
 
