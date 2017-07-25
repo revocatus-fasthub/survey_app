@@ -25,19 +25,22 @@ public class Answer {
     @JoinColumn(name = "qsnId")
     private Question question;
 
+    @OneToOne(mappedBy = "answer")
+    private CustomerTransaction customerTransaction;
+
     private static AnswerRepository answerRepository;
     private static AnswerService answerService;
     private static QuestionService questionService;
     public Answer() {
     }
 
-    public Answer(String ans, int sequence, int position, Question question) {
+    public Answer(String ans, int sequence, int position, Question question, CustomerTransaction customerTransaction) {
         this.ans = ans;
         this.sequence = sequence;
-        this.position=position;
+        this.position = position;
         this.question = question;
+        this.customerTransaction = customerTransaction;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -58,6 +61,7 @@ public class Answer {
                 ", sequence=" + sequence +
                 ", position=" + position +
                 ", question=" + question +
+                ", customerTransaction=" + customerTransaction +
                 '}';
     }
 
@@ -101,4 +105,36 @@ public class Answer {
         this.question = question;
     }
 
+
+    public CustomerTransaction getCustomerTransaction() {
+        return customerTransaction;
+    }
+
+    public void setCustomerTransaction(CustomerTransaction customerTransaction) {
+        this.customerTransaction = customerTransaction;
+    }
+
+    public static AnswerRepository getAnswerRepository() {
+        return answerRepository;
+    }
+
+    public static void setAnswerRepository(AnswerRepository answerRepository) {
+        Answer.answerRepository = answerRepository;
+    }
+
+    public static AnswerService getAnswerService() {
+        return answerService;
+    }
+
+    public static void setAnswerService(AnswerService answerService) {
+        Answer.answerService = answerService;
+    }
+
+    public static QuestionService getQuestionService() {
+        return questionService;
+    }
+
+    public static void setQuestionService(QuestionService questionService) {
+        Answer.questionService = questionService;
+    }
 }

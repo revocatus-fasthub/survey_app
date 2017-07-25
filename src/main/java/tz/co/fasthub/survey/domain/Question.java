@@ -20,12 +20,18 @@ public class Question {
     @OneToMany(mappedBy = "question")
     private List<Answer> answer;
 
+    @OneToOne(mappedBy = "question")
+    private CustomerTransaction customerTransaction;
+
     public Question() {
     }
 
-    public Question(String qsn, int sequence) {
+    public Question(String qsn, int sequence, Long version, List<Answer> answer, CustomerTransaction customerTransaction) {
         this.qsn = qsn;
         this.sequence = sequence;
+        this.version = version;
+        this.answer = answer;
+        this.customerTransaction = customerTransaction;
     }
 
     @Override
@@ -38,7 +44,6 @@ public class Question {
         return id.equals(question.id);
     }
 
-
     @Override
     public String toString() {
         return "Question{" +
@@ -46,6 +51,8 @@ public class Question {
                 ", qsn='" + qsn + '\'' +
                 ", sequence=" + sequence +
                 ", version=" + version +
+                ", answer=" + answer +
+                ", customerTransaction=" + customerTransaction +
                 '}';
     }
 
@@ -87,6 +94,14 @@ public class Question {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public CustomerTransaction getCustomerTransaction() {
+        return customerTransaction;
+    }
+
+    public void setCustomerTransaction(CustomerTransaction customerTransaction) {
+        this.customerTransaction = customerTransaction;
     }
 }
 

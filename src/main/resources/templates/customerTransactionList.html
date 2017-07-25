@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>Customer Transaction</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-success"></h3>
+
+    <div th:if="${not #lists.isEmpty(questions)}">
+        <h2>Customer Transaction List</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>Customer_Msisdn </th>
+                <th>Question</th>
+                <th>Answer</th>
+                <th>Timestamp</th>
+                <th>Attended</th>
+                <th>View</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <tr th:each="customerTransaction : ${customerTransactions}">
+                <td th:text="${customerTransaction.id}"><a href="/customerTransaction/${customerTransaction.id}">Id</a></td>
+                <td th:text="${customerTransaction.customer.msisdn}">Msisdn</td>
+                <td th:text="${customerTransaction.question.qsn}">Question</td>
+                <td th:text="${customerTransaction.answer.ans}">Answer</td>
+                <td th:text="${customerTransaction.timestamp}">timestamp</td>
+                <td th:text="${customerTransaction.attended}">attended</td>
+
+
+                <td><a th:href="${'/customerTransaction/' + customerTransaction.id}">View</a></td>
+                <td><a th:href="${'/customerTransaction/edit/' + customerTransaction.id}">Edit</a></td>
+                <td><a th:href="${'/customerTransaction/delete/' + customerTransaction.id}">Delete</a></td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>
