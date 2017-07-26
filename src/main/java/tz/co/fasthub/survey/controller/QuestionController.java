@@ -269,7 +269,7 @@ public class QuestionController {
         try {
             if(id!=null){
                 questionService.deleteQuestion(id);
-                redirectAttributes.addFlashAttribute("flash.message.questionSuccess", "Success");
+                redirectAttributes.addFlashAttribute("flash.message.questionSuccess", "Question with id "+id+" successfully deleted");
                 return "redirect:/questions";
             }
             else {
@@ -285,7 +285,7 @@ public class QuestionController {
     }
 
     @RequestMapping("answer/delete/{qsdId}/{id}")
-    public String deleteAnswer(@PathVariable Question qsdId, Long questionId, @PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+    public String deleteAnswer(@PathVariable Question qsdId, Long questionId, @PathVariable Long id, RedirectAttributes redirectAttributes) {
         questionId = qsdId.getId();
         log.info("question id: "+questionId);
         List<Answer> answers = answerService.getAnswerByQsnId(qsdId);
@@ -293,35 +293,15 @@ public class QuestionController {
             if(answer.getId().equals(id)){
                     try {
                         answerService.deleteAnswer(id);
-                        model.addAttribute("question", questionService.getQsnById(questionId));
-                        redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Delete Success");
-                        return "redirect:/question/"+qsdId;
+                        redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Answer with id "+id+" successfully deleted");
+                        return "redirect:/question/"+questionId;
                 }catch (Exception e){
                         redirectAttributes.addFlashAttribute("flash.message.answerError", "Error! \nCannot delete answer with id "+id+"." );
                         return "redirect:/question/"+questionId;
                     }
-
             }
-
-        }/*
-        try {
-            if(id!=null&&qsdId!=null){
-                answerService.getAnswerByQsnId(qsdId);
-                answerService.deleteAnswer(id);
-                model.addAttribute("question", questionService.getQsnById(qsdId));
-                redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Delete Success");
-                return "redirect:/redirected/question/"+qsdId;
-            }
-            else {
-                redirectAttributes.addFlashAttribute("flash.message.answerError", "Error! \nCannot delete answer with id "+id+".");
-                return "redirect:/question/"+qsdId;
-            }
-
-        }catch (Exception e){
-            redirectAttributes.addFlashAttribute("flash.message.answerError", "Error! \nCannot delete answer with id "+id+"." );
-            return "redirect:/question/"+qsdId;
-        }*/
-        return "redirect:/question/"+qsdId;
+        }
+        return "redirect:/question/{id}";
     }
 
     @RequestMapping("/redirected/question/{qsnid}")

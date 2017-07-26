@@ -22,7 +22,7 @@ public class Answer {
     private int sequence;
     private int position;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "qsnId")
     private Question question;
 

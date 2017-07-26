@@ -1,5 +1,6 @@
 package tz.co.fasthub.survey.domain;
 
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,8 +18,7 @@ public class Question {
     @Version
     private Long version;
 
-    @OneToMany(mappedBy = "question")
-    //@Cascade(CascadeType.DELETE)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answer;
 
     @OneToMany(mappedBy = "question")
