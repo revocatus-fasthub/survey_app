@@ -87,6 +87,8 @@ public class SurveyController {
                 Question questionOne=questionService.getQnOneBySequence();
                 if (questionOne!=null) {
                     response = this.getQuestionOne(questionOne);
+                    customerTransaction=new CustomerTransaction(customer,questionOne);
+
                 }else {
                     response="Sorry , no questions";
                 }

@@ -22,11 +22,11 @@ public class Answer {
     private int sequence;
     private int position;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "qsnId")
     private Question question;
 
-    @OneToMany(mappedBy = "answer")
+    @OneToMany(mappedBy = "answer", cascade = CascadeType.DETACH)
     private List<CustomerTransaction> customerTransaction;
 
     private static AnswerRepository answerRepository;
