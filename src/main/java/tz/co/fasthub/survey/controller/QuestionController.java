@@ -3,6 +3,7 @@ package tz.co.fasthub.survey.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -269,7 +270,7 @@ public class QuestionController {
         try {
             if(id!=null){
                 questionService.deleteQuestion(id);
-                redirectAttributes.addFlashAttribute("flash.message.questionSuccess", "Question with id "+id+" successfully deleted");
+                redirectAttributes.addFlashAttribute("flash.message.questionSuccess", "Success");
                 return "redirect:/questions";
             }
             else {
@@ -285,23 +286,25 @@ public class QuestionController {
     }
 
     @RequestMapping("answer/delete/{qsdId}/{id}")
-    public String deleteAnswer(@PathVariable Question qsdId, Long questionId, @PathVariable Long id, RedirectAttributes redirectAttributes) {
-        questionId = qsdId.getId();
-        log.info("question id: "+questionId);
-        List<Answer> answers = answerService.getAnswerByQsnId(qsdId);
-        for (Answer answer: answers) {
-            if(answer.getId().equals(id)){
-                    try {
-                        answerService.deleteAnswer(id);
-                        redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Answer with id "+id+" successfully deleted");
-                        return "redirect:/question/"+questionId;
-                }catch (Exception e){
-                        redirectAttributes.addFlashAttribute("flash.message.answerError", "Error! \nCannot delete answer with id "+id+"." );
-                        return "redirect:/question/"+questionId;
-                    }
+    public String deleteAnswer(@PathVariable Long qsdId, @PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        Answer answer = answerService.getAnswerById(id);
+
+        try {
+            if (answer!=null) {
+                answerService.deleteAnswer(id);
+                model.addAttribute("question", questionService.getQsnById(qsdId));
+                redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Delete Success");
+                return "redirect:/question/"+qsdId;
+            }else {
+                redirectAttributes.addFlashAttribute("flash.message.answerError", "Answer not found with id :"+id);
+                return "redirect:/question/"+qsdId;
+
             }
-        }
-        return "redirect:/question/{id}";
+        }catch (Exception e){
+                        redirectAttributes.addFlashAttribute("flash.message.answerError", "Error! \nCannot delete answer with id "+id+"." );
+                        return "redirect:/question/"+qsdId;
+                }
+
     }
 
     @RequestMapping("/redirected/question/{qsnid}")

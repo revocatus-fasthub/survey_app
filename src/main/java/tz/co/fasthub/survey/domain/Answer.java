@@ -26,7 +26,7 @@ public class Answer {
     @JoinColumn(name = "qsnId")
     private Question question;
 
-    @OneToMany(mappedBy = "answer")
+    @OneToMany(mappedBy = "answer", cascade = CascadeType.DETACH)
     private List<CustomerTransaction> customerTransaction;
 
     private static AnswerRepository answerRepository;
