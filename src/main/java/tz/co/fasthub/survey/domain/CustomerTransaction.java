@@ -24,7 +24,6 @@ public class CustomerTransaction {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "answer_id")
     private Answer answer;
-
     private Date timestamp= new Date();
 
     private Boolean attended=false;

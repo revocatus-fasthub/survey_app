@@ -39,7 +39,7 @@ public class CustomerTransactionController {
      */
     @RequestMapping(value = "/customerTransactions", method = RequestMethod.GET)
     public String list(Model model) {
-            model.addAttribute("customerTransactions", customerTransactionService.listAllCustomerTransaction(true));
+            model.addAttribute("customerTransactions", customerTransactionService.listAllCustomerTransaction());
         return "customerTransactionList";
     }
 
