@@ -10,7 +10,13 @@
 <body>
 <div class="container">
 
-    <div th:fragment="header"><br/>
+    <div th:fragment="header">
+        <section>
+            <div class="pull-right" style="padding-right:5px">
+                <a th:href="@{'/logout'}">Logout</a>
+            </div>
+        </section>
+        <br/>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -21,7 +27,6 @@
                        <!-- <li><a href="#" th:href="@{'/customer/new'}"> Register Customer</a></li>-->
                         <li><a href="#" th:href="@{'/customers'}"> List all Customers</a></li>
                         <li><a href="#" th:href="@{'/customerTransactions'}"> View Customer Details</a></li>
-
 
                     </ul>
 
