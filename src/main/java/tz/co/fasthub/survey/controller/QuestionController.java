@@ -3,7 +3,6 @@ package tz.co.fasthub.survey.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,7 +53,6 @@ public class QuestionController {
     @RequestMapping(value = "/questions", method = RequestMethod.GET)
     public String list(Model model, RedirectAttributes redirectAttributes) {
         model.addAttribute("questions", questionService.listAllQuestionsByAsc());
-        //model.addAttribute("questions", questionService.listAllQuestionsByDesc());
         redirectAttributes.addFlashAttribute("flash.message.question", "Sucess!");
         return "questions";
     }
@@ -64,9 +62,10 @@ public class QuestionController {
     @RequestMapping("question/{qsnid}")
     public String showQuestion(@PathVariable Long qsnid, @Valid Answer answer, Model model, RedirectAttributes redirectAttributes) {
         Question question = questionService.getQsnById(qsnid);
+
         if (answer.getAns() != null) {
             savedAnswer = answerService.saveByQnsId(answer, question);
-            redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Answers Successfully Saved!");
+            redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Answer Successfully Saved!");
         }
 
         model.addAttribute("answers", answerService.getAnswerByQsnId(question));
@@ -270,16 +269,17 @@ public class QuestionController {
         try {
             if(id!=null){
                 questionService.deleteQuestion(id);
-                redirectAttributes.addFlashAttribute("flash.message.questionSuccess", "Success");
+                redirectAttributes.addFlashAttribute("flash.message.questionSuccess", "Question with id "+id+" has been successfully deleted");
                 return "redirect:/questions";
             }
             else {
-                redirectAttributes.addFlashAttribute("flash.message.questionError", "Failed! \nCannot delete question with id "+id+". Please delete question choices/answers first.");
+                redirectAttributes.addFlashAttribute("flash.message.questionError", "Error! \nCannot delete question with id "+id+". Please delete question choices/answers first.");
                 return "redirect:/questions";
             }
 
         }catch (Exception e){
-            redirectAttributes.addFlashAttribute("flash.message.questionError", "Failed! \nCannot delete question with id "+id+". Please delete question choices/answers first." );
+            redirectAttributes.addFlashAttribute("flash.message.questionError", "Error" +
+                    "! \nCannot delete question with id "+id+". Please delete question choices/answers first." );
             return "redirect:/questions";
         }
 
@@ -293,7 +293,7 @@ public class QuestionController {
             if (answer!=null) {
                 answerService.deleteAnswer(id);
                 model.addAttribute("question", questionService.getQsnById(qsdId));
-                redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Delete Success");
+                redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Answer with id "+id+" has been successfully deleted");
                 return "redirect:/question/"+qsdId;
             }else {
                 redirectAttributes.addFlashAttribute("flash.message.answerError", "Answer not found with id :"+id);
@@ -307,14 +307,5 @@ public class QuestionController {
 
     }
 
-    @RequestMapping("/redirected/question/{qsnid}")
-    public String showQuestionId(@PathVariable Long qsnid, Model model, RedirectAttributes redirectAttributes) {
-        Question question = questionService.getQsnById(qsnid);
-
-        model.addAttribute("answers", answerService.getAnswerByQsnId(question));
-        model.addAttribute("question", questionService.getQsnById(qsnid));
-
-        return "questionShow";
-    }
 
 }

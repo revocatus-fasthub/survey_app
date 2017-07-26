@@ -10,6 +10,7 @@
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
     <h3 th:if="${#vars['flash.message.question']}" th:text="${#vars['flash.message.question']}" class="alert alert-success"></h3>
+    <h3 th:if="${#vars['flash.message.questionError']}" th:text="${#vars['flash.message.questionError']}" class="alert alert-success"></h3>
     <h3 th:if="${#vars['flash.message.answerSuccess']}" th:text="${#vars['flash.message.answerSuccess']}" class="alert alert-success"></h3>
     <h3 th:if="${#vars['flash.message.answerError']}" th:text="${#vars['flash.message.answerError']}" class="alert alert-danger"></h3>
 

@@ -153,6 +153,7 @@ public class SurveyController {
     private String getQuestionOne(Question question) {
         String response=null;
         if (question!=null) {
+
             response=answerService.getAnswerByQuestion(question);
         }
         return response;
@@ -161,7 +162,7 @@ public class SurveyController {
     private static void sendAMessageToGravity(String id, String msisdn, String response, String serviceNumber) {
         try {
             List<MessageHandler> messages = new ArrayList<>();
-            MessageHandler messageHandler = new MessageHandler(id,response+"\nSend Your response to 0785723360",msisdn,"CRDB BANK");
+            MessageHandler messageHandler = new MessageHandler(id,response,msisdn,serviceNumber);
             messages.add(messageHandler);
 
             Content content = new Content(Constant.channelLink, messages);
