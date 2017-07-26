@@ -111,11 +111,11 @@ public class AnswerServiceImpl implements AnswerService {
         return answerRepository.findAnswerByQuestionAndPosition(question,position);
     }
 
+
     @Override
-    public void deleteAnswer(Answer id) {
+    public void deleteAnswer(Long id) {
         answerRepository.delete(id);
     }
-
 
 
 }

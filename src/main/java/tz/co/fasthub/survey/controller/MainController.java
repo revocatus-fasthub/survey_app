@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class MainController {
+
     @RequestMapping(value = "/survey/viewController")
     public String viewController(){
         return "/survey/viewController";

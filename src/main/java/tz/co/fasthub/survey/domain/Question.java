@@ -18,6 +18,7 @@ public class Question {
     private Long version;
 
     @OneToMany(mappedBy = "question")
+    //@Cascade(CascadeType.DELETE)
     private List<Answer> answer;
 
     @OneToMany(mappedBy = "question")

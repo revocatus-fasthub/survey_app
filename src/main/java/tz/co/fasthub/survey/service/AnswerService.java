@@ -20,6 +20,6 @@ public interface AnswerService {
     Answer getAllByQuestionAndPosition(Question question, int position);
 
     Iterable<Answer> getAnswerByQsnIdAll(Long id);
-    void deleteAnswer(Answer id);
+    void deleteAnswer(Long id);
 
 }

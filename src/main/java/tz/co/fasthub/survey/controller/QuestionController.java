@@ -51,9 +51,10 @@ public class QuestionController {
     }
 
     @RequestMapping(value = "/questions", method = RequestMethod.GET)
-    public String list(Model model, Integer id) {
+    public String list(Model model, RedirectAttributes redirectAttributes) {
         model.addAttribute("questions", questionService.listAllQuestionsByAsc());
         //model.addAttribute("questions", questionService.listAllQuestionsByDesc());
+        redirectAttributes.addFlashAttribute("flash.message.question", "Sucess!");
         return "questions";
     }
 
@@ -62,14 +63,13 @@ public class QuestionController {
     @RequestMapping("question/{qsnid}")
     public String showQuestion(@PathVariable Long qsnid, @Valid Answer answer, Model model, RedirectAttributes redirectAttributes) {
         Question question = questionService.getQsnById(qsnid);
-        Long id = question.getId();
         if (answer.getAns() != null) {
             savedAnswer = answerService.saveByQnsId(answer, question);
+            redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Answers Successfully Saved!");
         }
 
         model.addAttribute("answers", answerService.getAnswerByQsnId(question));
         model.addAttribute("question", questionService.getQsnById(qsnid));
-        redirectAttributes.addFlashAttribute("flash.message.answer", "Answers Successfully Saved!");
 
         return "questionShow";
     }
@@ -84,7 +84,7 @@ public class QuestionController {
             savedAnswer = answerService.saveByQnsId(answer, question);
         model.addAttribute("answers", answerService.getAnswerByQsnId(question));
         model.addAttribute("question", questionService.getQsnById(question.getId()));
-        redirectAttributes.addFlashAttribute("flash.message.answer", "Answer Successfully Saved!");
+        redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Answer Successfully Saved!");
         return "redirect:/question/"+question.getId();
     }
 
@@ -207,11 +207,11 @@ public class QuestionController {
         String up = "up", down = "down";
 
         Answer selectedAnswer = answerService.getAnswerById(answer_id);
-        Question featchedQuetion = selectedAnswer.getQuestion();
+        Question fetchedQuestion = selectedAnswer.getQuestion();
 
         Answer answerBeforeSelectedAns = null, answerAfterSelectedAns = null;
         if (selectedAnswer != null) {
-            List<Answer> answers = answerService.getAnswerByQsnId(featchedQuetion);
+            List<Answer> answers = answerService.getAnswerByQsnId(fetchedQuestion);
             for (int i = 0; i < answers.size(); i++) {
                 if (answers.get(i).equals(selectedAnswer)) {
                     if (i==0){
@@ -260,13 +260,78 @@ public class QuestionController {
             }
         }
 
-        return "redirect:/question/"+featchedQuetion.getId();
+        return "redirect:/question/"+fetchedQuestion.getId();
     }
 
 
     @RequestMapping("question/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        questionService.deleteQuestion(id);
-        return "redirect:/questions";
+    public String deleteQuestion(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            if(id!=null){
+                questionService.deleteQuestion(id);
+                redirectAttributes.addFlashAttribute("flash.message.questionSuccess", "Success");
+                return "redirect:/questions";
+            }
+            else {
+                redirectAttributes.addFlashAttribute("flash.message.questionError", "Failed! \nCannot delete question with id "+id+". Please delete question choices/answers first.");
+                return "redirect:/questions";
+            }
+
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("flash.message.questionError", "Failed! \nCannot delete question with id "+id+". Please delete question choices/answers first." );
+            return "redirect:/questions";
+        }
+
     }
+
+    @RequestMapping("answer/delete/{qsdId}/{id}")
+    public String deleteAnswer(@PathVariable Question qsdId, Long questionId, @PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+        questionId = qsdId.getId();
+        log.info("question id: "+questionId);
+        List<Answer> answers = answerService.getAnswerByQsnId(qsdId);
+        for (Answer answer: answers) {
+            if(answer.getId().equals(id)){
+                    try {
+                        answerService.deleteAnswer(id);
+                        model.addAttribute("question", questionService.getQsnById(questionId));
+                        redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Delete Success");
+                        return "redirect:/question/"+qsdId;
+                }catch (Exception e){
+                        redirectAttributes.addFlashAttribute("flash.message.answerError", "Error! \nCannot delete answer with id "+id+"." );
+                        return "redirect:/question/"+questionId;
+                    }
+
+            }
+
+        }/*
+        try {
+            if(id!=null&&qsdId!=null){
+                answerService.getAnswerByQsnId(qsdId);
+                answerService.deleteAnswer(id);
+                model.addAttribute("question", questionService.getQsnById(qsdId));
+                redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Delete Success");
+                return "redirect:/redirected/question/"+qsdId;
+            }
+            else {
+                redirectAttributes.addFlashAttribute("flash.message.answerError", "Error! \nCannot delete answer with id "+id+".");
+                return "redirect:/question/"+qsdId;
+            }
+
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("flash.message.answerError", "Error! \nCannot delete answer with id "+id+"." );
+            return "redirect:/question/"+qsdId;
+        }*/
+        return "redirect:/question/"+qsdId;
+    }
+
+    @RequestMapping("/redirected/question/{qsnid}")
+    public String showQuestionId(@PathVariable Long qsnid, Model model, RedirectAttributes redirectAttributes) {
+        Question question = questionService.getQsnById(qsnid);
+
+        model.addAttribute("answers", answerService.getAnswerByQsnId(question));
+        model.addAttribute("question", questionService.getQsnById(qsnid));
+
+        return "questionShow";
+    }
+
 }
