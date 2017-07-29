@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -18,6 +19,64 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    public SecurityConfig(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return super.userDetailsService();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+
+    @Autowired
+    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordencoder());
+    }
+
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/").access("hasRole('ROLE_ADMIN')")
+                .anyRequest().permitAll()
+                .and()
+                .formLogin().loginPage("/login").successForwardUrl("/survey/index")
+                .usernameParameter("username").passwordParameter("password")
+                .and()
+                .logout().logoutSuccessUrl("/login?logout")
+                .and()
+                .exceptionHandling().accessDeniedPage("/403")
+                .and()
+                .csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
+    }
+
+    @Bean(name="passwordEncoder")
+    public PasswordEncoder passwordencoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+
+/*
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("john").password("pa55word").roles("USER");
@@ -27,34 +86,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
-        httpSecurity.formLogin().loginPage("/login")
+        httpSecurity.formLogin().loginPage("/survey/login")
                 .usernameParameter("userId")
                 .passwordParameter("password");
 
         httpSecurity.formLogin().defaultSuccessUrl("/survey/index")
                 .failureUrl("/login?error");
 
-        httpSecurity.logout().logoutSuccessUrl("/login? logout");
+        httpSecurity.logout().permitAll().logoutSuccessUrl("/survey/login");
 
 
         httpSecurity.exceptionHandling().accessDeniedPage("/login?accessDenied");
 
         httpSecurity.authorizeRequests()
-                .antMatchers("/").permitAll()
-
-                .antMatchers("/**/survey/index").access("hasRole('ADMIN')")
-                .antMatchers("/**/addQuestion").access("hasRole('ADMIN')")
-                .antMatchers("/**/customerTransactions").access("hasRole('ADMIN')")
-                .antMatchers("/**/customers").access("hasRole('ADMIN')")
-                .antMatchers("/**/questions").access("hasRole('USER')");
+                .antMatchers("/").permitAll();
 
         httpSecurity.csrf().disable();
 
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    }*/
 
 }

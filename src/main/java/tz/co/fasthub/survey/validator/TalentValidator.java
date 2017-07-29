@@ -5,15 +5,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import tz.co.fasthub.survey.domain.Question;
 
 @Component
 public class TalentValidator implements Validator {
 
     private static final Logger log = LoggerFactory.getLogger(TalentValidator.class);
 
-    public boolean supports(Class<?> aClass) {
-        return Question.class.equals(aClass);
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
     }
 
     @Override
@@ -21,6 +21,10 @@ public class TalentValidator implements Validator {
 
     }
 /*
+    public boolean supports(Class<?> aClass) {
+        return Talent.class.equals(aClass);
+    }
+
     public void validate(Object o, Errors errors) {
 
         Talent talent = (Talent)o;

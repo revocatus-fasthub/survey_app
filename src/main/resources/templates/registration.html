@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>Registration</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/headerlogin :: header"></th:block> /*/-->
+
+    <div class="row">
+        <div class="col-md-9 col-md-offset-3">
+            <h3 th:if="${#vars['flash.message.user']}" th:text="${#vars['flash.message.user']}" class="alert alert-success"></h3>
+
+            <form autocomplete="off" action="#" th:action="@{/saveregistration}" th:object="${user}" method="post" class="form-horizontal" role="form">
+
+                <h2>Register New User</h2>
+
+                <input type="hidden" th:field="*{id}"/>
+                <div class="form-group">
+                    <div class="col-sm-7">
+                        <input type="tel" class="form-control" th:placeholder="Username" th:field="*{username}"/>
+                        <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="validation-message" th:class="alert-danger"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-7">
+                        <input type="password" class="form-control" th:placeholder="password" th:field="*{password}"/>
+                        <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message" th:class="alert-danger"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-7">
+                        <input type="password" class="form-control" th:placeholder="ConfirmPassword" th:field="*{cpassword}"/>
+                        <label th:if="${#fields.hasErrors('cpassword')}" th:errors="*{fname}" class="cpassword" th:class="alert-danger"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-7">
+                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
