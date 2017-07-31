@@ -17,4 +17,10 @@ public interface UserService {
     User validateUser(String username, String password);
 
     User encryptUserInput(String username, String password);
+
+    Iterable<User> listAllCustomers();
+
+    User getUserById(Long id);
+
+    void deleteUser(Long id);
 }

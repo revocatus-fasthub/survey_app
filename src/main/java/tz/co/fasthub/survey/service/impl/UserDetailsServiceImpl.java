@@ -1,7 +1,8 @@
 package tz.co.fasthub.survey.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,7 +12,7 @@ import tz.co.fasthub.survey.domain.User;
 import tz.co.fasthub.survey.repository.UserRepository;
 import tz.co.fasthub.survey.repository.UserRolesRepository;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,6 +20,9 @@ import java.util.List;
  */
 @Service("customUserDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+
 
     private final UserRepository userRepository;
     private final UserRolesRepository userRoleRepository;
@@ -32,17 +36,22 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     //@Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if(user==null){
-            throw new UsernameNotFoundException("No user present with username: "+username);
-        }else {
-            List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
-            GrantedAuthority auth = new SimpleGrantedAuthority("ROLE_ADMIN");
-            auths.add(auth);
-         //   List<User> users = userRepository.findByUsername(username);
-            List<String> userRoles = userRoleRepository.findRoleByUsername(username);
-            return new CustomUserDetails(user,userRoles);
+        try {
+            User user = userRepository.findByUsername(username);
+            if (user == null) {
+                logger.debug("user not found with the provided username");
+                throw new UsernameNotFoundException("User not found");
+            }
+            logger.debug(" user from username " + user.toString());
+            return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority());
+        }
+        catch (Exception e){
+            throw new UsernameNotFoundException("User not found");
         }
   }
+
+    private List getAuthority() {
+        return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
+    }
 
 }

@@ -20,4 +20,8 @@ public class MainController {
     }
 
 
+    @RequestMapping(value = "/survey/login")
+    public String login(){
+        return "login";
+    }
 }

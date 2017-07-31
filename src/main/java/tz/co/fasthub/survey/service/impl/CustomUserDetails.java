@@ -13,15 +13,14 @@ import java.util.List;
  * Created by root on 7/28/17.
  */
 
-public class CustomUserDetails extends  User implements UserDetails {
+public class CustomUserDetails extends User implements UserDetails {
 
     private static final long serialVersionUID = 1L;
     private List<String> userRoles;
 
 
-    public CustomUserDetails(User user, List<String> userRoles) {
+    public CustomUserDetails(User user) {
         super(user);
-        this.userRoles = userRoles;
     }
 
     @Override

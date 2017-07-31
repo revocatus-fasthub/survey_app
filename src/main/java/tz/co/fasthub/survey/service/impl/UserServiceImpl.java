@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User validateUser(String username, String password) {
         User checkUser = findByUsernameAndPassword(username,password);//huyu yuko kwenye db
-        logger.info(checkUser.getUsername());
+        logger.info("*******"+checkUser.getUsername());
         if(checkUser.getUsername()!=null){
             if(bCryptPasswordEncoder.encode(password).equals(checkUser.getPassword())){
                 logger.info("checkUserNAme = "+checkUser.getUsername());
@@ -73,5 +73,20 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    @Override
+    public Iterable<User> listAllCustomers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findOne(id);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        userRepository.delete(id);
+
+    }
 
 }

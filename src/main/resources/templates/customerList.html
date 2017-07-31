@@ -10,7 +10,7 @@
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
-    <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-success"></h3>
+    <h3 th:if="${#vars['flash.message.customer']}" th:text="${#vars['flash.message.customer']}" class="alert alert-success"></h3>
 
     <div th:if="${not #lists.isEmpty(customers)}">
         <h2>Customer List</h2>

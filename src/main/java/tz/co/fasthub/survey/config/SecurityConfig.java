@@ -22,6 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
 
+
+
     @Autowired
     public SecurityConfig(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
@@ -32,14 +34,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.userDetailsService();
     }
 
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -47,21 +45,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-
+/*
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordencoder());
-    }
+    }*/
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/").access("hasRole('ROLE_ADMIN')")
-                .anyRequest().permitAll()
+                .antMatchers("/")
+                .permitAll()
                 .and()
-                .formLogin().loginPage("/login").successForwardUrl("/survey/index")
-                .usernameParameter("username").passwordParameter("password")
+                .formLogin().loginPage("/login").successForwardUrl("/survey/index").failureUrl("/login?error")
+                .usernameParameter("username").passwordParameter("password").permitAll()
                 .and()
                 .logout().logoutSuccessUrl("/login?logout")
                 .and()

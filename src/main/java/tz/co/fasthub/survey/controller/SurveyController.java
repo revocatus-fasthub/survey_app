@@ -180,11 +180,6 @@ public class SurveyController {
         }
     }
 
-    @RequestMapping(value = "/index")
-    public String index(){
-        return "index";
-    }
-
     public Survey[] initQsn(){
         return surveyService.initQsn();
     }

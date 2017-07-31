@@ -64,10 +64,7 @@ public class SurveyMonkeyController {
           return "surveyQuestions";
       }
 
-    @RequestMapping(value = "/index")
-    public String index(){
-        return "index";
-    }
+
 
     @RequestMapping(value = "/successPage")
     public String successPage(){

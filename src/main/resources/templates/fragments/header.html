@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head lang="en">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -13,7 +13,9 @@
     <div th:fragment="header">
         <section>
             <div class="pull-right" style="padding-right:5px">
+                <a th:href="@{'/users'}">View Users</a> |
                 <a th:href="@{'/logout'}">Logout</a>
+
             </div>
         </section>
         <br/>

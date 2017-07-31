@@ -10,6 +10,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -28,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController {
 
 
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
+    private final Logger log = LoggerFactory.getLogger(UserController.class);
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
@@ -46,11 +47,16 @@ public class UserController {
         this.userValidator = userValidator;
     }
 
+
+    @RequestMapping(value = "/survey/index")
+    public String index(User user, Model model){
+        model.addAttribute("user", userService.findByUsername(user.getUsername()));
+        return "index";
+    }
+
     /**
      * New User.
      *
-     * @param model
-     * @return
      */
     @RequestMapping(value = "registration/new", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -61,111 +67,68 @@ public class UserController {
 
     /**
      * Save user to database.
-     *
-     * @param userForm
-     * @return
      */
     @RequestMapping(value = "/saveregistration", method = RequestMethod.POST)
     public String registration(User userForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        User user = new User();
         userValidator.validate(userForm, bindingResult);
         if (bindingResult.hasErrors()) {
             return "registration";
         }
 
         userService.save(userForm);
-        securityService.autologin(user.getUsername(), user.getPassword());
-        redirectAttributes.addFlashAttribute("flash.message.userLogin", "Successfully Registered. Please log in to continue.");
-        return "redirect:/survey/login";
+      //securityService.autologin(user.getUsername(), user.getPassword());
+        redirectAttributes.addFlashAttribute("flash.message.user", userForm.getUsername()+" has been Successfully Registered");
+        return "redirect:/users";
+    }
+
+    /**
+     * List all users
+     */
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public String list(Model model) {
+        model.addAttribute("users", userService.listAllCustomers());
+        return "userList";
     }
 
 
+    /**
+     * Edit User.
+     *
+     */
+    @RequestMapping("user/edit/{id}")
+    public String edit(@PathVariable Long id, Model model) {
+        model.addAttribute("user", userService.getUserById(id));
+        return "userform";
+    }
+
+
+    /**
+     * Delete user by its id.
+     *
+     */
+    @RequestMapping("user/delete/{id}")
+    public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        userService.deleteUser(id);
+        redirectAttributes.addFlashAttribute("flash.message.user", "Deletion success");
+        return "redirect:/users";
+    }
 
     /**
      * Login to Page.
      */
-    @RequestMapping(value = "/checklogin", method = RequestMethod.POST)
-    public String login(User userForm, RedirectAttributes redirectAttributes) throws NullPointerException{
-       // if(userService.findByUsername(userForm.getPassword()).equals(userForm.getUsername())&& ){
 
-        User checkUser = userService.findByUsernameAndPassword(userForm.getUsername(),userForm.getPassword());//huyu yuko kwenye db
-        log.info("username = "+checkUser.getUsername());
-        log.info("password = "+checkUser.getPassword());
-        //akiwa encrypted/kakosewa, checkUser anasoma null
-        try {
-            if(checkUser!=null){
-                 if (userForm.getUsername() != null && userForm.getPassword()!=null ) {//kama yupo
+    @RequestMapping("/login")
+    public String getLoginForm(Model model,String error, String logout) {
 
-                     if(checkUser.getUsername().equals(userForm.getUsername())){//kama database username == input username
+        if (error != null) {
+            model.addAttribute("message", "Invalid username of password, try again !");
 
-                            if(bCryptPasswordEncoder.encode(userForm.getPassword()).equals(checkUser.getPassword())){//kawa encrypted
-                                userService.validateUser(userForm.getUsername(),userForm.getPassword());
-                                redirectAttributes.addFlashAttribute("flash.message.user", "Successfully logged in!");
-                                return "redirect:/survey/index";
-                            }else {//hajawa encrypted
-                                userService.validateUser(userForm.getUsername(),userForm.getPassword());
-                                redirectAttributes.addFlashAttribute("flash.message.user", "Successfully logged in!");
-                                return "redirect:/survey/index";
-                            }
-                        }else{//kama database username != input username
-                         redirectAttributes.addFlashAttribute("flash.message", "Invalid username/password");
-                         return "redirect:/survey/login";
-                     }
-                 }else{//kama yuko null
-                     redirectAttributes.addFlashAttribute("flash.message", "No input, Invalid username/password");
-                     return "redirect:/survey/login";
-                 }
-            }else {//kama checkUser == null
-                String encryptUsername =  bCryptPasswordEncoder.encode(userForm.getUsername());
-                if(!encryptUsername.isEmpty()){
-                    if(bCryptPasswordEncoder.encode(userForm.getPassword()).equals(userForm.getPassword())){
-                        userService.validateUser(userForm.getUsername(),userForm.getPassword());
-                        redirectAttributes.addFlashAttribute("flash.message.user", "Successfully logged in!");
-                        return "redirect:/survey/index";
-                    }else {
-                        redirectAttributes.addFlashAttribute("flash.message", "Encryption password don match");
-                        return "redirect:/survey/login";
-                    }
+        } else if (logout != null) {
 
-                }else {
-                    redirectAttributes.addFlashAttribute("flash.message", "Encryption username don match");
-                    return "redirect:/survey/login";
-                }
-
-            }
-
-        }catch (Exception e){
-                log.info("Error: "+e.getMessage());
-            }
-        redirectAttributes.addFlashAttribute("flash.message", "Invalid username/password");
-        return "redirect:/survey/login";
-    }
-
-    @RequestMapping(value = "/survey/login", method = RequestMethod.GET)
-    public String login() {
+            model.addAttribute("message", "Logged Out successfully, login again to continue !");
+        }
         return "login";
     }
-
-/*
-   @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginPage(User userForm, RedirectAttributes redirectAttributes){
-        userService.validateUser(userForm.getUsername(),userForm.getPassword());
-        redirectAttributes.addFlashAttribute("flash.message.user", "Successfully logged in!");
-        return "redirect:/survey/index";
-    }
-*/
-
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(Model model, String error, String logout) {
-        if (error != null)
-            model.addAttribute("error", "Your username and password is invalid.");
-
-        if (logout != null)
-            model.addAttribute("message", "You have been logged out successfully.");
-
-        return "login";
-    }
-
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
      public String logout(HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes){
@@ -178,11 +141,4 @@ public class UserController {
      }
 
 
-
-
-
-    @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
-    public String welcome(Model model) {
-        return "/survey/index";
-    }
 }
