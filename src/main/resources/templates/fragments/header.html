@@ -12,10 +12,13 @@
 
     <div th:fragment="header">
         <section>
-            <div class="pull-right" style="padding-right:5px">
+            <div class="pull-right" style="padding-right:5px" sec:authorize="isAuthenticated()">
+              <span class="user-label">
+                   <small>Welcome, </small>
+                    <span sec:authentication="name"></span>
+              </span>  |
                 <a th:href="@{'/users'}">View Users</a> |
                 <a th:href="@{'/logout'}">Logout</a>
-
             </div>
         </section>
         <br/>

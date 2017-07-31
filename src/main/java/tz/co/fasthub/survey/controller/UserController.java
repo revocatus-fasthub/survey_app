@@ -21,6 +21,7 @@ import tz.co.fasthub.survey.validator.UserValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 
 /**
  * Created by root on 7/27/17.
@@ -49,8 +50,9 @@ public class UserController {
 
 
     @RequestMapping(value = "/survey/index")
-    public String index(User user, Model model){
-        model.addAttribute("user", userService.findByUsername(user.getUsername()));
+    public String index(Principal principal, Model model){
+        String name = principal.getName();
+        model.addAttribute("username", name);
         return "index";
     }
 
@@ -109,7 +111,7 @@ public class UserController {
     @RequestMapping("user/delete/{id}")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         userService.deleteUser(id);
-        redirectAttributes.addFlashAttribute("flash.message.user", "Deletion success");
+        redirectAttributes.addFlashAttribute("flash.message.user", "User with id "+id+ " has been succesfully deleted");
         return "redirect:/users";
     }
 
@@ -119,7 +121,6 @@ public class UserController {
 
     @RequestMapping("/login")
     public String getLoginForm(Model model,String error, String logout) {
-
         if (error != null) {
             model.addAttribute("message", "Invalid username of password, try again !");
 
@@ -127,7 +128,8 @@ public class UserController {
 
             model.addAttribute("message", "Logged Out successfully, login again to continue !");
         }
-        return "login";
+
+        return "redirect:/survey/index";
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)

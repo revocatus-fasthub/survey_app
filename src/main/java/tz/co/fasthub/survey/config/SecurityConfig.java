@@ -45,13 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-/*
-    @Autowired
-    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordencoder());
-    }*/
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -72,35 +65,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordencoder(){
         return new BCryptPasswordEncoder();
     }
-
-
-/*
-    @Autowired
-    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("john").password("pa55word").roles("USER");
-        auth.inMemoryAuthentication().withUser("adcrdb").password("rootC123").roles("USER","ADMIN");
-    }
-
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-
-        httpSecurity.formLogin().loginPage("/survey/login")
-                .usernameParameter("userId")
-                .passwordParameter("password");
-
-        httpSecurity.formLogin().defaultSuccessUrl("/survey/index")
-                .failureUrl("/login?error");
-
-        httpSecurity.logout().permitAll().logoutSuccessUrl("/survey/login");
-
-
-        httpSecurity.exceptionHandling().accessDeniedPage("/login?accessDenied");
-
-        httpSecurity.authorizeRequests()
-                .antMatchers("/").permitAll();
-
-        httpSecurity.csrf().disable();
-
-    }*/
 
 }

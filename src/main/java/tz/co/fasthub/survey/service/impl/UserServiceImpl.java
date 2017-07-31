@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setCpassword(bCryptPasswordEncoder.encode(user.getCpassword()));
         user.setRole("ROLE_ADMIN");
-       // user.setRoles(new HashSet<>(roleRepository.findAll()));
+       //user.setRoles(new HashSet<>(roleRepository.findAll()));
         userRepository.save(user);
     }
 
@@ -68,8 +68,6 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         String encryptedUsername = bCryptPasswordEncoder.encode(username);
         String encryptedPassword = bCryptPasswordEncoder.encode(password);
-
-
         return null;
     }
 
