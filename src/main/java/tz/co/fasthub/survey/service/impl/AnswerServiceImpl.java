@@ -111,6 +111,12 @@ public class AnswerServiceImpl implements AnswerService {
         return answerRepository.findAnswerByQuestionAndPosition(question,position);
     }
 
+    @Override
+    public Answer getAllByQuestionpenEnded(Question question, String answer){
+        return answerRepository.findAnswerByQuestion(question);
+
+    }
+
 
     @Override
     public void deleteAnswer(Long id) {

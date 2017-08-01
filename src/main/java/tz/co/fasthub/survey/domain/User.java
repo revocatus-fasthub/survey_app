@@ -15,15 +15,19 @@ public class User {
     private String password;
     private String cpassword;
     private String role;
+    @Version
+    private Long version;
+
 
     public User() {
     }
 
-    public User(String username, String password, String cpassword,String role) {
+    public User(String username, String password, String cpassword,String role, Long version) {
         this.username = username;
         this.password = password;
         this.cpassword = cpassword;
         this.role = role;
+        this.version = version;
     }
 
     public User(User user) {
@@ -38,6 +42,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", cpassword='" + cpassword + '\'' +
                 ", role='" + role + '\'' +
+                ", version='" + version + '\'' +
                 '}';
     }
 
@@ -79,5 +84,13 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }

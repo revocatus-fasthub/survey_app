@@ -20,6 +20,9 @@ public interface AnswerService {
     Answer getAllByQuestionAndPosition(Question question, int position);
 
     Iterable<Answer> getAnswerByQsnIdAll(Long id);
+
+    Answer getAllByQuestionpenEnded(Question question, String answer);
+
     void deleteAnswer(Long id);
 
 }

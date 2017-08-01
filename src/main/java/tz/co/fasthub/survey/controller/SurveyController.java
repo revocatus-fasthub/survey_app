@@ -72,6 +72,7 @@ public class SurveyController {
 
             if (customerTransaction!=null){
                 Answer answer=answerService.getAllByQuestionAndPosition(customerTransaction.getQuestion(),parseIntInput(text));
+              //  Answer answer=answerService.getAllByQuestionAndPosition(customerTransaction.getQuestion(),parseIntInput(text));
                 if (answer!=null){
                     if (customerTransaction.getAnswer()!=null){
                         response = fetchNextQuestion(customerTransaction);
@@ -102,7 +103,7 @@ public class SurveyController {
                 response = this.getQuestionOne(questionOne);
                 customerTransaction=new CustomerTransaction(createdCustomer,questionOne);
             }else {
-                response="Sorry , no questions";
+                response="Sorry, no questions";
             }
 
         }
@@ -180,24 +181,6 @@ public class SurveyController {
         }
     }
 
-    public Survey[] initQsn(){
-        return surveyService.initQsn();
-    }
-
-    @RequestMapping(method = RequestMethod.GET)
-    public Survey[] getQuestions(){
-        return surveyService.getQuestions();
-    }
-
-    public String loopingQuestions(){
-        String userResponse = null; Question qsn = new Question();
-        if(userResponse.equals(2)|| userResponse.equals(3)){
-            qsn = questionService.getQsnById(2L);
-            qsn.getQsn();
-            //pull answers from qsn 2
-        }
-        return qsn.getQsn();
-    }
 
 
 }
