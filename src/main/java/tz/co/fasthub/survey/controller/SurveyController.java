@@ -62,20 +62,69 @@ public class SurveyController {
                                  @RequestParam("operator") String operator) throws JSONException {
 
         log.info("received message from gravity: "+text+ " from "+msisdn);
+        String response = null;
 
-        Question question = new Question();
-        log.info("type: "+question.getType());
 
-        if(question.getType().equals("Open Ended")){
-            openEndedQuestion(msisdn,text,id,serviceNumber);
+        Customer customer=customerService.getCustomerByMsisdn(msisdn);
+        CustomerTransaction customerTransaction = null;
+        Answer lastSentAnswer=null;
 
-        }else{
-            closedEndedQuestion(msisdn,id,serviceNumber,text);
 
+        if (customer!=null){
+            customerTransaction=customerTransactionService.getOneTransactionByCustomerDesc(customer,false);
+
+            if (customerTransaction!=null){
+                Answer answer=answerService.getAllByQuestionAndPosition(customerTransaction.getQuestion(),parseIntInput(text));
+                //  Answer answer=answerService.getAllByQuestionAndPosition(customerTransaction.getQuestion(),parseIntInput(text));
+                if (answer!=null){
+                    if (customerTransaction.getAnswer()!=null){
+                        response = fetchNextQuestion(customerTransaction);
+                    }   else {
+                        customerTransaction.setAnswer(answer);
+                        customerTransaction.setAttended(true);
+                        response = fetchNextQuestion(customerTransaction);
+                    }
+                }else {
+                    response="Sorry Invalid input , try again";
+                }
+            }else {
+                Question questionOne=questionService.getQnOneBySequence();
+                if (questionOne!=null) {
+                    response = this.getQuestionOne(questionOne);
+                    customerTransaction=new CustomerTransaction(customer,questionOne);
+
+                }else {
+                    response="Sorry , no questions";
+                }
+            }
+        }else {
+            customer=new Customer(msisdn);
+            Customer createdCustomer=customerService.saveCustomer(customer);
+            Question questionOne=questionService.getQnOneBySequence();
+
+            if (questionOne!=null) {
+                response = this.getQuestionOne(questionOne);
+                customerTransaction=new CustomerTransaction(createdCustomer,questionOne);
+            }else {
+                response="Sorry, no questions";
+            }
+
+        }
+
+        if (customerTransaction!=null) {
+            customerTransactionService.saveCustomerTransaction(customerTransaction);
+        }
+
+
+        if (response!=null) {
+            sendAMessageToGravity(id, msisdn, response, serviceNumber);
         }
 
         return new ResponseEntity(HttpStatus.OK);
     }
+
+
+
 
     private void closedEndedQuestion(String msisdn, String id, String serviceNumber, String text){
         String response = null;
@@ -152,10 +201,10 @@ public class SurveyController {
                 OpenEndedAnswer answer=openAnswerService.getAllByQuestion(openEndedAnswer.getQuestion());
                 if (answer!=null){
                     if (openEndedAnswer.getAnswer()!=null){
-                        response = "Thank you. No more questions";
+                        response = "Thank you. No more questions";//this is where we fetch next question
                     }else {
                         answer.setAnswer(text);
-                        response = "Thank you. No more questions";
+                        response = "Thank you. No more questions";//this is where we fetch next question
                     }
                 }else {
                     response="Sorry Invalid input , try again";
