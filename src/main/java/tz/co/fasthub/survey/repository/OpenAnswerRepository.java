@@ -12,8 +12,6 @@ import java.util.List;
  */
 public interface OpenAnswerRepository extends CrudRepository<OpenEndedAnswer, Long> {
 
-  // OpenEndedAnswer findByQuestion(Question qsnId);
-
     List<OpenEndedAnswer> findAllByCustomerOrderByIdDesc(Customer customer);
 
     OpenEndedAnswer findByQuestion(Question question);

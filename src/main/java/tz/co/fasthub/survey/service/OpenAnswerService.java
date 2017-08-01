@@ -11,19 +11,9 @@ public interface OpenAnswerService {
     
     OpenEndedAnswer save(OpenEndedAnswer answer);
 
-    OpenEndedAnswer getAnswerById(Long id);
-
-
     OpenEndedAnswer getAnswerByQsnId(Question qsnId);
 
-
-    OpenEndedAnswer saveByQnsId(OpenEndedAnswer answer, Question qsnId);
-
     OpenEndedAnswer getOneTransactionByCustomerDesc(Customer customer);
-
-    Iterable<OpenEndedAnswer> getAnswerByQsnIdAll(Long id);
-
-    Iterable<OpenEndedAnswer> listAllAnswers();
 
     OpenEndedAnswer getAllByQuestion(Question question);
 }

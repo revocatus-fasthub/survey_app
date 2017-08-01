@@ -34,22 +34,8 @@ public class OpenAnswerServiceImpl implements OpenAnswerService {
 
 
     @Override
-    public OpenEndedAnswer getAnswerById(Long id) {
-        return openAnswerRepository.findOne(id);
-     }
-
-    @Override
     public OpenEndedAnswer getAnswerByQsnId(Question qsnId) {
         return openAnswerRepository.findByQuestion(qsnId);
-    }
-
-    @Override
-    public OpenEndedAnswer saveByQnsId(OpenEndedAnswer answer, Question qsnId) {
-        answer.setQuestion(qsnId);
-        if(qsnId.getId()!=null) {
-            return openAnswerRepository.save(answer);
-        }else
-        return answer;
     }
 
     @Override
@@ -63,41 +49,9 @@ public class OpenAnswerServiceImpl implements OpenAnswerService {
     }
 
 
-
-    @Override
-    public Iterable<OpenEndedAnswer> getAnswerByQsnIdAll(Long id) {
-
-        return openAnswerRepository.findAll();
-    }
-
-    @Override
-    public Iterable<OpenEndedAnswer> listAllAnswers() {
-        return openAnswerRepository.findAll();
-    }
-
     @Override
     public OpenEndedAnswer getAllByQuestion(Question question) {
         return openAnswerRepository.findByQuestion(question);
     }
-
-/*
-    @Override
-    public String getAnswerByQuestion(Question question) {
-        if (question!=null&&question.getAnswer()!=null) {
-            StringBuilder stringBuilder =  new StringBuilder();
-            stringBuilder.append(question.getQsn());
-            stringBuilder.append("\n");
-            for (Answer answer: question.getAnswer()){
-                stringBuilder.append(answer.getPosition());
-                stringBuilder.append(".");
-                stringBuilder.append(answer.getAns());
-                stringBuilder.append("\n");
-            }
-            return stringBuilder.toString();
-        }else {
-            return null;
-        }
-    }
-*/
 
 }
