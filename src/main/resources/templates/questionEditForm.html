@@ -24,7 +24,13 @@
                     <div class="col-sm-9">
                         <label class="col-sm-2 control-label">Question</label>
                             <input type="text" th:field="*{qsn}" placeholder="Question" class="form-control" />
-                        <label th:if="${#fields.hasErrors('qsn')}" th:errors="*{qsn}" class="validation-message"></label>
+                        <label th:if="${#fields.hasErrors('qsn')}" th:errors="*{qsn}" class="validation-message"></label><br/>
+                        <select class="form-control" name="type" id="type" th:field="*{type}">
+                            <option value="0" th:text="${'---Select---'}"></option>
+                            <option th:value="${'Closed Ended'}" th:selected="${question.isSelected(lastselected)}">Closed Ended</option>
+                            <option th:value="${'Open Ended'}" th:selected="${question.isSelected(lastselected)}">Open Ended</option>
+                        </select>
+
                     </div>
                 </div>
 

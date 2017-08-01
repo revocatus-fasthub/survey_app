@@ -14,6 +14,7 @@ public interface QuestionRepository extends CrudRepository<Question, Long> {
     List<Question> findAllByOrderBySequenceDesc();
 
     Question findAllByOrderByIdDesc(int id);
+    Question findAllByOrderByTypeDesc(Question type);
 
 }
 

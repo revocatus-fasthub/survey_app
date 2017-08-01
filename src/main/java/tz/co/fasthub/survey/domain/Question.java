@@ -1,9 +1,6 @@
 package tz.co.fasthub.survey.domain;
 
-import org.hibernate.annotations.*;
 import javax.persistence.*;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
 import java.util.List;
 
 /**
@@ -19,10 +16,14 @@ public class Question {
     private int sequence;
     @Version
     private Long version;
+    private String type;
 
 
     @OneToMany(mappedBy = "question",cascade = CascadeType.ALL)
     private List<Answer> answer;
+
+    @OneToMany(mappedBy = "question",cascade = CascadeType.DETACH)
+    private List<OpenEndedAnswer> openEndedAnswers;
 
 
     @OneToMany(mappedBy = "question",cascade = CascadeType.DETACH)
@@ -32,10 +33,11 @@ public class Question {
     }
 
 
-    public Question(String qsn, int sequence, Long version) {
+    public Question(String qsn, int sequence, Long version, String type) {
         this.qsn = qsn;
         this.sequence = sequence;
         this.version = version;
+        this.type = type;
     }
 
     @Override
@@ -45,6 +47,7 @@ public class Question {
                 ", qsn='" + qsn + '\'' +
                 ", sequence=" + sequence +
                 ", version=" + version +
+                ", type=" + type +
                 '}';
     }
 
@@ -56,6 +59,14 @@ public class Question {
         Question question = (Question) o;
 
         return id.equals(question.id);
+    }
+
+
+    public boolean isSelected(Long qsnId){
+        if (qsnId != null) {
+            return qsnId.equals(id);
+        }
+        return false;
     }
 
     public Long getId() {
@@ -98,6 +109,12 @@ public class Question {
         this.version = version;
     }
 
+    public String getType() {
+        return type;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
 }
 

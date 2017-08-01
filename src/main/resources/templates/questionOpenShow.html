@@ -43,61 +43,27 @@
         </form>
     </div>
 
-
-    <div>
-        <h3 th:if="${#vars['flash.message.answerSuccess']}" th:text="${#vars['flash.message.answerSuccess']}" class="alert alert-success"></h3>
-
-        <h2>Answer Details</h2>
-
+    <div th:if="${not #lists.isEmpty(answers)}">
+        <h2>Answer List</h2>
         <table class="table table-striped">
             <tr>
                 <th>Id</th>
+                <th>Msisdn</th>
                 <th>Answer </th>
-                <th>Position</th>
                 <th>Qsn_Id</th>
-                <th>Move Up</th>
-                <th>Move Down</th>
-                <th>Action</th>
             </tr>
             <tr th:each="answer : ${answers}">
-                <td th:text="${answer.id}">Id</td>
-                <td th:text="${answer.ans}">answer </td>
-                <td th:text="${answer.position}">position</td>
+                <td th:text="${answer.id}"><a href="/answer/${answer.id}">Id</a></td>
+                <td th:text="${answer.customer.msisdn}"></td>
+                <td th:text="${answer.answer}">answer </td>
                 <td th:text="${answer.question.id}">qsn Id</td>
-
-                <td> <a th:text="Up" th:href="${'/answerPosition/' +answer.question.id+'/'+ answer.id+'/'+'up'}">Move Up</a></td>
-                <td> <a th:text="Down" th:href="${'/answerPosition/'+answer.question.id+'/' + answer.id+'/'+'down'}">Move Down</a></td>
-                <td><a th:href="${'/answer/delete/'+question.id+'/' + answer.id}">Delete</a></td>
-                <!--<td><a th:href="${'/question/' + question.id}">Edit</a></td>-->
-
             </tr>
         </table>
 
     </div>
 
-<br/><hr/>
-    <div class="container">
 
-        <form autocomplete="off" action="#" th:action="@{/question/{id}(id=${question.id})}" th:object="${answer}" method="post" class="form-horizontal" role="form">
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Choice:</label>
-                <div class="col-md-5 col-md-offset-0">
-                    <input type="text" class="form-control" placeholder="add new choice" th:field="*{ans}"/><br/> <!--th:field="*{ans}"-->
-                    <button type="submit" class="btn btn-primary">Add Choice</button>
-                </div>
-            </div>
-        </form>
-    </div>
 </div>
-
-
-<!-- <div class="container">
-    
-<img th:src="@{/barChart}" width="1000"/>
-
-</div> -->
-
 
 </body>
 </html>

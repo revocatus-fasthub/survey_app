@@ -109,6 +109,10 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository.save(question);
     }
 
+    @Override
+    public Question getQsnByType(Question question){
+        return questionRepository.findAllByOrderByTypeDesc(question);
+    }
 
     @Override
     public Question update(Question question) {

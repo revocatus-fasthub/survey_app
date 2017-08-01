@@ -1,11 +1,9 @@
 package tz.co.fasthub.survey.domain;
 
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.validation.Constraint;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -26,6 +24,10 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     @Cascade(CascadeType.ALL)
     private List<CustomerTransaction> customerTransaction;
+
+    @OneToMany(mappedBy = "customer")
+    @Cascade(CascadeType.ALL)
+    private List<OpenEndedAnswer> openEndedAnswers;
 
     public Customer() {
     }

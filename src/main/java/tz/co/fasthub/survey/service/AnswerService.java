@@ -21,7 +21,7 @@ public interface AnswerService {
 
     Iterable<Answer> getAnswerByQsnIdAll(Long id);
 
-    Answer getAllByQuestionpenEnded(Question question, String answer);
+    Answer getAllByQuestionOpenEnded(Question question, String answer);
 
     void deleteAnswer(Long id);
 

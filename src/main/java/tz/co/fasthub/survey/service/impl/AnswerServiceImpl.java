@@ -112,8 +112,8 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Answer getAllByQuestionpenEnded(Question question, String answer){
-        return answerRepository.findAnswerByQuestion(question);
+    public Answer getAllByQuestionOpenEnded(Question question, String answer){
+        return answerRepository.findAnswerByQuestion(question, answer);
 
     }
 

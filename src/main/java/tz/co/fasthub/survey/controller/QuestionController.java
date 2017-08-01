@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import tz.co.fasthub.survey.domain.Answer;
+import tz.co.fasthub.survey.domain.OpenEndedAnswer;
 import tz.co.fasthub.survey.domain.Question;
 import tz.co.fasthub.survey.service.AnswerService;
+import tz.co.fasthub.survey.service.OpenAnswerService;
 import tz.co.fasthub.survey.service.QuestionService;
 import tz.co.fasthub.survey.validator.TalentValidator;
 
@@ -30,6 +32,7 @@ public class QuestionController {
 
     private final QuestionService questionService;
     private final AnswerService answerService;
+    private final OpenAnswerService openAnswerService;
 
     private TalentValidator talentValidator;
 
@@ -44,34 +47,42 @@ public class QuestionController {
     }
 
     @Autowired
-    public QuestionController(QuestionService questionService, AnswerService answerService, TalentValidator talentValidator) {
+    public QuestionController(QuestionService questionService, AnswerService answerService, OpenAnswerService openAnswerService, TalentValidator talentValidator) {
         this.questionService = questionService;
         this.answerService = answerService;
+        this.openAnswerService = openAnswerService;
         this.talentValidator = talentValidator;
     }
 
     @RequestMapping(value = "/questions", method = RequestMethod.GET)
     public String list(Model model, RedirectAttributes redirectAttributes) {
         model.addAttribute("questions", questionService.listAllQuestionsByAsc());
-        redirectAttributes.addFlashAttribute("flash.message.question", "Sucess!");
+        redirectAttributes.addFlashAttribute("flash.message.question", "Success!");
         return "questions";
     }
 
     // View a specific question and answers by its id
 
     @RequestMapping("question/{qsnid}")
-    public String showQuestion(@PathVariable Long qsnid, @Valid Answer answer, Model model, RedirectAttributes redirectAttributes) {
+    public String showQuestion(@PathVariable Long qsnid, @Valid Answer answer, OpenEndedAnswer openEndedAnswer, Model model, RedirectAttributes redirectAttributes) {
         Question question = questionService.getQsnById(qsnid);
 
-        if (answer.getAns() != null) {
-            savedAnswer = answerService.saveByQnsId(answer, question);
-            redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Answer Successfully Saved!");
-        }
+        if(question.getType().equals("Open Ended")){
+            model.addAttribute("question", questionService.getQsnById(qsnid));
+            model.addAttribute("answers", openAnswerService.getAnswerByQsnId(question));
+            return "questionOpenShow";
+        }else {
 
-        model.addAttribute("answers", answerService.getAnswerByQsnId(question));
-        model.addAttribute("question", questionService.getQsnById(qsnid));
+            if (answer.getAns() != null) {
+                savedAnswer = answerService.saveByQnsId(answer, question);
+                redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Answer Successfully Saved!");
+            }
+
+            model.addAttribute("answers", answerService.getAnswerByQsnId(question));
+            model.addAttribute("question", questionService.getQsnById(qsnid));
 
         return "questionShow";
+        }
     }
 
     @RequestMapping(value = "answer", method = RequestMethod.POST)

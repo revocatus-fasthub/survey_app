@@ -21,6 +21,8 @@ public class Answer {
     private String ans;
     private int sequence;
     private int position;
+//    private String text;
+
 
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "qsnId")
@@ -35,11 +37,12 @@ public class Answer {
     public Answer() {
     }
 
-    public Answer(String ans, int sequence, int position, Question question) {
+    public Answer(String ans, int sequence, int position, Question question, String text) {
         this.ans = ans;
         this.sequence = sequence;
         this.position = position;
         this.question = question;
+ //       this.text = text;
     }
 
     @Override
@@ -50,6 +53,7 @@ public class Answer {
                 ", sequence=" + sequence +
                 ", position=" + position +
                 ", question=" + question +
+       //         ", text=" + text +
                 '}';
     }
 
@@ -129,5 +133,12 @@ public class Answer {
     public static void setQuestionService(QuestionService questionService) {
         Answer.questionService = questionService;
     }
+/*
+    public String getText() {
+        return text;
+    }
 
+    public void setText(String text) {
+        this.text = text;
+    }*/
 }

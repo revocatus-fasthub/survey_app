@@ -35,6 +35,8 @@ public class SurveyController {
 
     private  AnswerService answerService;
 
+    private OpenAnswerService openAnswerService;
+
     private  SurveyService surveyService;
     private  CustomerService customerService;
     private CustomerTransactionService customerTransactionService;
@@ -42,10 +44,11 @@ public class SurveyController {
     private static final Logger log = LoggerFactory.getLogger(SurveyController.class);
 
     @Autowired
-    public SurveyController(SurveyService surveyService, QuestionService questionService, AnswerService answerService, CustomerService customerService, CustomerTransactionService customerTransactionService) {
+    public SurveyController(SurveyService surveyService, QuestionService questionService, AnswerService answerService, OpenAnswerService openAnswerService, CustomerService customerService, CustomerTransactionService customerTransactionService) {
         this.surveyService = surveyService;
         this.questionService = questionService;
         this.answerService = answerService;
+        this.openAnswerService = openAnswerService;
         this.customerService = customerService;
         this.customerTransactionService = customerTransactionService;
     }
@@ -59,20 +62,36 @@ public class SurveyController {
                                  @RequestParam("operator") String operator) throws JSONException {
 
         log.info("received message from gravity: "+text+ " from "+msisdn);
+
+        Question question = new Question();
+        log.info("type: "+question.getType());
+
+        if(question.getType().equals("Open Ended")){
+            openEndedQuestion(msisdn,text,id,serviceNumber);
+
+        }else{
+            closedEndedQuestion(msisdn,id,serviceNumber,text);
+
+        }
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    private void closedEndedQuestion(String msisdn, String id, String serviceNumber, String text){
         String response = null;
 
-
         Customer customer=customerService.getCustomerByMsisdn(msisdn);
-        CustomerTransaction customerTransaction = null;
-        Answer lastSentAnswer=null;
 
+
+        CustomerTransaction customerTransaction = null;
+        OpenEndedAnswer openEndedAnswer = null;
 
         if (customer!=null){
             customerTransaction=customerTransactionService.getOneTransactionByCustomerDesc(customer,false);
 
             if (customerTransaction!=null){
                 Answer answer=answerService.getAllByQuestionAndPosition(customerTransaction.getQuestion(),parseIntInput(text));
-              //  Answer answer=answerService.getAllByQuestionAndPosition(customerTransaction.getQuestion(),parseIntInput(text));
+                //  Answer answer=answerService.getAllByQuestionAndPosition(customerTransaction.getQuestion(),parseIntInput(text));
                 if (answer!=null){
                     if (customerTransaction.getAnswer()!=null){
                         response = fetchNextQuestion(customerTransaction);
@@ -112,13 +131,69 @@ public class SurveyController {
             customerTransactionService.saveCustomerTransaction(customerTransaction);
         }
 
-
         if (response!=null) {
             sendAMessageToGravity(id, msisdn, response, serviceNumber);
         }
 
-        return new ResponseEntity(HttpStatus.OK);
     }
+
+
+    private void openEndedQuestion(String msisdn, String text, String id, String serviceNumber){
+        String response = null;
+
+        Customer customer=customerService.getCustomerByMsisdn(msisdn);
+
+        CustomerTransaction customerTransaction = null;
+        OpenEndedAnswer openEndedAnswer = null;
+
+        if (customer!=null){
+            openEndedAnswer = openAnswerService.getOneTransactionByCustomerDesc(customer);
+            if (openEndedAnswer!=null){
+                OpenEndedAnswer answer=openAnswerService.getAllByQuestion(openEndedAnswer.getQuestion());
+                if (answer!=null){
+                    if (openEndedAnswer.getAnswer()!=null){
+                        response = "Thank you. No more questions";
+                    }else {
+                        answer.setAnswer(text);
+                        response = "Thank you. No more questions";
+                    }
+                }else {
+                    response="Sorry Invalid input , try again";
+                }
+            }else {
+                Question questionOne=questionService.getQnOneBySequence();
+                if (questionOne!=null) {
+                    response = this.getQuestionOne(questionOne);
+                    openEndedAnswer=new OpenEndedAnswer(customer,questionOne);
+
+                }else {
+                    response="Sorry , no questions";
+                }
+            }
+
+        }else {
+            customer=new Customer(msisdn);
+            Customer createdCustomer = customerService.saveCustomer(customer);
+            Question questionOne=questionService.getQnOneBySequence();
+
+            if (questionOne!=null) {
+                response = this.getQuestionOne(questionOne);
+                openEndedAnswer = new OpenEndedAnswer(createdCustomer,questionOne);
+            }else {
+                response="Sorry, no questions";
+            }
+
+        }
+
+        if (openEndedAnswer!=null) {
+            openAnswerService.save(openEndedAnswer);
+        }
+
+        if (response!=null) {
+            sendAMessageToGravity(id, msisdn, response, serviceNumber);
+        }
+    }
+
 
     private String fetchNextQuestion(CustomerTransaction customerTransaction) {
         String response = null;
@@ -154,8 +229,9 @@ public class SurveyController {
     private String getQuestionOne(Question question) {
         String response=null;
         if (question!=null) {
-
-            response=answerService.getAnswerByQuestion(question);
+            response = question.getQsn();
+            log.info("questoin is: "+response);
+           // response=answerService.getAnswerByQuestion(question);
         }
         return response;
     }
