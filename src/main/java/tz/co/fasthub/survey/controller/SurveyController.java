@@ -75,12 +75,13 @@ public class SurveyController {
 
             if (customerTransaction!=null){
                 Answer answer=answerService.getAllByQuestionAndPosition(customerTransaction.getQuestion(),parseIntInput(text));
-                //  Answer answer=answerService.getAllByQuestionAndPosition(customerTransaction.getQuestion(),parseIntInput(text));
-                if (answer!=null){
+                if (answer!=null || customerTransaction.getQuestion().getType().equals("Open Ended")){
+
                     if (customerTransaction.getAnswer()!=null){
                         response = fetchNextQuestion(customerTransaction);
                     }   else {
                         customerTransaction.setAnswer(answer);
+                        customerTransaction.setAnswerDetails(text);
                         customerTransaction.setAttended(true);
                         response = fetchNextQuestion(customerTransaction);
                     }
@@ -126,7 +127,7 @@ public class SurveyController {
 
 
 
-    private void closedEndedQuestion(String msisdn, String id, String serviceNumber, String text){
+/*    private void closedEndedQuestion(String msisdn, String id, String serviceNumber, String text){
         String response = null;
 
         Customer customer=customerService.getCustomerByMsisdn(msisdn);
@@ -241,8 +242,7 @@ public class SurveyController {
         if (response!=null) {
             sendAMessageToGravity(id, msisdn, response, serviceNumber);
         }
-    }
-
+    }*/
 
     private String fetchNextQuestion(CustomerTransaction customerTransaction) {
         String response = null;
@@ -279,8 +279,6 @@ public class SurveyController {
         String response=null;
         if (question!=null) {
             response = question.getQsn();
-            log.info("questoin is: "+response);
-           // response=answerService.getAnswerByQuestion(question);
         }
         return response;
     }

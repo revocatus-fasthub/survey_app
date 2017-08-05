@@ -51,8 +51,6 @@ public class UserController {
 
     @RequestMapping(value = "/survey/index")
     public String index(Principal principal, Model model){
-        String name = principal.getName();
-        model.addAttribute("username", name);
         return "index";
     }
 
@@ -100,7 +98,30 @@ public class UserController {
     @RequestMapping("user/edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
-        return "userform";
+        return "userEditForm";
+    }
+
+    /**
+     * Save edited user to database.
+     */
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String saveEditedUser(User userForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+ //     User username = userService.findByUsername(userForm.getUsername());
+//      log.info("username entered: "+username.getUsername());
+   //     if(userForm.getUsername().equals(username.getUsername())){
+          userValidator.validatePassword(userForm,bindingResult);
+          if (bindingResult.hasErrors()) {
+     //         redirectAttributes.addFlashAttribute("flash.message.userError", userForm.getUsername()+" has been Successfully updated");
+              return "userEditForm";
+          }
+       // }
+          else
+            log.info("his new password: "+userForm.getPassword());
+            userService.update(userForm);
+            redirectAttributes.addFlashAttribute("flash.message.userSuccess", userForm.getUsername()+" has been Successfully updated");
+            return "redirect:/users";
+
+
     }
 
 

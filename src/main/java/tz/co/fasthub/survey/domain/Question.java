@@ -16,6 +16,7 @@ public class Question {
     private int sequence;
     @Version
     private Long version;
+
     private String type;
 
 
@@ -116,5 +117,6 @@ public class Question {
     public void setType(String type) {
         this.type = type;
     }
-}
+
+  }
 

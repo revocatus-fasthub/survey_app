@@ -1,7 +1,11 @@
 package tz.co.fasthub.survey.service;
 
+import tz.co.fasthub.survey.domain.Answer;
 import tz.co.fasthub.survey.domain.Customer;
 import tz.co.fasthub.survey.domain.CustomerTransaction;
+import tz.co.fasthub.survey.domain.Question;
+
+import java.util.List;
 
 /**
  * Created by root on 7/25/17.
@@ -19,4 +23,8 @@ public interface CustomerTransactionService {
     CustomerTransaction saveCustomerTransaction(CustomerTransaction customerTransaction);
 
     void deleteCustomerTransaction(Long id);
+
+    List<CustomerTransaction> getAllQuestionAndAnswer(Question question, Answer answer);
+
+
 }

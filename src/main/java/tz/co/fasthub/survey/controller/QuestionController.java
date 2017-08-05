@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import tz.co.fasthub.survey.domain.Answer;
-import tz.co.fasthub.survey.domain.OpenEndedAnswer;
+import tz.co.fasthub.survey.domain.CustomerTransaction;
 import tz.co.fasthub.survey.domain.Question;
 import tz.co.fasthub.survey.service.AnswerService;
+import tz.co.fasthub.survey.service.CustomerTransactionService;
 import tz.co.fasthub.survey.service.OpenAnswerService;
 import tz.co.fasthub.survey.service.QuestionService;
 import tz.co.fasthub.survey.validator.TalentValidator;
@@ -33,6 +34,7 @@ public class QuestionController {
     private final QuestionService questionService;
     private final AnswerService answerService;
     private final OpenAnswerService openAnswerService;
+    private final CustomerTransactionService customerTransactionService;
 
     private TalentValidator talentValidator;
 
@@ -47,10 +49,11 @@ public class QuestionController {
     }
 
     @Autowired
-    public QuestionController(QuestionService questionService, AnswerService answerService, OpenAnswerService openAnswerService, TalentValidator talentValidator) {
+    public QuestionController(QuestionService questionService, AnswerService answerService, OpenAnswerService openAnswerService, CustomerTransactionService customerTransactionService, TalentValidator talentValidator) {
         this.questionService = questionService;
         this.answerService = answerService;
         this.openAnswerService = openAnswerService;
+        this.customerTransactionService = customerTransactionService;
         this.talentValidator = talentValidator;
     }
 
@@ -64,25 +67,25 @@ public class QuestionController {
     // View a specific question and answers by its id
 
     @RequestMapping("question/{qsnid}")
-    public String showQuestion(@PathVariable Long qsnid, @Valid Answer answer, OpenEndedAnswer openEndedAnswer, Model model, RedirectAttributes redirectAttributes) {
+    public String showQuestion(@PathVariable Long qsnid, @Valid Answer answer, Model model, RedirectAttributes redirectAttributes) {
         Question question = questionService.getQsnById(qsnid);
-
-        if(question.getType().equals("Open Ended")){
-            model.addAttribute("question", questionService.getQsnById(qsnid));
-            model.addAttribute("answers", openAnswerService.getAnswerByQsnId(question));
-            return "questionOpenShow";
-        }else {
 
             if (answer.getAns() != null) {
                 savedAnswer = answerService.saveByQnsId(answer, question);
                 redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Answer Successfully Saved!");
             }
+            List<Answer> answers = answerService.getAnswerByQsnId(question);
 
-            model.addAttribute("answers", answerService.getAnswerByQsnId(question));
+            for (Answer answer1 : answers) {
+                count(question, answer1);
+            }
+
+            model.addAttribute("answers", answers);
             model.addAttribute("question", questionService.getQsnById(qsnid));
 
+
         return "questionShow";
-        }
+
     }
 
     @RequestMapping(value = "answer", method = RequestMethod.POST)
@@ -284,7 +287,7 @@ public class QuestionController {
                 return "redirect:/questions";
             }
             else {
-                redirectAttributes.addFlashAttribute("flash.message.questionError", "Error! \nCannot delete question with id "+id+". Please delete question choices/answers first.");
+                redirectAttributes.addFlashAttribute("flash.message.questionError", "Error! \nCannot delete question with id "+id+". This question has other details in the Customer Details list");
                 return "redirect:/questions";
             }
 
@@ -315,6 +318,21 @@ public class QuestionController {
                         redirectAttributes.addFlashAttribute("flash.message.answerError", "Error! \nCannot delete answer with id "+id+"." );
                         return "redirect:/question/"+qsdId;
                 }
+
+    }
+
+    public void count(Question question, Answer answer ) {
+
+
+        if(question != null && answer != null){
+
+            List<CustomerTransaction> customerTransactions = customerTransactionService.getAllQuestionAndAnswer(question, answer);
+
+            if(customerTransactions!=null && !customerTransactions.isEmpty()){
+
+                answer.setCount(customerTransactions.size());
+            }
+        }
 
     }
 

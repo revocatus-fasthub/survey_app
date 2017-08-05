@@ -29,6 +29,10 @@ public class CustomerTransaction {
 
     private Boolean attended=false;
 
+    @Column(length = 1024)
+    private String answerDetails;
+
+
     public CustomerTransaction() {
     }
 
@@ -38,12 +42,13 @@ public class CustomerTransaction {
         this.question = question;
     }
 
-    public CustomerTransaction(Customer customer, Question question, Answer answer, Date timestamp, Boolean attended) {
+    public CustomerTransaction(Customer customer, Question question, Answer answer, Date timestamp, Boolean attended, String answerDetails) {
         this.customer = customer;
         this.question = question;
         this.answer = answer;
         this.timestamp = timestamp;
         this.attended = attended;
+        this.answerDetails = answerDetails;
     }
 
     @Override
@@ -55,6 +60,7 @@ public class CustomerTransaction {
                 ", answer=" + answer +
                 ", timestamp=" + timestamp +
                 ", attended=" + attended +
+                ", answerDetails=" + answerDetails +
                 '}';
     }
 
@@ -104,5 +110,14 @@ public class CustomerTransaction {
 
     public void setAttended(Boolean attended) {
         this.attended = attended;
+    }
+
+    public String getAnswerDetails() {
+
+        return answerDetails;
+    }
+
+    public void setAnswerDetails(String answerDetails) {
+        this.answerDetails = answerDetails;
     }
 }

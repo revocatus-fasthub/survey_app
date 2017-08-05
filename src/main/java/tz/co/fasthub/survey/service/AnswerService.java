@@ -25,4 +25,5 @@ public interface AnswerService {
 
     void deleteAnswer(Long id);
 
+    Answer getByAnswer(Answer answer);
 }

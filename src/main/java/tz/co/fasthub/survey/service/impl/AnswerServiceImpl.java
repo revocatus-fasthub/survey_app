@@ -7,6 +7,7 @@ import tz.co.fasthub.survey.domain.Answer;
 import tz.co.fasthub.survey.domain.Question;
 import tz.co.fasthub.survey.repository.AnswerRepository;
 import tz.co.fasthub.survey.service.AnswerService;
+import tz.co.fasthub.survey.service.CustomerTransactionService;
 import tz.co.fasthub.survey.service.QuestionService;
 
 import javax.sql.DataSource;
@@ -20,6 +21,8 @@ public class AnswerServiceImpl implements AnswerService {
     
     private AnswerRepository answerRepository;
 
+    private final CustomerTransactionService customerTransactionService;
+
     private final Answer answer = new Answer();
 
     private JdbcTemplate jdbcTemplate;
@@ -27,10 +30,11 @@ public class AnswerServiceImpl implements AnswerService {
     private final QuestionService questionService;
 
     @Autowired
-    public AnswerServiceImpl(AnswerRepository answerRepository, QuestionService questionService, DataSource dataSource) {
+    public AnswerServiceImpl(AnswerRepository answerRepository, QuestionService questionService, DataSource dataSource, CustomerTransactionService customerTransactionService) {
         this.answerRepository = answerRepository;
         this.questionService = questionService;
         jdbcTemplate = new JdbcTemplate(dataSource);
+        this.customerTransactionService = customerTransactionService;
     }
 
     @Override
@@ -117,6 +121,26 @@ public class AnswerServiceImpl implements AnswerService {
 
     }
 
+/*
+    @Override
+    public Iterable<Answer> listAllAnswersByQsn() {
+        Question question = new Question();
+        List<CustomerTransaction> customerTrans = customerTransactionService.getAllQuestionAndAnswer(question, answer);
+        for (CustomerTransaction customerTransaction : customerTrans) {
+            if (!customerTrans.isEmpty()) {
+                if (customerTransaction.getQuestion() != null&& customerTransaction.getAnswer()) {
+
+                    customerTransaction.setCount(customerTransaction.getCount()+1);
+
+
+                }
+            }
+        }
+    }*/
+    @Override
+    public Answer getByAnswer(Answer answer){
+        return answerRepository.findByAns(answer);
+    }
 
     @Override
     public void deleteAnswer(Long id) {

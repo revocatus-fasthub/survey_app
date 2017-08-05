@@ -21,7 +21,8 @@ public class Answer {
     private String ans;
     private int sequence;
     private int position;
-//    private String text;
+    @Transient
+    private int count;
 
 
     @ManyToOne(cascade = CascadeType.DETACH)
@@ -37,13 +38,14 @@ public class Answer {
     public Answer() {
     }
 
-    public Answer(String ans, int sequence, int position, Question question, String text) {
+    public Answer(String ans, int sequence, int position, int count, Question question) {
         this.ans = ans;
         this.sequence = sequence;
         this.position = position;
         this.question = question;
- //       this.text = text;
+        this.count = count;
     }
+
 
     @Override
     public String toString() {
@@ -52,8 +54,8 @@ public class Answer {
                 ", ans='" + ans + '\'' +
                 ", sequence=" + sequence +
                 ", position=" + position +
+                ", count=" + count +
                 ", question=" + question +
-       //         ", text=" + text +
                 '}';
     }
 
@@ -66,8 +68,6 @@ public class Answer {
 
         return id.equals(answer.id);
     }
-
-
 
 
     public Long getId() {
@@ -133,12 +133,14 @@ public class Answer {
     public static void setQuestionService(QuestionService questionService) {
         Answer.questionService = questionService;
     }
-/*
-    public String getText() {
-        return text;
+
+    public int getCount() {
+        return count;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }*/
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+
 }

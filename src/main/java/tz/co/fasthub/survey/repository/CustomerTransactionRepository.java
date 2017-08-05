@@ -1,8 +1,10 @@
 package tz.co.fasthub.survey.repository;
 
 import org.springframework.data.repository.CrudRepository;
+import tz.co.fasthub.survey.domain.Answer;
 import tz.co.fasthub.survey.domain.Customer;
 import tz.co.fasthub.survey.domain.CustomerTransaction;
+import tz.co.fasthub.survey.domain.Question;
 
 import java.util.List;
 
@@ -12,4 +14,7 @@ import java.util.List;
 public interface CustomerTransactionRepository extends CrudRepository<CustomerTransaction ,Long>{
     List<CustomerTransaction> findAllByCustomerAndAttendedOrderByIdDesc(Customer customer, boolean attended);
     List<CustomerTransaction> findByAttendedOrderByIdDesc(boolean attended);
+
+    List<CustomerTransaction> findAllByQuestionAndAnswer(Question question, Answer answer);
+
 }

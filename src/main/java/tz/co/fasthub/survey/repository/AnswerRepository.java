@@ -16,4 +16,6 @@ public interface AnswerRepository extends CrudRepository<Answer, Long> {
    Answer findAnswerByQuestionAndPosition(Question question, int position);
    Answer findAnswerByQuestion(Question question, String answer);
 
+   Answer findByAns(Answer answer);
+
 }
