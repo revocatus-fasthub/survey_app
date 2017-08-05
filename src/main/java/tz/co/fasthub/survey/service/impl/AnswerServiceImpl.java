@@ -1,7 +1,6 @@
 package tz.co.fasthub.survey.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import tz.co.fasthub.survey.domain.Answer;
 import tz.co.fasthub.survey.domain.Question;
@@ -10,7 +9,6 @@ import tz.co.fasthub.survey.service.AnswerService;
 import tz.co.fasthub.survey.service.CustomerTransactionService;
 import tz.co.fasthub.survey.service.QuestionService;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 /**
@@ -25,15 +23,12 @@ public class AnswerServiceImpl implements AnswerService {
 
     private final Answer answer = new Answer();
 
-    private JdbcTemplate jdbcTemplate;
-
     private final QuestionService questionService;
 
     @Autowired
-    public AnswerServiceImpl(AnswerRepository answerRepository, QuestionService questionService, DataSource dataSource, CustomerTransactionService customerTransactionService) {
+    public AnswerServiceImpl(AnswerRepository answerRepository, QuestionService questionService, CustomerTransactionService customerTransactionService) {
         this.answerRepository = answerRepository;
         this.questionService = questionService;
-        jdbcTemplate = new JdbcTemplate(dataSource);
         this.customerTransactionService = customerTransactionService;
     }
 
@@ -77,11 +72,6 @@ public class AnswerServiceImpl implements AnswerService {
         return answerRepository.findAllByQuestionOrderByPositionAsc(qsnId);
     }
 
-    public Iterable<Answer> getAnswerByQsnIdAll(Long id) {
-
-        return answerRepository.findAll();
-    }
-
     @Override
     public Iterable<Answer> listAllAnswers() {
         return answerRepository.findAll();
@@ -113,33 +103,6 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public Answer getAllByQuestionAndPosition(Question question, int position) {
         return answerRepository.findAnswerByQuestionAndPosition(question,position);
-    }
-
-    @Override
-    public Answer getAllByQuestionOpenEnded(Question question, String answer){
-        return answerRepository.findAnswerByQuestion(question, answer);
-
-    }
-
-/*
-    @Override
-    public Iterable<Answer> listAllAnswersByQsn() {
-        Question question = new Question();
-        List<CustomerTransaction> customerTrans = customerTransactionService.getAllQuestionAndAnswer(question, answer);
-        for (CustomerTransaction customerTransaction : customerTrans) {
-            if (!customerTrans.isEmpty()) {
-                if (customerTransaction.getQuestion() != null&& customerTransaction.getAnswer()) {
-
-                    customerTransaction.setCount(customerTransaction.getCount()+1);
-
-
-                }
-            }
-        }
-    }*/
-    @Override
-    public Answer getByAnswer(Answer answer){
-        return answerRepository.findByAns(answer);
     }
 
     @Override

@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import tz.co.fasthub.survey.domain.User;
 import tz.co.fasthub.survey.repository.UserRepository;
-import tz.co.fasthub.survey.repository.UserRolesRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,12 +24,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 
     private final UserRepository userRepository;
-    private final UserRolesRepository userRoleRepository;
 
     @Autowired
-    public UserDetailsServiceImpl(UserRepository userRepository, UserRolesRepository userRoleRepository) {
+    public UserDetailsServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.userRoleRepository = userRoleRepository;
     }
 
     @Override

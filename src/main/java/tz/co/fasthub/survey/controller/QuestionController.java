@@ -15,7 +15,6 @@ import tz.co.fasthub.survey.domain.CustomerTransaction;
 import tz.co.fasthub.survey.domain.Question;
 import tz.co.fasthub.survey.service.AnswerService;
 import tz.co.fasthub.survey.service.CustomerTransactionService;
-import tz.co.fasthub.survey.service.OpenAnswerService;
 import tz.co.fasthub.survey.service.QuestionService;
 import tz.co.fasthub.survey.validator.TalentValidator;
 
@@ -33,7 +32,6 @@ public class QuestionController {
 
     private final QuestionService questionService;
     private final AnswerService answerService;
-    private final OpenAnswerService openAnswerService;
     private final CustomerTransactionService customerTransactionService;
 
     private TalentValidator talentValidator;
@@ -49,10 +47,9 @@ public class QuestionController {
     }
 
     @Autowired
-    public QuestionController(QuestionService questionService, AnswerService answerService, OpenAnswerService openAnswerService, CustomerTransactionService customerTransactionService, TalentValidator talentValidator) {
+    public QuestionController(QuestionService questionService, AnswerService answerService, CustomerTransactionService customerTransactionService, TalentValidator talentValidator) {
         this.questionService = questionService;
         this.answerService = answerService;
-        this.openAnswerService = openAnswerService;
         this.customerTransactionService = customerTransactionService;
         this.talentValidator = talentValidator;
     }

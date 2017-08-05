@@ -27,18 +27,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static tz.co.fasthub.survey.constants.Constant.*;
+
   /**
  * Created by Naamini on 6/22/17.
  */
 @Controller
 @RequestMapping("/survey")
 public class SurveyMonkeyController {
-//http://survey.fasthub.co.tz:8081
 
-//survey_id=118875579
-
-      @Autowired
-      private SurveyController surveyController;
+    @Autowired
+    private SurveyController surveyController;
 
     @Autowired
     private ContactService contactService;
@@ -48,10 +46,10 @@ public class SurveyMonkeyController {
 
     private static final Logger log = LoggerFactory.getLogger(SurveyMonkeyController.class);
 
-      final ArrayList<String> contactArray = new ArrayList<>();
-
       private Payload payload = new Payload(access_token,expires_in,token_type);
+
     private Contact contact = new Contact(href,first_name,last_name,contactId,email,phoneNumber);
+
     private RestTemplate restTemplate = new RestTemplate();
 
     @RequestMapping(value = "/authorizationUrl")
@@ -114,12 +112,10 @@ public class SurveyMonkeyController {
         if(payloading!=null) {
             JSONObject jsonObject = new JSONObject(payloading);
 
-            //get items from json
             accessTokenFromPayload = jsonObject.getString("access_token");
             token_type = jsonObject.getString("token_type");
             expires_in = jsonObject.getString("expires_in");
 
-            //save payload to db
             savingPayloadToDb();
 
         }
@@ -304,20 +300,10 @@ public class SurveyMonkeyController {
             heading = innerObj.getString("heading");
 
             list = position+ ". "+heading;
-            //log.info(list);
             qsnList.add(list);
             log.info("QsnList: "+listCleanUp(qsnList));
-            //send to user through gravity
-          //  surveyController.post("74","0785723360","hi","255659099015","2016-05-18","INFO", list);
-            //wait for response and receive response to gravity
-
-            //send to survey monkey
         }
-       // surveyController.post("74","0785723360","hi","255754088816","2016-05-18","INFO", listCleanUp(qsnList));
-
-      //  model.addAttribute("qsns", listCleanUp(qsnList));
         return listCleanUp(qsnList);
-        //return heading+"\n" +listCleanUp(qsnList);
         }
 
       @RequestMapping(value = "/allContactList/{id}",method = RequestMethod.GET)
@@ -336,7 +322,6 @@ public class SurveyMonkeyController {
           log.info("response:" + contacts);
 
           return "redirect:/survey/successPage";
-          //return new ResponseEntity<>("response", headers, HttpStatus.OK);
       }
 
       @RequestMapping(value = "/getAllContact/{id}",method = RequestMethod.GET)
@@ -355,50 +340,6 @@ public class SurveyMonkeyController {
           log.info("response:" + contactResponse);
           contactService.save(handler.getData());
 
-         // log.info("contact: "+contactArray);
-
           return "redirect:/survey/successPage";
-          //return new ResponseEntity<>("response", headers, HttpStatus.OK);
       }
-
-
-/*
-      @RequestMapping(value = "/responseList/{id}",method = RequestMethod.GET, produces = "application/json")
-      String responseList() throws JSONException {
-          Long id = 1L;
-          Payload createdPayload = payloadService.getPayloadById(id);
-          HttpHeaders headers = new HttpHeaders();
-          headers.setContentType(MediaType.APPLICATION_JSON);
-          headers.add("Authorization","bearer "+createdPayload.getAccess_token());
-
-          HttpEntity<?> entity = new HttpEntity<>(headers);
-
-          ResponseEntity<String> response1 = restTemplate.exchange(responseListUrl,HttpMethod.GET,entity,String.class);
-          response1.getBody();
-          log.info("response: "+response1);
-
-          String jsonStr1 = String.valueOf(response1);
-          final ArrayList<String> rspList = new ArrayList<>();
-          JSONObject jsonObject = new JSONObject(jsonStr1.substring(jsonStr1.indexOf('{')));
-
-          JSONObject data = new JSONObject(jsonObject.getString("data").indexOf('{'));
-
-          JSONArray pages = data.getJSONArray("pages");
-          JSONArray jsonArray=jsonObject.getJSONArray("questions");
-
-          String qsnId = null, answers=null, heading = null;
-
-          for(int u = 0;u<pages.length();u++){
-              String list=null;
-              JSONObject innerObj = pages.getJSONObject(u);
-              qsnId = innerObj.getString("id");
-              answers = innerObj.getString("answers");
-              list = qsnId+ ". "+answers;
-              log.info(list);
-              rspList.add(list);
-          }
-          return listCleanUp(rspList);
-      }*/
-
-
   }

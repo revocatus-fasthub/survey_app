@@ -14,19 +14,12 @@ public interface QuestionService {
     Question getNextQuestion(Question currentCurrent);
 
     Question getQsnById(Long id);
-    Question getQsnByAscendingId(int sequence);
-    Question getQsnByDescendingId(int sequence);
-    Question getQnsBySequence(Integer id);
 
     Question getQnOneBySequence();
 
     List<Question> listAllQuestionsByDesc();
 
     List<Question> listAllQuestionsByAsc();
-
-    Question saveBySequence(Question question);
-
-    Question getQsnByType(Question question);
 
     Question update(Question question);
 

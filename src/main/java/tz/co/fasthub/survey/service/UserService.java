@@ -14,12 +14,6 @@ public interface UserService {
 
     User findByUsername(String username);
 
-    User findByUsernameAndPassword(String username, String password);
-
-    User validateUser(String username, String password);
-
-    User encryptUserInput(String username, String password);
-
     Iterable<User> listAllCustomers();
 
     User getUserById(Long id);

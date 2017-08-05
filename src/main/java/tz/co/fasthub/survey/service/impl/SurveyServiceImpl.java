@@ -14,15 +14,9 @@ import tz.co.fasthub.survey.service.SurveyService;
 @Service("surveyService")
 public class SurveyServiceImpl implements SurveyService {
 
-   // private final SurveyRepository surveyRepository;
     private static final Logger log = LoggerFactory.getLogger(SurveyController.class);
     private static AbstractApplicationContext context;
     private int answer;
-/*
-    @Autowired
-    public SurveyServiceImpl(SurveyRepository surveyRepository) {
-        this.surveyRepository = surveyRepository;
-    }*/
 
 
     public Survey[] getQuestions(){

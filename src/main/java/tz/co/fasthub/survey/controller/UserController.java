@@ -106,15 +106,10 @@ public class UserController {
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String saveEditedUser(User userForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
- //     User username = userService.findByUsername(userForm.getUsername());
-//      log.info("username entered: "+username.getUsername());
-   //     if(userForm.getUsername().equals(username.getUsername())){
-          userValidator.validatePassword(userForm,bindingResult);
+     userValidator.validatePassword(userForm,bindingResult);
           if (bindingResult.hasErrors()) {
-     //         redirectAttributes.addFlashAttribute("flash.message.userError", userForm.getUsername()+" has been Successfully updated");
               return "userEditForm";
           }
-       // }
           else
             log.info("his new password: "+userForm.getPassword());
             userService.update(userForm);

@@ -65,21 +65,6 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question getQsnByAscendingId(int sequence) {
-        return null;//questionRepository.findAllByOrderBySequence();
-    }
-
-    @Override
-    public Question getQsnByDescendingId(int sequence) {
-        return questionRepository.findAllByOrderByIdDesc(sequence);
-    }
-
-    @Override
-    public Question getQnsBySequence(Integer id) {
-        return questionRepository.findAllByOrderByIdDesc(id);
-    }
-
-    @Override
     public Question getQnOneBySequence() {
 
         List<Question> questions = questionRepository.findAllByOrderBySequenceAsc();
@@ -101,17 +86,6 @@ public class QuestionServiceImpl implements QuestionService {
     public List<Question> listAllQuestionsByAsc() {
 
         return questionRepository.findAllByOrderBySequenceAsc();
-    }
-
-    @Override
-    public Question saveBySequence(Question question) {
-
-        return questionRepository.save(question);
-    }
-
-    @Override
-    public Question getQsnByType(Question question){
-        return questionRepository.findAllByOrderByTypeDesc(question);
     }
 
     @Override

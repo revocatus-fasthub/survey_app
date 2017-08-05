@@ -16,8 +16,6 @@ public interface CustomerTransactionService {
 
     CustomerTransaction getOneTransactionByCustomerDesc(Customer customer, boolean attended);
 
-    Iterable<CustomerTransaction> lisAllByCustomerAndAttended(Customer customer, boolean attended);
-
     CustomerTransaction getCustomerTransactionById(Long id);
 
     CustomerTransaction saveCustomerTransaction(CustomerTransaction customerTransaction);

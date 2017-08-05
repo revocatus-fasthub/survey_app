@@ -10,5 +10,5 @@ import java.util.ArrayList;
 public interface ContactService {
 
     Iterable<Contact> save(ArrayList<Contact> contact);
-//    Contact getContactById(Long id);
+
 }

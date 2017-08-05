@@ -35,8 +35,6 @@ public class SurveyController {
 
     private  AnswerService answerService;
 
-    private OpenAnswerService openAnswerService;
-
     private  SurveyService surveyService;
     private  CustomerService customerService;
     private CustomerTransactionService customerTransactionService;
@@ -44,11 +42,10 @@ public class SurveyController {
     private static final Logger log = LoggerFactory.getLogger(SurveyController.class);
 
     @Autowired
-    public SurveyController(SurveyService surveyService, QuestionService questionService, AnswerService answerService, OpenAnswerService openAnswerService, CustomerService customerService, CustomerTransactionService customerTransactionService) {
+    public SurveyController(SurveyService surveyService, QuestionService questionService, AnswerService answerService, CustomerService customerService, CustomerTransactionService customerTransactionService) {
         this.surveyService = surveyService;
         this.questionService = questionService;
         this.answerService = answerService;
-        this.openAnswerService = openAnswerService;
         this.customerService = customerService;
         this.customerTransactionService = customerTransactionService;
     }
@@ -124,126 +121,6 @@ public class SurveyController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-
-
-
-/*    private void closedEndedQuestion(String msisdn, String id, String serviceNumber, String text){
-        String response = null;
-
-        Customer customer=customerService.getCustomerByMsisdn(msisdn);
-
-
-        CustomerTransaction customerTransaction = null;
-        OpenEndedAnswer openEndedAnswer = null;
-
-        if (customer!=null){
-            customerTransaction=customerTransactionService.getOneTransactionByCustomerDesc(customer,false);
-
-            if (customerTransaction!=null){
-                Answer answer=answerService.getAllByQuestionAndPosition(customerTransaction.getQuestion(),parseIntInput(text));
-                //  Answer answer=answerService.getAllByQuestionAndPosition(customerTransaction.getQuestion(),parseIntInput(text));
-                if (answer!=null){
-                    if (customerTransaction.getAnswer()!=null){
-                        response = fetchNextQuestion(customerTransaction);
-                    }   else {
-                        customerTransaction.setAnswer(answer);
-                        customerTransaction.setAttended(true);
-                        response = fetchNextQuestion(customerTransaction);
-                    }
-                }else {
-                    response="Sorry Invalid input , try again";
-                }
-            }else {
-                Question questionOne=questionService.getQnOneBySequence();
-                if (questionOne!=null) {
-                    response = this.getQuestionOne(questionOne);
-                    customerTransaction=new CustomerTransaction(customer,questionOne);
-
-                }else {
-                    response="Sorry , no questions";
-                }
-            }
-        }else {
-            customer=new Customer(msisdn);
-            Customer createdCustomer=customerService.saveCustomer(customer);
-            Question questionOne=questionService.getQnOneBySequence();
-
-            if (questionOne!=null) {
-                response = this.getQuestionOne(questionOne);
-                customerTransaction=new CustomerTransaction(createdCustomer,questionOne);
-            }else {
-                response="Sorry, no questions";
-            }
-
-        }
-
-        if (customerTransaction!=null) {
-            customerTransactionService.saveCustomerTransaction(customerTransaction);
-        }
-
-        if (response!=null) {
-            sendAMessageToGravity(id, msisdn, response, serviceNumber);
-        }
-
-    }
-
-
-    private void openEndedQuestion(String msisdn, String text, String id, String serviceNumber){
-        String response = null;
-
-        Customer customer=customerService.getCustomerByMsisdn(msisdn);
-
-        CustomerTransaction customerTransaction = null;
-        OpenEndedAnswer openEndedAnswer = null;
-
-        if (customer!=null){
-            openEndedAnswer = openAnswerService.getOneTransactionByCustomerDesc(customer);
-            if (openEndedAnswer!=null){
-                OpenEndedAnswer answer=openAnswerService.getAllByQuestion(openEndedAnswer.getQuestion());
-                if (answer!=null){
-                    if (openEndedAnswer.getAnswer()!=null){
-                        response = "Thank you. No more questions";//this is where we fetch next question
-                    }else {
-                        answer.setAnswer(text);
-                        response = "Thank you. No more questions";//this is where we fetch next question
-                    }
-                }else {
-                    response="Sorry Invalid input , try again";
-                }
-            }else {
-                Question questionOne=questionService.getQnOneBySequence();
-                if (questionOne!=null) {
-                    response = this.getQuestionOne(questionOne);
-                    openEndedAnswer=new OpenEndedAnswer(customer,questionOne);
-
-                }else {
-                    response="Sorry , no questions";
-                }
-            }
-
-        }else {
-            customer=new Customer(msisdn);
-            Customer createdCustomer = customerService.saveCustomer(customer);
-            Question questionOne=questionService.getQnOneBySequence();
-
-            if (questionOne!=null) {
-                response = this.getQuestionOne(questionOne);
-                openEndedAnswer = new OpenEndedAnswer(createdCustomer,questionOne);
-            }else {
-                response="Sorry, no questions";
-            }
-
-        }
-
-        if (openEndedAnswer!=null) {
-            openAnswerService.save(openEndedAnswer);
-        }
-
-        if (response!=null) {
-            sendAMessageToGravity(id, msisdn, response, serviceNumber);
-        }
-    }*/
-
     private String fetchNextQuestion(CustomerTransaction customerTransaction) {
         String response = null;
         try {
@@ -303,7 +180,4 @@ public class SurveyController {
             e.printStackTrace();
         }
     }
-
-
-
 }

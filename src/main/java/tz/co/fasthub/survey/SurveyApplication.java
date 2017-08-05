@@ -10,4 +10,3 @@ public class SurveyApplication {
 		SpringApplication.run(SurveyApplication.class, args);
 	}
 }
-//this is application file

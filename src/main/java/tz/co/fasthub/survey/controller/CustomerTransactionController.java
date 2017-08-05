@@ -8,10 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import tz.co.fasthub.survey.domain.Answer;
-import tz.co.fasthub.survey.domain.Customer;
 import tz.co.fasthub.survey.domain.CustomerTransaction;
-import tz.co.fasthub.survey.domain.Question;
 import tz.co.fasthub.survey.service.CustomerTransactionService;
 
 /**
@@ -56,25 +53,9 @@ public class CustomerTransactionController {
         return "customerTransactionShow";
     }
 
-    /*@RequestMapping("customerTransaction/edit/{id}")
-    public String edit(@PathVariable Long id, Model model) {
-        model.addAttribute("customerTransaction", customerTransactionService.getCustomerTransactionById(id));
-        return "customerTransactionform";
-    }
-
-    //* New customerTransaction.
-    @RequestMapping("customerTransaction/new")
-    public String newCustomerTransaction(Model model) {
-        model.addAttribute("customerTransaction", new CustomerTransaction());
-        return "customerTransactionform";
-    }*/
-
     //*Save customerTransaction to database.
     @RequestMapping(value = "customerTransaction", method = RequestMethod.POST)
-    public String saveCustomerTransaction(CustomerTransaction customerTransaction, Customer customer,
-                                          Answer answer, Question question) {
-       //
-
+    public String saveCustomerTransaction(CustomerTransaction customerTransaction) {
         customerTransactionService.saveCustomerTransaction(customerTransaction);
         return "redirect:/customerTransaction/" + customerTransaction.getId();
     }

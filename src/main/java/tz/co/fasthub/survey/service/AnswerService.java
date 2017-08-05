@@ -18,12 +18,6 @@ public interface AnswerService {
     List<Answer> listAllAnswersByDesc(Question qsnId);
     String getAnswerByQuestion(Question question);
     Answer getAllByQuestionAndPosition(Question question, int position);
-
-    Iterable<Answer> getAnswerByQsnIdAll(Long id);
-
-    Answer getAllByQuestionOpenEnded(Question question, String answer);
-
     void deleteAnswer(Long id);
 
-    Answer getByAnswer(Answer answer);
 }

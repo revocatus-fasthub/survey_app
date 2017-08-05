@@ -42,10 +42,6 @@ public class CustomerTransactionServiceImpl implements CustomerTransactionServic
     }
 
     @Override
-    public Iterable<CustomerTransaction> lisAllByCustomerAndAttended(Customer customer, boolean attended) {
-        return customerTransactionRepository.findAllByCustomerAndAttendedOrderByIdDesc(customer,attended);
-    }
-    @Override
     public CustomerTransaction getCustomerTransactionById(Long id) {
         return customerTransactionRepository.findOne(id);
     }
