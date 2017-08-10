@@ -78,7 +78,7 @@ public class UserController {
         userService.save(userForm);
       //securityService.autologin(user.getUsername(), user.getPassword());
         redirectAttributes.addFlashAttribute("flash.message.user", "Success. Please Login to continue");
-        return "redirect:/crdb/survey/login";
+        return "redirect:/crdb/login";
     }
 
     /**
@@ -139,11 +139,11 @@ public class UserController {
     public String getLoginForm(Model model, String error, String logout) {
         if (error != null) {
             model.addAttribute("message", "Invalid username of password, try again !");
-            return "redirect:/crdb/survey/login";
+            return "redirect:/crdb/login";
 
         } else if (logout != null) {
             model.addAttribute("message", "Logged Out successfully, login again to continue !");
-            return "redirect:/crdb/survey/login";
+            return "redirect:/crdb/login";
         }
 
         return "redirect:/survey/index";
@@ -156,7 +156,7 @@ public class UserController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         redirectAttributes.addFlashAttribute("flash.message.user","Successfully logged out");
-        return "redirect:/survey/login";
+        return "redirect:/crdb/login";
      }
 
 

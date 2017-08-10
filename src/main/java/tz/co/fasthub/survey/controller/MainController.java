@@ -19,7 +19,7 @@ public class MainController {
         return "surveyQuestions";
     }
 
-    @RequestMapping(value = "/crdb/survey/login")
+    @RequestMapping(value = "/crdb/login")
     public String login(){
         return "login";
     }
