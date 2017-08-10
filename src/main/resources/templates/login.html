@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
-    <title>Login</title>
+    <title>CRDB Survey | Login</title>
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
 <br/><br/>
 <div class="container">
-    <!--/*/ <th:block th:include="fragments/headerlogin :: header"></th:block> /*/-->
 
     <div class="container">
         <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-danger" ></h3>
@@ -15,14 +14,47 @@
         <h3 th:if="${#vars['flash.message.userLogin']}" th:text="${#vars['flash.message.userLogin']}" class="alert alert-success"></h3>
 
         <div class="row">
-
             <div class="col-md-4 col-md-offset-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Please sign in</h3>
-                    </div>
-                    <div class="panel-body">
+                <div class="panel 2">
+                    <div class="panel-body" th:width="420" >
+
+
                         <form th:action="${'/login'}" th:object="${user}" th:value="${'/login'}" method="post" class="form-horizontal">
+
+                            <!--
+                            <div class="jumbotron">
+
+                                <div>
+                                    <img src="../../static/images/crdb.png" width="250" height="150" th:src="@{/images/crdb.png}"/>
+                                </div>
+                            </div>
+                            -->
+
+                            <div>
+                                <h2 th:align="center" style="color: #4bb242;">
+                                    <img src="../../static/images/crdb.png" width="250" height="150" th:src="@{/images/crdb.png}"/>
+                                </h2>
+                            </div>
+
+                            <div class="input-group input-sm">
+                                <label class="input-group-addon" for="username"></label>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required="required"/>
+                            </div>
+                            <div class="input-group input-sm">
+                                <label class="input-group-addon" for="password"></label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required="required"/>
+                            </div><br/>
+
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+                            <div th:fragment="header">
+                                <section>
+                                <center>    <input type="submit"  class="btn btn-block btn-success" value="Log in"/><br/></center>
+                                    <div class="pull-right" style="padding-right:5px">
+                                        <small><a th:href="@{'/survey/registration/new'}">Register new User</a></small>
+                                    </div>
+                                </section>
+                            </div>
 
                             <div th:if="${param.error!=null}">
                                 <div class="alert alert-danger">
@@ -42,20 +74,8 @@
                                 </div>
                             </div>
 
-                            <div class="input-group input-sm">
-                                <label class="input-group-addon" for="username"><i class="fa fa-user"></i></label>
-                                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required="required"/>
-                            </div>
-                            <div class="input-group input-sm">
-                                <label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required="required"/>
-                            </div>
 
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-                            <div class="form-actions">
-                                <input type="submit" class="btn btn-block btn-primary btn-default" value="Log in"/>
-                            </div>
                         </form>
                     </div>
                 </div>

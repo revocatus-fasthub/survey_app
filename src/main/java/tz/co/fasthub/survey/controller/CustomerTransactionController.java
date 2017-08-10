@@ -15,6 +15,7 @@ import tz.co.fasthub.survey.service.CustomerTransactionService;
  * Created by root on 7/25/17.
  */
 @Controller
+@RequestMapping("/survey/")
 public class CustomerTransactionController {
 
 
@@ -57,7 +58,7 @@ public class CustomerTransactionController {
     @RequestMapping(value = "customerTransaction", method = RequestMethod.POST)
     public String saveCustomerTransaction(CustomerTransaction customerTransaction) {
         customerTransactionService.saveCustomerTransaction(customerTransaction);
-        return "redirect:/customerTransaction/" + customerTransaction.getId();
+        return "redirect:/survey/customerTransaction/" + customerTransaction.getId();
     }
 
     /**
@@ -69,7 +70,7 @@ public class CustomerTransactionController {
     @RequestMapping("customerTransaction/delete/{id}")
     public String delete(@PathVariable Long id) {
         customerTransactionService.deleteCustomerTransaction(id);
-        return "redirect:/customerTransactions";
+        return "redirect:/survey/customerTransactions";
     }
 
 }

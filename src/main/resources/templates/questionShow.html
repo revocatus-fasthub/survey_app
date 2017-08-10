@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-    <title>Show Questions</title>
+    <title>CRDB Survey | Show Questions</title>
 
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
@@ -68,10 +68,10 @@
                 <td th:text="${answer.count}">count</td>
 
 
-                <td> <a th:text="Up" th:href="${'/answerPosition/' +answer.question.id+'/'+ answer.id+'/'+'up'}">Move Up</a></td>
-                <td> <a th:text="Down" th:href="${'/answerPosition/'+answer.question.id+'/' + answer.id+'/'+'down'}">Move Down</a></td>
-                <td><a th:href="${'/answer/delete/'+question.id+'/' + answer.id}">Delete</a></td>
-                <!--<td><a th:href="${'/question/' + question.id}">Edit</a></td>-->
+                <td> <a th:text="Up" th:href="${'/survey/answerPosition/' +answer.question.id+'/'+ answer.id+'/'+'up'}">Move Up</a></td>
+                <td> <a th:text="Down" th:href="${'/survey/answerPosition/'+answer.question.id+'/' + answer.id+'/'+'down'}">Move Down</a></td>
+                <td><a th:href="${'/survey/answer/delete/'+question.id+'/' + answer.id}">Delete</a></td>
+                <!--<td><a th:href="${'/survey/question/' + question.id}">Edit</a></td>-->
 
             </tr>
         </table>
@@ -81,7 +81,7 @@
 <br/><hr/>
     <div class="container">
 
-        <form autocomplete="off" action="#" th:action="@{/question/{id}(id=${question.id})}" th:object="${answer}" method="post" class="form-horizontal" role="form">
+        <form autocomplete="off" action="#" th:action="@{/survey/question/{id}(id=${question.id})}" th:object="${answer}" method="post" class="form-horizontal" role="form">
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">Choice:</label>

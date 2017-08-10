@@ -21,12 +21,12 @@ import tz.co.fasthub.survey.validator.UserValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.security.Principal;
 
 /**
  * Created by root on 7/27/17.
  */
 @Controller
+@RequestMapping("/survey/")
 public class UserController {
 
 
@@ -49,8 +49,9 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "/survey/index")
-    public String index(Principal principal, Model model){
+
+    @RequestMapping(value = "/index")
+    public String index(){
         return "index";
     }
 
@@ -77,8 +78,8 @@ public class UserController {
 
         userService.save(userForm);
       //securityService.autologin(user.getUsername(), user.getPassword());
-        redirectAttributes.addFlashAttribute("flash.message.user", userForm.getUsername()+" has been Successfully Registered");
-        return "redirect:/users";
+        redirectAttributes.addFlashAttribute("flash.message.user", "Succes. Please Login to continue");
+        return "redirect:/crdb/survey/login";
     }
 
     /**
@@ -114,7 +115,7 @@ public class UserController {
             log.info("his new password: "+userForm.getPassword());
             userService.update(userForm);
             redirectAttributes.addFlashAttribute("flash.message.userSuccess", userForm.getUsername()+" has been Successfully updated");
-            return "redirect:/users";
+            return "redirect:/survey/users";
 
 
     }
@@ -128,7 +129,7 @@ public class UserController {
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         userService.deleteUser(id);
         redirectAttributes.addFlashAttribute("flash.message.user", "User with id "+id+ " has been succesfully deleted");
-        return "redirect:/users";
+        return "redirect:/survey/users";
     }
 
     /**
@@ -136,7 +137,7 @@ public class UserController {
      */
 
     @RequestMapping("/login")
-    public String getLoginForm(Model model,String error, String logout) {
+    public String getLoginForm(Model model, String error, String logout) {
         if (error != null) {
             model.addAttribute("message", "Invalid username of password, try again !");
 

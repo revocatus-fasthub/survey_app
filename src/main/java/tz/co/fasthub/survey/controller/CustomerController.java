@@ -15,6 +15,7 @@ import tz.co.fasthub.survey.service.CustomerService;
  * Created by root on 7/25/17.
  */
 @Controller
+@RequestMapping("/survey/")
 public class CustomerController {
 
     private CustomerService customerService;
@@ -88,7 +89,7 @@ public class CustomerController {
         }
         customerService.saveCustomer(customer);
         redirectAttributes.addFlashAttribute("flash.message.customer", "Customer Successfully Registered!");
-        return "redirect:/customer/" + customer.getId();
+        return "redirect:/survey/customer/" + customer.getId();
     }
 
     /**
@@ -101,7 +102,7 @@ public class CustomerController {
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         customerService.deleteCustomer(id);
         redirectAttributes.addAttribute("flash.message.customer", "Customer Successfully Deleted!");
-        return "redirect:/customers";
+        return "redirect:/survey/customers";
     }
 
 }

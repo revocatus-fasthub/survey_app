@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-    <title>Edit Question</title>
+    <title>CRDB Survey | Edit Question</title>
 
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
@@ -13,7 +13,7 @@
 
     <div class="row">
         <div class="col-md-9 col-md-offset-3">
-            <form autocomplete="off" action="#" th:action="@{/question/{id}(id=${question.id})}" th:object="${answer}" method="post" class="form-horizontal" role="form">
+            <form autocomplete="off" action="#" th:action="@{/survey/question/{id}(id=${question.id})}" th:object="${answer}" method="post" class="form-horizontal" role="form">
 
                 <h2>Edit Answer</h2>
 

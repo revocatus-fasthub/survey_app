@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-    <title>Customers</title>
+    <title>CRDB Survey | Customers</title>
 
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
@@ -19,18 +19,24 @@
                 <th>Id</th>
                 <th>Msisdn </th>
                 <th>Email</th>
+            <!--
                 <th>View</th>
                 <th>Edit</th>
                 <th>Delete</th>
+             -->
             </tr>
             <tr th:each="customer : ${customers}">
                 <td th:text="${customer.id}"><a href="/customer/${customer.id}">Id</a></td>
                 <td th:text="${customer.msisdn}">Msisdn</td>
                 <td th:text="${customer.email}">Email</td>
 
-                <td><a th:href="${'/customer/' + customer.id}">View</a></td>
-                <td><a th:href="${'/customer/edit/' + customer.id}">Edit</a></td>
-                <td><a th:href="${'/customer/delete/' + customer.id}">Delete</a></td>
+                <!--
+                  <td><a th:href="${'/survey/customer/' + customer.id}">View</a></td>
+                  <td><a th:href="${'/survey/customer/edit/' + customer.id}">Edit</a></td>
+                <td><a th:href="${'/survey/customer/delete/' + customer.id}">Delete</a></td>
+                -->
+
+
             </tr>
         </table>
 

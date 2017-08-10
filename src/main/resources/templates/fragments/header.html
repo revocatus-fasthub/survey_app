@@ -3,7 +3,7 @@
 
 <head lang="en">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
     <link href="../../static/css/style.css" th:href="@{css/style.css}" rel="stylesheet" media="screen"/>
 </head>
 
@@ -12,13 +12,14 @@
 
     <div th:fragment="header">
         <section>
-            <div class="pull-right" style="padding-right:5px" sec:authorize="isAuthenticated()">
+            <div class="pull-right" style="padding-right:5px">
               <span class="user-label">
-                   <small>Welcome, </small>
+
+                   <small>Logged User: </small>
                     <span sec:authentication="name"></span>
-              </span>  |
-                <a th:href="@{'/users'}">View Users</a> |
-                <a th:href="@{'/logout'}">Logout</a>
+              </span>
+                |   <a th:href="@{'/survey/users'}">View Users</a> |
+                    <a th:href="@{'/survey/logout'}">Logout</a>
             </div>
         </section>
         <br/>
@@ -27,11 +28,11 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#" th:href="@{/survey/index}">Home</a>
                     <ul class="nav navbar-nav">
-                        <li><a href="#" th:href="@{'/addQuestion'}"> Add Questions</a></li>
-                        <li><a href="#" th:href="@{'/questions'}"> List all questions</a></li>
+                        <li><a href="#" th:href="@{'/survey/addQuestion'}"> Add Questions</a></li>
+                        <li><a href="#" th:href="@{'/survey/questions'}"> List all questions</a></li>
                        <!-- <li><a href="#" th:href="@{'/customer/new'}"> Register Customer</a></li>-->
-                        <li><a href="#" th:href="@{'/customers'}"> List all Customers</a></li>
-                        <li><a href="#" th:href="@{'/customerTransactions'}"> View Customer Details</a></li>
+                        <li><a href="#" th:href="@{'/survey/customers'}"> List all Customers</a></li>
+                        <li><a href="#" th:href="@{'/survey/customerTransactions'}"> View Customer Details</a></li>
 
 
                     </ul>

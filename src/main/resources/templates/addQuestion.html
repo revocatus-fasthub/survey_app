@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-    <title>Add Question</title>
+    <title>CRDB Survey | Add Question</title>
 
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
@@ -14,7 +14,7 @@
         <div class="col-md-9 col-md-offset-3">
             <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-success"></h3>
 
-            <form autocomplete="off" action="#" th:action="@{/question}" th:object="${question}" method="post" class="form-horizontal" role="form">
+            <form autocomplete="off" action="#" th:action="@{/survey/question}" th:object="${question}" method="post" class="form-horizontal" role="form">
 
                 <h2>Create Your Question Here</h2>
 
@@ -23,8 +23,8 @@
                 <div class="form-group">
                     <div class="col-sm-7">
                         <input type="text" th:placeholder="Question" class="form-control" th:field="*{qsn}"/><br/>
-                        <select class="form-control" name="type" id="type" th:field="*{type}">
-                            <option value="0" th:text="${'---Select---'}"></option>
+                        <select class="col-sm-5" name="type" id="type" th:field="*{type}">
+                            <option value="0" th:text="${'---Select Type---'}"></option>
                             <option th:value="${'Closed Ended'}" th:selected="${question.isSelected(lastselected)}">Closed Ended</option>
                             <option th:value="${'Open Ended'}" th:selected="${question.isSelected(lastselected)}">Open Ended</option>
                         </select>
@@ -32,9 +32,9 @@
                 </div>
 
 
-                <div class="form-group">
-                    <div class="col-sm-9">
-                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                <div class="form-group" align="right">
+                    <div class="col-sm-5">
+                        <button type="submit" class="btn btn-success">Submit</button>
                     </div>
                 </div>
 

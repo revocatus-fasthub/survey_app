@@ -28,6 +28,7 @@ import static tz.co.fasthub.survey.constants.Constant.savedQuestion;
  * Created by root on 7/17/17.
  */
 @Controller
+@RequestMapping("/survey/")
 public class QuestionController {
 
     private final QuestionService questionService;
@@ -96,7 +97,7 @@ public class QuestionController {
         model.addAttribute("answers", answerService.getAnswerByQsnId(question));
         model.addAttribute("question", questionService.getQsnById(question.getId()));
         redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Answer Successfully Saved!");
-        return "redirect:/question/"+question.getId();
+        return "redirect:/survey/question/"+question.getId();
     }
 
 
@@ -131,7 +132,7 @@ public class QuestionController {
         Long id = savedQuestion.getId();
 
         redirectAttributes.addFlashAttribute("flash.message.question", "Question " + id + " Successfully Updated!");
-        return "redirect:question/" + id;
+        return "redirect:/survey/question/" + id;
 
     }
 
@@ -150,7 +151,7 @@ public class QuestionController {
         Long id = savedQuestion.getId();
 
         redirectAttributes.addFlashAttribute("flash.message.question", "Question " + id + " Successfully Saved!");
-        return "redirect:question/" + id;
+        return "redirect:/survey/question/" + id;
 
     }
 
@@ -209,7 +210,7 @@ public class QuestionController {
             }
         }
 
-        return "redirect:/questions";
+        return "redirect:/survey/questions";
     }
 
 
@@ -271,7 +272,7 @@ public class QuestionController {
             }
         }
 
-        return "redirect:/question/"+fetchedQuestion.getId();
+        return "redirect:/survey/question/"+fetchedQuestion.getId();
     }
 
 
@@ -281,17 +282,17 @@ public class QuestionController {
             if(id!=null){
                 questionService.deleteQuestion(id);
                 redirectAttributes.addFlashAttribute("flash.message.questionSuccess", "Question with id "+id+" has been successfully deleted");
-                return "redirect:/questions";
+                return "redirect:/survey/questions";
             }
             else {
                 redirectAttributes.addFlashAttribute("flash.message.questionError", "Error! \nCannot delete question with id "+id+". This question has other details in the Customer Details list");
-                return "redirect:/questions";
+                return "redirect:/survey/questions";
             }
 
         }catch (Exception e){
-            redirectAttributes.addFlashAttribute("flash.message.questionError", "Error" +
-                    "! \nCannot delete question with id "+id+". Please delete question choices/answers first." );
-            return "redirect:/questions";
+            redirectAttributes.addFlashAttribute("flash.message.questionError", "Failed" +
+                    "! \nCannot delete question with id "+id+". \n\nPlease delete question choices/answers first." );
+            return "redirect:/survey/questions";
         }
 
     }
@@ -305,15 +306,15 @@ public class QuestionController {
                 answerService.deleteAnswer(id);
                 model.addAttribute("question", questionService.getQsnById(qsdId));
                 redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Answer with id "+id+" has been successfully deleted");
-                return "redirect:/question/"+qsdId;
+                return "redirect:/survey/question/"+qsdId;
             }else {
                 redirectAttributes.addFlashAttribute("flash.message.answerError", "Answer not found with id :"+id);
-                return "redirect:/question/"+qsdId;
+                return "redirect:/survey/question/"+qsdId;
 
             }
         }catch (Exception e){
                         redirectAttributes.addFlashAttribute("flash.message.answerError", "Error! \nCannot delete answer with id "+id+"." );
-                        return "redirect:/question/"+qsdId;
+                        return "redirect:/survey/question/"+qsdId;
                 }
 
     }

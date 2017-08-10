@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-    <title>Customer Transaction</title>
+    <title>CRDB Survey | Customer Transaction</title>
 
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
@@ -21,9 +21,12 @@
                 <th>Question</th>
                 <th>Answer</th>
                 <th>Timestamp</th>
+                <!--
                 <th>View</th>
                 <th>Edit</th>
                 <th>Delete</th>
+                -->
+
             </tr>
             <tr th:each="customerTransaction : ${customerTransactions}">
                 <td th:text="${customerTransaction.id}"><a href="/customerTransaction/${customerTransaction.id}">Id</a></td>
@@ -34,14 +37,17 @@
                 <td th:text="${customerTransaction.timestamp}">timestamp</td>
 
                 <!--
-                th:text="${customerTransaction.answer.ans != null} ? ${customerTransaction.answer.ans} : 'null value'"
+                      th:text="${customerTransaction.answer.ans != null} ? ${customerTransaction.answer.ans} : 'null value'"
                      th:if="${!#strings.isEmpty(customerTransaction)}"
-                     <td th:text="${customerTransaction.answer.ans != null ? customerTransaction.answer.ans : '-' }"></td> -->
+                     <td th:text="${customerTransaction.answer.ans != null ? customerTransaction.answer.ans : '-' }"></td>
+                 -->
 
+                <!--
+                <td><a th:href="${'/survey/customerTransaction/' + customerTransaction.id}">View</a></td>
+                <td><a th:href="${'/survey/customerTransaction/edit/' + customerTransaction.id}">Edit</a></td>
+                <td><a th:href="${'/survey/customerTransaction/delete/' + customerTransaction.id}">Delete</a></td>
+                -->
 
-                <td><a th:href="${'/customerTransaction/' + customerTransaction.id}">View</a></td>
-                <td><a th:href="${'/customerTransaction/edit/' + customerTransaction.id}">Edit</a></td>
-                <td><a th:href="${'/customerTransaction/delete/' + customerTransaction.id}">Delete</a></td>
             </tr>
         </table>
 
