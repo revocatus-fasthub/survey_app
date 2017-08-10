@@ -42,11 +42,11 @@ public class MainController {
     public String getLoginForm(Model model, String error, String logout) {
         if (error != null) {
             model.addAttribute("message", "Invalid username of password, try again !");
-            return "redirect:/crdb/login";
+            return "login";
 
         } else if (logout != null) {
             model.addAttribute("message", "Logged Out successfully, login again to continue !");
-            return "redirect:/crdb/login";
+            return "login";
         }
 
         return "redirect:/survey/index";
@@ -59,7 +59,7 @@ public class MainController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         redirectAttributes.addFlashAttribute("flash.message.user","Successfully logged out");
-        return "redirect:/crdb/login";
+        return "login";
     }
 
 

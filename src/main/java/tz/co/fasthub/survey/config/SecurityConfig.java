@@ -60,11 +60,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/survey/index")
                 .failureUrl("/login?error")
                 .and()
-                .logout().logoutUrl("/survey/logout").logoutSuccessUrl("/survey/login?logout")
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout")
                 .and()
                 .exceptionHandling().accessDeniedPage("/403")
                 .and()
-                .csrf().and().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+                .csrf().disable().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
 
     }
