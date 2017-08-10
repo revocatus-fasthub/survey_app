@@ -50,9 +50,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().and()
-                .authorizeRequests().antMatchers("/**").access("hasRole('ADMIN')")
-                .antMatchers("/survey/registration/new", "/resources/static/**").permitAll()
+        http    .headers().cacheControl().and().defaultsDisabled()
+                .contentTypeOptions();
+
+        http    .authorizeRequests().and()
+                .authorizeRequests().antMatchers("/survey/registration/new", "/resources/static/**").permitAll()
+                .antMatchers("/**").access("hasRole('ADMIN')")
                 .anyRequest().authenticated().and()
                 .formLogin()
                 .loginPage("/crdb/login").permitAll().loginProcessingUrl("/login")
@@ -60,12 +63,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/survey/index")
                 .failureUrl("/login?error")
                 .and()
-                .logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout")
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/crdb/login")
                 .and()
                 .exceptionHandling().accessDeniedPage("/403")
                 .and()
                 .csrf().disable().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
-
 
     }
 
