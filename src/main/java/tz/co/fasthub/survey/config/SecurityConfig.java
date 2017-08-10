@@ -15,7 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -24,6 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
 
+    private AccessDeniedHandler accessDeniedHandler;
 
 
     @Autowired
@@ -47,12 +48,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry
-                .addResourceHandler("/resources/**")
-                .addResourceLocations("/resources/");
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().and()
@@ -60,16 +55,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/survey/registration/new", "/resources/static/**").permitAll()
                 .anyRequest().authenticated().and()
                 .formLogin()
-                .loginPage("/crdb/login").permitAll().loginProcessingUrl("/survey/login")
+                .loginPage("/crdb/login").permitAll().loginProcessingUrl("/login")
                 .usernameParameter("username").passwordParameter("password")
                 .defaultSuccessUrl("/survey/index")
-                .failureUrl("/survey/login?error")
+                .failureUrl("/login?error")
                 .and()
                 .logout().logoutUrl("/survey/logout").logoutSuccessUrl("/survey/login?logout")
                 .and()
                 .exceptionHandling().accessDeniedPage("/403")
                 .and()
-                .csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
+                .csrf().and().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
 
     }

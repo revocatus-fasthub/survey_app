@@ -51,7 +51,7 @@ public class UserValidator implements Validator {
         }
 
         if (!user.getCpassword().equals(user.getPassword())) {
-            errors.rejectValue("passwordConfirm", "Diff.userForm.passwordConfirm");
+            errors.rejectValue("cpassword", "Diff.userForm.passwordConfirm");
         }
     }
 }

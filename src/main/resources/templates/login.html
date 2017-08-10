@@ -22,15 +22,15 @@
                         <h3 class="panel-title">Please sign in</h3>
                     </div>
                     <div class="panel-body">
-                        <form th:action="${'/survey/login'}" th:object="${user}" th:value="${'/survey/login'}" method="post" class="form-horizontal">
+                        <form th:action="${'/login'}" th:object="${user}" th:value="${'/login'}" method="post" class="form-horizontal">
 
-                            <div th:if="${param.error!=null}">
+                            <div th:if="${param.error}">
                                 <div class="alert alert-danger">
                                     <p>Invalid username and password.</p>
                                 </div>
                             </div>
 
-                            <div th:if="${param.logout!=null}">
+                            <div th:if="${param.logout}">
                                 <div class="alert alert-success">
                                     <p>You have been logged out successfully.</p>
                                 </div>
