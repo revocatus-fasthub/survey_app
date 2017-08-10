@@ -12,7 +12,16 @@
 
     <h3 th:if="${#vars['flash.message.user']}" th:text="${#vars['flash.message.user']}" class="alert alert-success"></h3>
 
-        <div th:if="${not #lists.isEmpty(users)}">
+    <div th:fragment="header">
+        <section>
+            <div class="pull-right" style="padding-right:5px">
+                <small><a th:href="@{'/survey/registration/new'}">Register new User</a></small>
+            </div>
+        </section>
+    </div>
+
+
+    <div th:if="${not #lists.isEmpty(users)}">
         <h2>Users</h2>
         <table class="table table-striped">
             <tr>

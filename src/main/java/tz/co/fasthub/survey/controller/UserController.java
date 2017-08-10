@@ -78,7 +78,7 @@ public class UserController {
         userService.save(userForm);
       //securityService.autologin(user.getUsername(), user.getPassword());
         redirectAttributes.addFlashAttribute("flash.message.user", "Success. Please Login to continue");
-        return "redirect:/crdb/survey/login";
+        return "redirect:/users";
     }
 
     /**
