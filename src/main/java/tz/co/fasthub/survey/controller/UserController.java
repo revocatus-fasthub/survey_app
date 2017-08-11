@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileSystemUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +19,7 @@ import tz.co.fasthub.survey.service.SecurityService;
 import tz.co.fasthub.survey.service.UserService;
 import tz.co.fasthub.survey.validator.UserValidator;
 
-import java.io.File;
+import java.security.Principal;
 
 /**
  * Created by root on 7/27/17.
@@ -113,7 +112,7 @@ public class UserController {
           else
             log.info("his new password: "+userForm.getPassword());
             userService.update(userForm);
-            redirectAttributes.addFlashAttribute("flash.message.userSuccess", userForm.getUsername()+" has been Successfully updated");
+            redirectAttributes.addFlashAttribute("flash.message.userSuccess", userForm.getUsername()+" has been successfully updated");
             return "redirect:/survey/users";
 
 
@@ -125,9 +124,15 @@ public class UserController {
      *
      */
     @RequestMapping("user/delete/{id}")
-    public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    public String delete(@PathVariable Long id, User user, RedirectAttributes redirectAttributes, Principal principal) {
+       String loggedUser = userService.getUserById(id).getUsername(); //get logged username by id
+        String name = principal.getName(); //get logged in username
+        if(loggedUser.equals(name)){
+            redirectAttributes.addFlashAttribute("flash.message.userFail", "Can not delete this user. You are logged in as '"+loggedUser+"'.");
+            return "redirect:/survey/users";
+        }
         userService.deleteUser(id);
-        redirectAttributes.addFlashAttribute("flash.message.user", "User with id "+id+ " has been succesfully deleted");
+        redirectAttributes.addFlashAttribute("flash.message.user", "User with id "+id+ " has been successfully deleted");
         return "redirect:/survey/users";
     }
 
