@@ -30,20 +30,21 @@
                     </div>
 
                         <br/>
-                    <div class="panel-body">
+                    <div class="panel-body" style="color: #c0c0c0">
                         <form th:action="${'/login'}" th:object="${user}" th:value="${'/login'}" method="post" class="form-horizontal">
-
-                            <div th:if="${param.error}">
-                                <div class="alert alert-danger">
-                                    <p>Invalid username and password.</p>
-                                </div>
-                            </div>
 
                             <div th:if="${param.logout}">
                                 <div class="alert alert-success">
                                     <p>You have been logged out successfully.</p>
                                 </div>
                             </div>
+
+                            <div th:if="${param.error}">
+                                <div class="alert alert-danger">
+                                    <p>Invalid username or password.</p>
+                                </div>
+                            </div>
+
 
                             <div th:if="${param.accessDenied!=null}">
                                 <div class="alert alert-danger">
@@ -62,9 +63,16 @@
 
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-                            <div class="form-">
-                                <input type="submit" width="80%" class="btn btn-block btn-success" value="Log in"/>
-                            </div><br/>
+
+                            <div class="panel-footer">
+                                <button class="btn btn-sm btn-success btn-block" type="submit">
+                                    Login
+                                </button>
+                            </div>
+
+                            <!--<div class="form-">-->
+                                <!--<input type="submit" width="80%" class="btn btn-block btn-success" value="Log in"/>-->
+                            <!--</div><br/>-->
 
                             <!---->
                             <!--<div class="row">-->
