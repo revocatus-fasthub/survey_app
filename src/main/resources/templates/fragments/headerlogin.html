@@ -8,14 +8,24 @@
 </head>
 
 <body>
+
 <div class="container">
     <div th:fragment="header">
-        <div class="jumbotron">
 
+        <div class="jumbotron" th:align="center">
             <div class="row text-center">
-                <img src="../../static/images/crdb.png" width="350" height="250" th:src="@{/images/crdb.png}"/>
+                <img src="../../static/images/crdb.png" width="250" height="150" th:src="@{/images/crdb.png}"/>
             </div>
         </div>
+
+        <!--
+             <div>
+                            <h2 th:align="center" style="color: #4bb242;">
+                                <img src="../../static/images/crdb.png" width="250" height="150" th:src="@{/images/crdb.png}"/>
+                            </h2>
+                        </div>
+
+        -->
 
     </div>
 </div>

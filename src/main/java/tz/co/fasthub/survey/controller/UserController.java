@@ -49,7 +49,6 @@ public class UserController {
     }
 
 
-
     @RequestMapping(value = "/index")
     public String index(){
         return "index";
@@ -78,7 +77,7 @@ public class UserController {
 
         userService.save(userForm);
       //securityService.autologin(user.getUsername(), user.getPassword());
-        redirectAttributes.addFlashAttribute("flash.message.user", "Succes. Please Login to continue");
+        redirectAttributes.addFlashAttribute("flash.message.user", "Success. Please Login to continue");
         return "redirect:/crdb/survey/login";
     }
 
@@ -140,10 +139,11 @@ public class UserController {
     public String getLoginForm(Model model, String error, String logout) {
         if (error != null) {
             model.addAttribute("message", "Invalid username of password, try again !");
+            return "redirect:/crdb/survey/login";
 
         } else if (logout != null) {
-
             model.addAttribute("message", "Logged Out successfully, login again to continue !");
+            return "redirect:/crdb/survey/login";
         }
 
         return "redirect:/survey/index";
