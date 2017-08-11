@@ -24,26 +24,32 @@
                             <input type="hidden" th:field="*{id}"/>
 
                             <br/>
-                            <div class="col-sm-12">
-                                <input type="tel" class="form-control" id="username" th:placeholder="Username" th:field="*{username}"/>
-                                <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="validation-message" th:class="alert-danger"></label>
+                            <div class="input-group input-sm">
+                                <label class="input-group-addon" for="username"><i class="fa fa-user-o" aria-hidden="true"></i></label>
+                                <input type="text" class="form-control" id="username" placeholder="Username" th:field="*{username}"/>
+                            </div>
+                            <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="validation-message" th:class="alert-danger"></label>
 
-                            </div><br/><br/>
-                            <div class="col-sm-12">
-                                <input type="password" class="form-control" id="password" th:placeholder="Password" th:field="*{password}"/>
-                                <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message" th:class="alert-danger"></label>
-                            </div><br/><br/>
+                            <div class="input-group input-sm">
+                                <label class="input-group-addon" for="password"><i class="fa fa-key" aria-hidden="true"></i></label>
+                                <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}"/>
+                            </div>
+                            <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message" th:class="alert-danger"></label>
 
+                            <div class="input-group input-sm">
+                                <label class="input-group-addon" for="cpassword"><i class="fa fa-key" aria-hidden="true"></i></label>
+                                <input type="password" class="form-control" id="cpassword" placeholder="Confirm Password" th:field="*{cpassword}"/>
+                            </div>
+                            <label th:if="${#fields.hasErrors('cpassword')}" th:errors="*{cpassword}" class="validation-message" th:class="alert-danger"></label>
 
-                            <div class="col-sm-12">
-                                <input type="password" class="form-control" id="cpassword" th:placeholder="ConfirmPassword" th:field="*{cpassword}"/>
-                                <label th:if="${#fields.hasErrors('cpassword')}" th:errors="*{cpassword}" class="validation-message" th:class="alert-danger"></label>
-                                <br/>
-                                    <center>
-                                        <a class="btn btn-secondary" th:href="${'/survey/users'}">Cancel</a>
-                                        <button type="submit" class="btn btn-success">Register</button>
-                                    </center>
-                                </div><br/>
+                            <br/>
+
+                            <div class="input-group input-sm">
+                            <center>
+                                <a class="btn btn-secondary" th:href="${'/survey/users'}">Cancel</a>
+                                <button type="submit" class="btn btn-sm btn-success">Register</button>
+                            </center>
+                            </div>
 
                         </form>
                     </div>
