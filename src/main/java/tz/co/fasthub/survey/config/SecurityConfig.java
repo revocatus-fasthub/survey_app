@@ -53,9 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http    .headers().cacheControl().and().defaultsDisabled()
                 .contentTypeOptions();
 
-        http    .authorizeRequests().and()
-                .authorizeRequests().antMatchers( "/resources/static/**").permitAll()
-                .antMatchers("/**").access("hasRole('ADMIN')")
+        http    .authorizeRequests()
+                .antMatchers("/survey/**").access("hasRole('ADMIN')")
                 .anyRequest().authenticated().and()
                 .formLogin()
                 .loginPage("/crdb/login").permitAll().loginProcessingUrl("/login")
@@ -71,12 +70,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    public void configureWeb(WebSecurity web) throws Exception {
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
         //Web resources
         web.ignoring().antMatchers("/css/**");
-      //  web.ignoring().antMatchers("/scripts/**");
+        //  web.ignoring().antMatchers("/scripts/**");
         web.ignoring().antMatchers("/images/**");
     }
+
 
     @Bean(name="passwordEncoder")
     public PasswordEncoder passwordencoder(){

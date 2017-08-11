@@ -33,12 +33,6 @@ public class MainController {
         return "login";
     }
 
-    @RequestMapping(value = "/crdb/login?error")
-    public String loginError(){
-        return "login";
-    }
-
-
     /**
      * Login to Page.
      */

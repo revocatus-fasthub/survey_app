@@ -3,18 +3,24 @@ package tz.co.fasthub.survey.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileSystemUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import tz.co.fasthub.survey.domain.User;
+import tz.co.fasthub.survey.repository.UserRepository;
 import tz.co.fasthub.survey.service.SecurityService;
 import tz.co.fasthub.survey.service.UserService;
 import tz.co.fasthub.survey.validator.UserValidator;
+
+import java.io.File;
 
 /**
  * Created by root on 7/27/17.
@@ -125,5 +131,20 @@ public class UserController {
         return "redirect:/survey/users";
     }
 
+    @Bean
+    CommandLineRunner setupUsers(UserRepository userRepository){
+
+        return (args)-> {
+            User user = userService.findByUsername("admin");
+            if (user==null){
+                user=new User();
+                user.setUsername("admin");
+                user.setPassword("AdMin123");
+                user.setRole("ADMIN");
+                user.setCpassword("AdMin123");
+                userService.save(user);
+            }
+        };
+    }
 
 }
