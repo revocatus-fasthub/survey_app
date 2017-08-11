@@ -18,13 +18,17 @@
 <br/><br/><br/>
 
             <div class="col-md-3 col-md-offset-4">
-                <div class="panel panel-default">
+                <div >
 
                     <img src="../static/images/CRDB%20BANK%20LOGO.png" width="257" height="130" th:src="@{/images/CRDB%20BANK%20LOGO.png}"/>
 
+                    <div class="panel panel-default">
+
                     <div class="panel-heading">
                        <center> <h3 class="panel-title">Please sign in</h3></center>
-                    </div><br/>
+                    </div>
+
+                        <br/>
                     <div class="panel-body">
                         <form th:action="${'/login'}" th:object="${user}" th:value="${'/login'}" method="post" class="form-horizontal">
 
@@ -57,13 +61,11 @@
 
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-                            <div th:fragment="header">
-                                <section>
+                            <div class="input-group-addon">
                                     <input type="submit"  class="btn btn-block btn-success" value="Log in"/><br/>
-                                        <!--span login-->
-                                </section>
                             </div>
                         </form>
+                    </div>
                     </div>
                 </div>
             </div>
