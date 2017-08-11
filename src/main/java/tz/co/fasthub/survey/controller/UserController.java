@@ -3,10 +3,7 @@ package tz.co.fasthub.survey.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,9 +15,6 @@ import tz.co.fasthub.survey.domain.User;
 import tz.co.fasthub.survey.service.SecurityService;
 import tz.co.fasthub.survey.service.UserService;
 import tz.co.fasthub.survey.validator.UserValidator;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by root on 7/27/17.
@@ -77,8 +71,8 @@ public class UserController {
 
         userService.save(userForm);
       //securityService.autologin(user.getUsername(), user.getPassword());
-        redirectAttributes.addFlashAttribute("flash.message.user", "Success. Please Login to continue");
-        return "redirect:/users";
+        redirectAttributes.addFlashAttribute("flash.message.user", "Success. New user registered");
+        return "redirect:/survey/users";
     }
 
     /**
@@ -130,34 +124,6 @@ public class UserController {
         redirectAttributes.addFlashAttribute("flash.message.user", "User with id "+id+ " has been succesfully deleted");
         return "redirect:/survey/users";
     }
-
-    /**
-     * Login to Page.
-     */
-
-    @RequestMapping("/login")
-    public String getLoginForm(Model model, String error, String logout) {
-        if (error != null) {
-            model.addAttribute("message", "Invalid username of password, try again !");
-            return "redirect:/crdb/survey/login";
-
-        } else if (logout != null) {
-            model.addAttribute("message", "Logged Out successfully, login again to continue !");
-            return "redirect:/crdb/survey/login";
-        }
-
-        return "redirect:/survey/index";
-    }
-
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
-     public String logout(HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
-        redirectAttributes.addFlashAttribute("flash.message.user","Successfully logged out");
-        return "redirect:/survey/login";
-     }
 
 
 }

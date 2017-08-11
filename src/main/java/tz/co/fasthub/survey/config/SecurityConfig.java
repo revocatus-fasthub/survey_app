@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .contentTypeOptions();
 
         http    .authorizeRequests().and()
-                .authorizeRequests().antMatchers("/survey/registration/new", "/resources/static/**").permitAll()
+                .authorizeRequests().antMatchers( "/resources/static/**").permitAll()
                 .antMatchers("/**").access("hasRole('ADMIN')")
                 .anyRequest().authenticated().and()
                 .formLogin()

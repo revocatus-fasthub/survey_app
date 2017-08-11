@@ -7,7 +7,7 @@
 <body>
 <br/><br/>
 <div class="container">
-    <!--/*/ <th:block th:include="fragments/headerlogin :: header"></th:block> /*/-->
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
     <div class="container">
         <h3 th:if="${#vars['flash.message.user']}" th:text="${#vars['flash.message.user']}" class="alert alert-success"></h3>
@@ -41,7 +41,7 @@
                                 <label th:if="${#fields.hasErrors('cpassword')}" th:errors="*{cpassword}" class="validation-message" th:class="alert-danger"></label>
                                 <br/>
                                     <center>
-                                        <a class="btn btn-secondary" th:href="${'/crdb/login'}">Cancel</a>
+                                        <a class="btn btn-secondary" th:href="${'/survey/users'}">Cancel</a>
                                         <button type="submit" class="btn btn-success">Register</button>
                                     </center>
                                 </div><br/>
