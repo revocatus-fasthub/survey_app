@@ -12,24 +12,32 @@
 
     <div th:fragment="header">
         <section>
-            <div class="pull-right" style="padding-right:5px">
-              <span class="user-label">
+            <div class="pull-left" style="...">
+                <img src="../../static/images/CRDB%20BANK%20LOGO.png" width="140" height="50" th:src="@{/images/CRDB%20BANK%20LOGO.png}"/>
+            </div>
 
-                   <small>Logged User: </small>
+            <div class="pull-right" style="padding-right:5px" >
+              <p>
+                  <span class="user-label">
+                  <strong> <small>Logged User: </small> </strong>
                     <span sec:authentication="name"></span>
               </span>
-                |   <a th:href="@{'/survey/users'}">View Users</a> |
+              </p>
+                <p>
+                    <a th:href="@{'/survey/users'}">View Users</a> |
                     <a th:href="@{'/logout'}">Logout</a>
+                </p>
+
             </div>
         </section>
-        <br/>
+        <br/><br/><br/>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#" th:href="@{/survey/index}">Home</a>
                     <ul class="nav navbar-nav">
                         <li><a href="#" th:href="@{'/survey/addQuestion'}"> Add Questions</a></li>
-                        <li><a href="#" th:href="@{'/survey/questions'}"> List all questions</a></li>
+                        <!--<li><a href="#" th:href="@{'/survey/questions'}"> List all questions</a></li>-->
                        <!-- <li><a href="#" th:href="@{'/customer/new'}"> Register Customer</a></li>-->
                         <li><a href="#" th:href="@{'/survey/customers'}"> List all Customers</a></li>
                         <li><a href="#" th:href="@{'/survey/customerTransactions'}"> View Customer Details</a></li>
@@ -41,11 +49,11 @@
             </div>
         </nav>
 
-        <div class="jumbotron">
-            <div class="row text-center">
-                <img src="../../static/images/crdb.png" width="300" th:src="@{/images/crdb.png}"/>
-            </div>
-        </div>
+        <!--<div class="jumbotron">-->
+            <!--<div class="row text-center">-->
+                <!--<img src="../../static/images/crdb.png" width="150" th:src="@{/images/crdb.png}"/>-->
+            <!--</div>-->
+        <!--</div>-->
 
     </div>
 </div>

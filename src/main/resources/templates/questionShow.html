@@ -42,7 +42,25 @@
             </div>
         </form>
     </div>
+<hr/><br/>
 
+
+    <div class="container">
+
+        <form autocomplete="off" action="#" th:action="@{/survey/question/{id}(id=${question.id})}" th:object="${answer}" method="post" class="form-horizontal" role="form">
+
+            <div class="pull-left" th:class="col-md-9" th:width="60" style="padding-right: 20px">
+                <input type="text" class="form-control" placeholder="Add New answer/choice" th:field="*{ans}"/><br/> <!--th:field="*{ans}"-->
+            </div>
+
+            <div class="pull-left" style="padding-right: 30px">
+                <button type="submit" class="btn btn-primary">Add Choice</button>
+            </div>
+        </form>
+
+    </div>
+
+    <hr/>
 
     <div>
         <h3 th:if="${#vars['flash.message.answerSuccess']}" th:text="${#vars['flash.message.answerSuccess']}" class="alert alert-success"></h3>
@@ -79,19 +97,6 @@
     </div>
 
 <br/><hr/>
-    <div class="container">
-
-        <form autocomplete="off" action="#" th:action="@{/survey/question/{id}(id=${question.id})}" th:object="${answer}" method="post" class="form-horizontal" role="form">
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Choice:</label>
-                <div class="col-md-5 col-md-offset-0">
-                    <input type="text" class="form-control" placeholder="add new choice" th:field="*{ans}"/><br/> <!--th:field="*{ans}"-->
-                    <button type="submit" class="btn btn-primary">Add Choice</button>
-                </div>
-            </div>
-        </form>
-    </div>
 </div>
 
 

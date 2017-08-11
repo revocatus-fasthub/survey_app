@@ -116,6 +116,10 @@ public class QuestionController {
     @RequestMapping("/addQuestion")
     public String newQuestion(Model model) {
         model.addAttribute("question", new Question());
+
+        model.addAttribute("questions", questionService.listAllQuestionsByAsc());
+    //    redirectAttributes.addFlashAttribute("flash.message.question", "Success!");
+
         return "addQuestion";
     }
 
