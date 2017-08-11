@@ -13,7 +13,7 @@
     <h3 th:if="${#vars['flash.message.customer']}" th:text="${#vars['flash.message.customer']}" class="alert alert-success"></h3>
 
     <div th:if="${not #lists.isEmpty(customers)}">
-        <h2>Customers</h2>
+        <h3>Customers</h3>
         <table class="table table-striped">
             <tr>
                 <th>Id</th>

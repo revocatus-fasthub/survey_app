@@ -76,7 +76,7 @@
                 <th>Count</th>
                 <th>Move Up</th>
                 <th>Move Down</th>
-                <th>Action</th>
+                <th>Delete</th>
             </tr>
             <tr th:each="answer : ${answers}">
                 <td th:text="${answer.id}">Id</td>
@@ -86,9 +86,9 @@
                 <td th:text="${answer.count}">count</td>
 
 
-                <td> <a th:text="Up" th:href="${'/survey/answerPosition/' +answer.question.id+'/'+ answer.id+'/'+'up'}">Move Up</a></td>
-                <td> <a th:text="Down" th:href="${'/survey/answerPosition/'+answer.question.id+'/' + answer.id+'/'+'down'}">Move Down</a></td>
-                <td><a th:href="${'/survey/answer/delete/'+question.id+'/' + answer.id}">Delete</a></td>
+                <td> <a th:href="${'/survey/answerPosition/' +answer.question.id+'/'+ answer.id+'/'+'up'}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></td>
+                <td> <a th:href="${'/survey/answerPosition/'+answer.question.id+'/' + answer.id+'/'+'down'}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></td>
+                <td> <a th:href="${'/survey/answer/delete/'+question.id+'/' + answer.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                 <!--<td><a th:href="${'/survey/question/' + question.id}">Edit</a></td>-->
 
             </tr>

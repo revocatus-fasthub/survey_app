@@ -14,21 +14,24 @@
 
     <div th:fragment="header">
         <section>
-            <div class="pull-right" style="padding-right:5px">
-                <h3><a th:href="@{'/survey/registration/new'}">Register new User</a></h3>
+            <div class="pull-left" style="padding-right:5px">
+                <h3>Users</h3>
+            </div>
+
+            <div class="pull-right" style="padding-right:2px">
+                <h3><a th:href="@{'/survey/registration/new'}"><i class="fa fa-user-plus" aria-hidden="true"></i><button class="btn btn-sm">Add</button></a></h3>
             </div>
         </section>
     </div>
 
 
     <div th:if="${not #lists.isEmpty(users)}">
-        <h2>Users</h2>
         <table class="table table-striped">
             <tr>
                 <th>Id</th>
                 <th>Username </th>
                 <!-- <th>Change Password </th> -->
-                <th>Action </th>
+                <th>Delete</th>
 
             </tr>
             <tr th:each="user : ${users}">
@@ -37,7 +40,7 @@
 
                 <!-- <td><a th:href="${'survey/user/' + user.id}">View</a></td>
                 <td><a th:href="${'survey/user/edit/' + user.id}">Change Password</a></td> -->
-                <td><a th:href="${'/survey/user/delete/' + user.id}">Delete</a></td>
+                <td><a th:href="${'/survey/user/delete/' + user.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
             </tr>
         </table>
 

@@ -3,6 +3,7 @@
 <head lang="en">
     <title>Login</title>
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
 </head>
 <body>
 <br/><br/>
@@ -61,9 +62,14 @@
 
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-                            <div class="input-group-addon">
-                                    <input type="submit"  class="btn btn-block btn-success" value="Log in"/><br/>
-                            </div>
+                            <div class="form-">
+                                <input type="submit" width="80%" class="btn btn-block btn-success" value="Log in"/>
+                            </div><br/>
+
+                            <!---->
+                            <!--<div class="row">-->
+                                    <!--<input type="submit"  class="btn btn-block btn-success" value="Log in"/><br/>-->
+                            <!--</div>-->
                         </form>
                     </div>
                     </div>
