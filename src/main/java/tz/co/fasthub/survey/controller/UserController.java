@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import tz.co.fasthub.survey.domain.Answer;
+import tz.co.fasthub.survey.domain.Question;
 import tz.co.fasthub.survey.domain.User;
 import tz.co.fasthub.survey.repository.UserRepository;
-import tz.co.fasthub.survey.service.SecurityService;
-import tz.co.fasthub.survey.service.UserService;
+import tz.co.fasthub.survey.service.*;
 import tz.co.fasthub.survey.validator.UserValidator;
 
 import java.security.Principal;
@@ -34,23 +35,57 @@ public class UserController {
 
 
     private final UserService userService;
+    private final AnswerService answerService;
+    private final QuestionService questionService;
+    private final CustomerTransactionService customerTransactionService;
 
     private final SecurityService securityService;
 
     private final UserValidator userValidator;
 
+    QuestionController questionController;
+
     @Autowired
-    public UserController(BCryptPasswordEncoder bCryptPasswordEncoder, UserService userService, SecurityService securityService, UserValidator userValidator) {
+    public UserController(BCryptPasswordEncoder bCryptPasswordEncoder, UserService userService, AnswerService answerService, QuestionService questionService, CustomerTransactionService customerTransactionService, SecurityService securityService, UserValidator userValidator) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userService = userService;
+        this.answerService = answerService;
+        this.questionService = questionService;
+        this.customerTransactionService = customerTransactionService;
         this.securityService = securityService;
         this.userValidator = userValidator;
     }
 
 
     @RequestMapping(value = "/index")
-    public String index(){
+    public String index(Model model, Question question, Answer answer){
+//        Question qsnById = questionService.getQsnById(1L);
+//        CustomerTransaction customerTransaction = new CustomerTransaction();
+//       List<CustomerTransaction> customerTransactions = customerTransactionService.getAllQuestionAndAnswer(question, answer);
+////        if(customerTransactions!=null && !customerTransactions.isEmpty()){
+////            answer.setCount(customerTransactions.size());
+////        }
+//
+//
+//        List<Answer> answers = answerService.getAnswerByQsnId(qsnById);
+////
+////        for (Answer answer1 : answers) {
+////            questionController.count(question, answer);
+////        }
+//
+//        Map<String,Integer> barChartData = new HashMap<>();
+//        barChartData.put(answers.get(0).getAns(),);
+//        barChartData.put(answers.get(1).getAns(),answers.size());
+//
+////        barChartData.put("Samsung",5000L);
+////        barChartData.put("Iphone",10000L);
+////        barChartData.put("MI",2000L);
+////        barChartData.put("Lava",4000L);
+////        barChartData.put("Oppo",3560L);
+////        barChartData.put("HTC",5560L);
+//        model.addAttribute("barChartData",barChartData);
         return "index";
+
     }
 
     /**

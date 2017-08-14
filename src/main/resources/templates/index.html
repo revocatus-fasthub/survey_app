@@ -9,15 +9,61 @@
 <body>
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
-<br/>
+ <!--<h2>Tutorial On How to use #map KeySet() and Values() function on thymeleaf template on spring boot application and use highcharts for data visualization.</h2>-->
+    <!--<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>-->
+<!--</div>-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
+    <!--&lt;!&ndash; Latest compiled and minified JavaScript &ndash;&gt;-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>-->
+    <!--<script src="https://code.highcharts.com/highcharts.js"></script>-->
+    <!--<script src="https://code.highcharts.com/modules/exporting.js"></script>-->
 
-<div class="container">
-    <h3 th:if="${#vars['flash.message.user']}" th:text="${#vars['flash.message.user']}" class="alert alert-success"></h3>
 
-    <!--<center><h2>We Listen-Customer Satisfaction Survey</h2></center>-->
-
-</div>
-
+    <!--<script th:inline="javascript">-->
+    <!--$(function(){-->
+        <!--Highcharts.chart('container', {-->
+            <!--chart: {-->
+                <!--type: 'column'-->
+            <!--},-->
+            <!--title: {-->
+                <!--text: 'CRDB Satisfactory Survey'-->
+            <!--},-->
+            <!--subtitle: {-->
+                <!--text: 'Actual Data from customer responses'-->
+            <!--},-->
+            <!--xAxis: {-->
+                <!--categories: [[${barChartData.keySet()}]],-->
+                <!--crosshair: true-->
+            <!--},-->
+            <!--yAxis: {-->
+                <!--min: 0,-->
+                <!--title: {-->
+                    <!--text: 'Number of Responses []'-->
+                <!--}-->
+            <!--},-->
+            <!--tooltip: {-->
+                <!--headerFormat: '<span style="font-size:10px">{point.key}</span><table>',-->
+                <!--pointFormat: '<tr>' +-->
+                               <!--'<td style="color:{series.#4bb242};padding:0">{series.name}: </td>' +-->
+                               <!--'<td style="padding:0"><b>{point.y:.1f} K</b></td>' +-->
+                             <!--'</tr>',-->
+                <!--footerFormat: '</table>',-->
+                <!--shared: true,-->
+                <!--useHTML: true-->
+            <!--},-->
+            <!--plotOptions: {-->
+                <!--column: {-->
+                    <!--pointPadding: 0.2,-->
+                    <!--borderWidth: 0-->
+                <!--}-->
+            <!--},-->
+            <!--series: [{-->
+                <!--name: 'Question 1',-->
+                <!--data: [[${barChartData.values()}]]-->
+            <!--}]-->
+        <!--});-->
+    <!--});-->
+    <!--</script>-->
 </div>
 </body>
 </html>

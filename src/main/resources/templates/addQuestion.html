@@ -63,7 +63,7 @@
                 <th>Delete</th>
             </tr>
             <tr th:each="question : ${questions}">
-                <td th:text="${question.id}"><a href="/question/${question.id}">Id</a></td>
+                <td> <a th:text="${question.id}" th:alt="Id" th:href="${'/survey/question/'+question.id}"></a></td>
                 <td th:text="${question.qsn}">Qsn Id</td>
                 <td th:text="${question.sequence}">sequence</td>
                 <td th:text="${question.type}">type</td>

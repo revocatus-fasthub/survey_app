@@ -15,7 +15,7 @@
     <h3 th:if="${#vars['flash.message.questionError']}" th:text="${#vars['flash.message.questionError']}" class="alert alert-danger"></h3>
 
     <div th:if="${not #lists.isEmpty(questions)}">
-        <h2>Question List</h2>
+        <h3>Questions</h3>
         <table class="table table-striped">
             <tr>
                 <th>Id</th>
@@ -29,7 +29,7 @@
                 <th>Delete</th>
             </tr>
             <tr th:each="question : ${questions}">
-                <td th:text="${question.id}"><a href="/question/${question.id}">Id</a></td>
+                <td th:text="${question.id}"><a href="/question/${question.id}"><i class="fa fa-th" aria-hidden="true"></i></a></td>
                 <td th:text="${question.qsn}">Qsn Id</td>
                 <td th:text="${question.sequence}">sequence</td>
                 <td th:text="${question.type}">type</td>

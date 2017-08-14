@@ -26,7 +26,9 @@
              -->
             </tr>
             <tr th:each="customer : ${customers}">
-                <td th:text="${customer.id}"><a href="/customer/${customer.id}">Id</a></td>
+                <!--<td th:text="${customer.id}"><a href="/customer/${customer.id}">Id</a></td>-->
+                <!--<td th:text="${customer.id}"> </td>-->
+                <td><i class="fa fa-user-circle" aria-hidden="true"></i></td>
                 <td th:text="${customer.msisdn}">Msisdn</td>
                 <td th:text="${customer.email}">Email</td>
 

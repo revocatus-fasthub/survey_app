@@ -15,22 +15,15 @@
         <h3 th:if="${#vars['flash.message.user']}" th:text="${#vars['flash.message.user']}" class="alert alert-success"></h3>
         <h3 th:if="${#vars['flash.message.userLogin']}" th:text="${#vars['flash.message.userLogin']}" class="alert alert-success"></h3>
 
-        <div class="row">
-<br/><br/><br/>
-
-            <div class="col-md-3 col-md-offset-4">
-                <div >
-
-                    <img src="../static/images/CRDB%20BANK%20LOGO.png" width="257" height="130" th:src="@{/images/CRDB%20BANK%20LOGO.png}"/>
-
-                    <div class="panel panel-default">
-
-                    <div class="panel-heading">
-                       <center> <h3 class="panel-title">Please sign in</h3></center>
-                    </div>
+            <div class="login-form">
+                      <center>
+                          <img src="../static/images/logo1.png" width="270" height="130" th:src="@{/images/logo1.png}"/>
+                      </center>
+                    <!--<div class="panel-heading">-->
+                       <!--<center> <h3 class="panel-title" >Please sign in</h3></center>-->
+                    <!--</div>-->
 
                         <br/>
-                    <div class="panel-body">
                         <form th:action="${'/login'}" th:object="${user}" th:value="${'/login'}" method="post" class="form-horizontal">
 
                             <div th:if="${param.logout}">
@@ -52,22 +45,29 @@
                                 </div>
                             </div>
 
-                            <div class="input-group input-sm">
-                                <label class="input-group-addon" for="username"><i class="fa fa-user" aria-hidden="true"></i></label>
+                            <div class="form-group">
+                                <!--<label class="input-group-addon" for="username"><i class="fa fa-user" aria-hidden="true"></i></label>-->
                                 <input type="text" class="form-control" id="username" name="username" placeholder="Username" required="required"/>
+                                <i class="fa fa-user" aria-hidden="true"></i>
                             </div>
-                            <div class="input-group input-sm">
-                                <label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label>
+                            <div class="form-group log-status">
+                                <!--<label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label>-->
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Password" required="required"/>
-                            </div><br/>
+                                <i class="fa fa-lock"></i>
+                            <br/>
+                            </div>
+
+                            <!--<div class="input-group input-sm">-->
+                                <button class="log-btn" type="submit">
+                                    Login
+                                </button>
+                            <!--</div>-->
+                            <br/>
 
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
 
-                            <div class="panel-footer">
-                                <button class="btn btn-sm btn-success btn-block" type="submit">
-                                    Login
-                                </button>
+                            <div>
                             </div>
 
                             <!--<div class="form-">-->
@@ -79,11 +79,9 @@
                                     <!--<input type="submit"  class="btn btn-block btn-success" value="Log in"/><br/>-->
                             <!--</div>-->
                         </form>
+
                     </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 </div>
 </body>

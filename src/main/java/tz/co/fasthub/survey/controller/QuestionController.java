@@ -19,7 +19,10 @@ import tz.co.fasthub.survey.service.QuestionService;
 import tz.co.fasthub.survey.validator.TalentValidator;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static tz.co.fasthub.survey.constants.Constant.savedAnswer;
 import static tz.co.fasthub.survey.constants.Constant.savedQuestion;
@@ -73,14 +76,27 @@ public class QuestionController {
                 redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Answer Successfully Saved!");
             }
             List<Answer> answers = answerService.getAnswerByQsnId(question);
+            Map<String, Integer> barChartData = new HashMap<>();
 
-            for (Answer answer1 : answers) {
-                count(question, answer1);
-            }
+        final List<Integer> listChoices = new ArrayList<Integer>();
 
-            model.addAttribute("answers", answers);
-            model.addAttribute("question", questionService.getQsnById(qsnid));
+        for (Answer answer1 : answers) {
+            count(question, answer1);
+            listChoices.add(answer1.getCount());
+        }
 
+        for (int i = 0; i < answers.size(); i++) {
+            String key = answers.get(i).getAns();
+            Integer counting = listChoices.get(i);
+            barChartData.put(key,counting);
+        }
+
+//         barChartData.put(answers.get(0).getAns(), listChoices.get(0));//answers.indexOf(answer1)
+//         barChartData.put(answers.get(1).getAns(), listChoices.get(1));//answer1.getCount()
+
+        model.addAttribute("answers", answers);
+        model.addAttribute("question", questionService.getQsnById(qsnid));
+        model.addAttribute("barChartData", barChartData);
 
         return "questionShow";
 
