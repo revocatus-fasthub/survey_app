@@ -34,12 +34,13 @@
                 <td th:text="${question.sequence}">sequence</td>
                 <td th:text="${question.type}">type</td>
 
-                <td> <a th:text="Up" th:href="${'/survey/questionSequence/' + question.id+'/'+'up'}">Move Up</a></td>
-               <td> <a th:text="Down" th:href="${'/survey/questionSequence/' + question.id+'/'+'down'}">Move Down</a></td>
+                <td> <a th:href="${'/survey/questionSequence/' + question.id+'/'+'up'}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></td>
+                <td> <a th:href="${'/survey/questionSequence/' + question.id+'/'+'down'}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></td>
 
-                <td><a th:href="${'/survey/question/' + question.id}">View</a></td>
-                <td><a th:href="${'/survey/question/edit/' + question.id}">Edit</a></td>
-                <td><a th:href="${'/survey/question/delete/' + question.id}">Delete</a></td>
+
+                <td><a th:href="${'/survey/question/' + question.id}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+                <td><a th:href="${'/survey/question/edit/' + question.id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+                <td><a th:href="${'/survey/question/delete/' + question.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
             </tr>
         </table>
 

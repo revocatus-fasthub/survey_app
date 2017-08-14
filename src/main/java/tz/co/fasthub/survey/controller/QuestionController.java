@@ -118,7 +118,7 @@ public class QuestionController {
         model.addAttribute("question", new Question());
 
         model.addAttribute("questions", questionService.listAllQuestionsByAsc());
-    //    redirectAttributes.addFlashAttribute("flash.message.question", "Success!");
+    //'    redirectAttributes.addFlashAttribute("flash.message.question", "Success!");
 
         return "addQuestion";
     }
@@ -214,7 +214,7 @@ public class QuestionController {
             }
         }
 
-        return "redirect:/survey/questions";
+        return "redirect:/survey/addQuestion";
     }
 
 
@@ -286,17 +286,17 @@ public class QuestionController {
             if(id!=null){
                 questionService.deleteQuestion(id);
                 redirectAttributes.addFlashAttribute("flash.message.questionSuccess", "Question with id "+id+" has been successfully deleted");
-                return "redirect:/survey/questions";
+                return "redirect:/survey/addQuestion";
             }
             else {
                 redirectAttributes.addFlashAttribute("flash.message.questionError", "Error! \nCannot delete question with id "+id+". This question has other details in the Customer Details list");
-                return "redirect:/survey/questions";
+                return "redirect:/survey/addQuestion";
             }
 
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("flash.message.questionError", "Failed" +
-                    "! \nCannot delete question with id "+id+". \n\nPlease delete question choices/answers first." );
-            return "redirect:/survey/questions";
+                    "! \nCannot delete question with id "+id+". \n\nThis question has other details in the Customer Details list" );
+            return "redirect:/survey/addQuestion";
         }
 
     }
