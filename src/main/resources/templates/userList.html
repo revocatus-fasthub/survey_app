@@ -37,7 +37,9 @@
 
             </tr>
             <tr th:each="user : ${users}">
-                <td th:text="${user.id}"><a href="/user/${user.id}">Id</a></td>
+                <!--<td th:text="${user.id}"><a href="/user/${user.id}">Id</a></td>-->
+
+                <td th:alt-title="${user.id}"><i class="fa fa-user-circle-o" aria-hidden="true"></i></td>
                 <td th:text="${user.username}">username</td>
 
                 <!-- <td><a th:href="${'survey/user/' + user.id}">View</a></td>

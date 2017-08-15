@@ -15,7 +15,7 @@
 
         <section>
             <div class="pull-left" style="...">
-                <img src="../../static/images/CRDB%20BANK%20LOGO.png" width="140" height="50" th:src="@{/images/CRDB%20BANK%20LOGO.png}"/>
+                <img src="../../static/images/CRDB%20BANK%20LOGO.png" alt="CRDB Logo" width="140" height="50" th:src="@{/images/CRDB%20BANK%20LOGO.png}"/>
             </div>
 
             <div class="pull-right" style="padding-right:5px" >
@@ -28,6 +28,8 @@
               </p>
                 <p>
                     <a th:href="@{'/survey/users'}">View Users</a> |
+
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
                     <a th:href="@{'/logout'}">Logout</a>
                 </p>
 
