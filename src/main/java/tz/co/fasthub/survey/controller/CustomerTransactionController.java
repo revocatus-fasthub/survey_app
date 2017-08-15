@@ -19,6 +19,9 @@ import tz.co.fasthub.survey.service.CustomerTransactionService;
 public class CustomerTransactionController {
 
 
+    private static final String INTERNAL_FILE="customer_transaction_list.pdf";
+    private static final String EXTERNAL_FILE_PATH="C:/mytemp/survey_app.zip";
+
     private CustomerTransactionService customerTransactionService;
 
     private static final Logger log = LoggerFactory.getLogger(CustomerTransactionController.class);
@@ -72,5 +75,37 @@ public class CustomerTransactionController {
         customerTransactionService.deleteCustomerTransaction(id);
         return "redirect:/survey/customerTransactions";
     }
+
+
+
+//    /**
+//     * Download PDF.
+//     *
+//     */
+//
+//    @RequestMapping(value="/download/pdf/{fileName:.+}", method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
+//    public void downloadFile(HttpServletResponse response, HttpServletRequest request,
+//                             @PathVariable("fileName") String fileName) throws IOException {
+//
+//        String dataDirectory = request.getServletContext().getRealPath("/downloads/");
+//        Path file = Paths.get(dataDirectory, fileName);
+//        if (Files.exists(file))
+//        {
+//            List<CustomerTransaction> customerTransactionsList = (List<CustomerTransaction>)customerTransactionService.listAllCustomerTransactionByAttendedDesc(true);
+//
+//            response.setContentType("application/pdf");
+//            response.addHeader("Content-Disposition", "attachment; filename="+fileName);
+//            try
+//            {
+//                Files.copy(file, response.getOutputStream());
+//                response.getOutputStream().flush();
+//            }
+//            catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+//
+//    }
+
 
 }

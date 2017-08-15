@@ -41,6 +41,7 @@ dependencies {
 	runtime('mysql:mysql-connector-java')
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity4")
+	compile('com.lowagie:itext:2.1.7')
 }
 
 springBoot{
