@@ -23,11 +23,10 @@
                        <!--<center> <h3 class="panel-title" >Please sign in</h3></center>-->
                     <!--</div>-->
 
-                        <br/>
                         <form th:action="${'/login'}" th:object="${user}" th:value="${'/login'}" method="post" class="form-horizontal">
 
                             <div th:if="${param.logout}">
-                                <div class="alert alert-success">
+                                <div class="alert alert-success fade in ">
                                     <p>You have been logged out successfully.</p>
                                 </div>
                             </div>
@@ -44,16 +43,17 @@
                                     <p>Access Denied: You are not authorised! </p>
                                 </div>
                             </div>
+                            <br/>
 
                             <div class="form-group">
                                 <!--<label class="input-group-addon" for="username"><i class="fa fa-user" aria-hidden="true"></i></label>-->
                                 <input type="text" class="form-control" id="username" name="username" placeholder="Username" required="required"/>
-                                <!--<i class="fa fa-user" aria-hidden="true"></i>-->
+                                <i class="fa fa-user" aria-hidden="true"></i>
                             </div>
                             <div class="form-group log-status">
                                 <!--<label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label>-->
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Password" required="required"/>
-                                <!--<i class="fa fa-lock"></i>-->
+                                <i class="fa fa-lock"></i>
                             <br/>
                             </div>
 
@@ -61,15 +61,11 @@
                                 <button class="log-btn" type="submit">
                                     Login
                                 </button>
-
                             <!--</div>-->
                             <br/>
 
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-
-                            <div>
-                            </div>
 
                             <!--<div class="form-">-->
                                 <!--<input type="submit" width="80%" class="btn btn-block btn-success" value="Log in"/>-->
