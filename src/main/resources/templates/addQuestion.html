@@ -1,85 +1,104 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head lang="en">
+<head lang="en" th:include="fragments/header :: header">
 
     <title>CRDB Survey | Add Question</title>
 
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
-<div class="container">
-    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+<div class="main-panel">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
 
-    <div class="row">
-    <br/>
-
-            <div class="col-md-0 col-md-offset-0.5" >
                 <section>
+                    <form autocomplete="off" action="#" th:action="@{/survey/question}" th:object="${question}" method="post" class="form-horizontal" role="form">
 
-                <!--col-md-9 col-md-offset-3-->
-                <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-success"></h3>
+                        <input type="hidden" th:field="*{id}"/>
+                        <input type="hidden" th:field="*{version}"/>
 
-                <form autocomplete="off" action="#" th:action="@{/survey/question}" th:object="${question}" method="post" class="form-horizontal" role="form">
+                        <div class="pull-left" th:class="col-md-9" th:width="60" style="padding-right: 20px">
+                            <input type="text" placeholder="Add Question" class="col-md-10" th:field="*{qsn}"/>
+                        </div>
 
-                    <input type="hidden" th:field="*{id}"/>
-                    <input type="hidden" th:field="*{version}"/>
+                        <div class="pull-left" style="padding-right: 30px">
+                            <select class="form-group" name="type" id="type" th:field="*{type}">
+                                <option value="0" th:text="${'---Select Type---'}"></option>
+                                <option th:value="${'Closed Ended'}" th:selected="${question.isSelected(lastselected)}">Closed Ended</option>
+                                <option th:value="${'Open Ended'}" th:selected="${question.isSelected(lastselected)}">Open Ended</option>
+                            </select>
 
-                    <div class="pull-left" th:class="col-md-9" th:width="60" style="padding-right: 20px">
-                        <input type="text" placeholder="Add Question" class="col-md-10" th:field="*{qsn}"/>
-                    </div>
+                        </div>
 
-                    <div class="pull-left" style="padding-right: 30px">
-                        <select class="form-group" name="type" id="type" th:field="*{type}">
-                            <option value="0" th:text="${'---Select Type---'}"></option>
-                            <option th:value="${'Closed Ended'}" th:selected="${question.isSelected(lastselected)}">Closed Ended</option>
-                            <option th:value="${'Open Ended'}" th:selected="${question.isSelected(lastselected)}">Open Ended</option>
-                        </select>
+                        <div class="pull-right" style="padding-right:40px" >
+                            <button type="submit" class="btn btn-success">Add</button>
+                        </div>
 
-                    </div>
-
-                    <div class="pull-right" style="padding-right:40px" >
-                      <button type="submit" class="btn btn-success">Add</button>
-                    </div>
-
-                </form>
+                    </form>
                 </section>
+
+                <div class="col-md-12">
+
+                    <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-success"></h3>
+
+
+                    <div class="col-md-0 col-md-offset-0.5" >
+
+
+                        <div class="card">
+                            <div class="header">
+                                <div th:fragment="header">
+                                    <section>
+                                        <div class="pull-left" style="padding-right:5px">
+                                            <h3>Questions</h3>
+                                        </div>
+                                    </section>
+                                </div>
+
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <div th:if="${not #lists.isEmpty(questions)}">
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                            <th>Id</th>
+                                            <th>Question </th>
+                                            <th>Sequence</th>
+                                            <th>Type</th>
+                                            <th>Move Up</th>
+                                            <th>Move Down</th>
+                                            <th>View</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="question : ${questions}">
+                                            <td> <a th:text="${question.id}" th:alt="Id" th:href="${'/survey/question/'+question.id}"></a></td>
+                                            <td th:text="${question.qsn}">Qsn Id</td>
+                                            <td th:text="${question.sequence}">sequence</td>
+                                            <td th:text="${question.type}">type</td>
+
+                                            <td> <a th:href="${'/survey/questionSequence/' + question.id+'/'+'up'}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></td>
+                                            <td> <a th:href="${'/survey/questionSequence/' + question.id+'/'+'down'}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></td>
+                                            <!--<i class="fa fa-long-arrow-down" aria-hidden="true"></i>-->
+
+                                            <td><a th:href="${'/survey/question/' + question.id}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+                                            <td><a th:href="${'/survey/question/edit/' + question.id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+                                            <td><a th:href="${'/survey/question/delete/' + question.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
     </div>
-
-    <br/><hr/>
-
-    <div th:if="${not #lists.isEmpty(questions)}">
-        <h3>Questions</h3>
-        <table class="table table-striped">
-            <tr>
-                <th>Id</th>
-                <th>Question </th>
-                <th>Sequence</th>
-                <th>Type</th>
-                <th>Move Up</th>
-                <th>Move Down</th>
-                <th>View</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-            <tr th:each="question : ${questions}">
-                <td> <a th:text="${question.id}" th:alt="Id" th:href="${'/survey/question/'+question.id}"></a></td>
-                <td th:text="${question.qsn}">Qsn Id</td>
-                <td th:text="${question.sequence}">sequence</td>
-                <td th:text="${question.type}">type</td>
-
-                <td> <a th:href="${'/survey/questionSequence/' + question.id+'/'+'up'}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></td>
-                <td> <a th:href="${'/survey/questionSequence/' + question.id+'/'+'down'}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></td>
-                <!--<i class="fa fa-long-arrow-down" aria-hidden="true"></i>-->
-
-                <td><a th:href="${'/survey/question/' + question.id}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
-                <td><a th:href="${'/survey/question/edit/' + question.id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-                <td><a th:href="${'/survey/question/delete/' + question.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-            </tr>
-        </table>
-    </div>
-
 </div>
 
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
 </html>

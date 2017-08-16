@@ -73,7 +73,7 @@ public class QuestionController {
 
             if (answer.getAns() != null) {
                 savedAnswer = answerService.saveByQnsId(answer, question);
-                redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Answer Successfully Saved!");
+
             }
             List<Answer> answers = answerService.getAnswerByQsnId(question);
             Map<String, Integer> barChartData = new HashMap<>();
@@ -91,12 +91,10 @@ public class QuestionController {
             barChartData.put(key,counting);
         }
 
-//         barChartData.put(answers.get(0).getAns(), listChoices.get(0));//answers.indexOf(answer1)
-//         barChartData.put(answers.get(1).getAns(), listChoices.get(1));//answer1.getCount()
-
         model.addAttribute("answers", answers);
         model.addAttribute("question", questionService.getQsnById(qsnid));
         model.addAttribute("barChartData", barChartData);
+        redirectAttributes.addFlashAttribute("flash.message.answerSuccess", "Answer Successfully Saved!");
 
         return "questionShow";
 
@@ -164,7 +162,7 @@ public class QuestionController {
         model.addAttribute("Question", question);
         talentValidator.validate(question, result);
         if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("flash.message.question", "Error!");
+            redirectAttributes.addFlashAttribute("flash.message.questionError", "Error!");
             return "addQuestion";
         }
         savedQuestion = questionService.save(question);
@@ -301,7 +299,7 @@ public class QuestionController {
         try {
             if(id!=null){
                 questionService.deleteQuestion(id);
-                redirectAttributes.addFlashAttribute("flash.message.questionSuccess", "Question with id "+id+" has been successfully deleted");
+                redirectAttributes.addFlashAttribute("flash.message.questionError", "Question with id "+id+" has been successfully deleted");
                 return "redirect:/survey/addQuestion";
             }
             else {

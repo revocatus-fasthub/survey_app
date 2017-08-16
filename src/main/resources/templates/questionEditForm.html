@@ -7,56 +7,74 @@
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
-<div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
     <p th:if="${param.error}" class="alert alert-error">There was an error, please try again</p>
 
-    <div class="row">
-        <div class="col-md-9 col-md-offset-3">
-            <form autocomplete="off" action="#" th:action="@{/survey/editedQuestion}" th:object="${question}" method="post" class="form-horizontal" role="form">
+    <div class="main-panel">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
 
-                <h3>Edit Question</h3>
+                    <div class="col-md-12">
+                        <!--alerts go here-->
+                        <div class="card">
+                            <div class="header">
+                                <div th:fragment="header">
+                                    <section>
+                                        <div class="pull-left" style="padding-right:5px">
+                                            <h3>Edit Question</h3>
+                                        </div>
+                                    </section>
+                                </div>
 
-                <input type="hidden" th:field="*{id}"/>
-                <input type="hidden" th:field="*{version}"/>
+                            </div>
 
-                <div class="form-group">
-                    <div class="col-sm-7">
-                        <label class="col-sm-2 control-label">Question</label>
-                        <input type="text" th:field="*{qsn}" placeholder="Question" class="form-control" />
-                        <label th:if="${#fields.hasErrors('qsn')}" th:errors="*{qsn}" class="validation-message"></label>
+                           <br/><hr/>
+                                <form autocomplete="off" action="#" th:action="@{/survey/editedQuestion}" th:object="${question}" method="post" class="form-horizontal" role="form">
 
-                        <label class="col-sm-1 control-label">Type</label>
-                        <select class="form-control" name="type" id="type" th:field="*{type}">
-                            <option value="0" th:text="${'---Select---'}"></option>
-                            <option th:value="${'Closed Ended'}" th:selected="${question.isSelected(lastselected)}">Closed Ended</option>
-                            <option th:value="${'Open Ended'}" th:selected="${question.isSelected(lastselected)}">Open Ended</option>
-                        </select>
+                                    <input type="hidden" th:field="*{id}"/>
+                                    <input type="hidden" th:field="*{version}"/>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-9">
+                                            <label class="col-sm-1 control-label">Question</label>
+                                            <input type="text" th:field="*{qsn}" placeholder="Question" class="form-control" />
+                                            <label th:if="${#fields.hasErrors('qsn')}" th:errors="*{qsn}" class="validation-message"></label>
+
+                                            <label class="col-sm-1 control-label">Type</label>
+                                            <select class="form-control" name="type" id="type" th:field="*{type}">
+                                                <option value="0" th:text="${'---Select---'}"></option>
+                                                <option th:value="${'Closed Ended'}" th:selected="${question.isSelected(lastselected)}">Closed Ended</option>
+                                                <option th:value="${'Open Ended'}" th:selected="${question.isSelected(lastselected)}">Open Ended</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-9">
+                                            <label class="col-sm-2 control-label">Sequence
+                                                <input type="text" th:field="*{sequence}" placeholder="Sequence" class="form-control" />
+                                            </label>
+
+                                            <label th:if="${#fields.hasErrors('sequence')}" th:errors="*{sequence}" class="validation-message"></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" >
+                                        <div class="col-sm-7" th:align="center">
+                                            <button type="submit" class="btn btn-success ">Update</button>
+                                            <a href="/survey/addQuestion" class="btn btn-secondary ">Cancel</a>
+                                        </div>
+                                    </div>
+
+                                </form>
+                        </div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <div class="col-sm-9">
-                        <label class="col-sm-2 control-label">Sequence
-                            <input type="text" th:field="*{sequence}" placeholder="Sequence" class="form-control" />
-                        </label>
-
-                        <label th:if="${#fields.hasErrors('sequence')}" th:errors="*{sequence}" class="validation-message"></label>
-                    </div>
-                </div>
-
-                <div class="form-group" >
-                    <div class="col-sm-7" th:align="center">
-                        <button type="submit" class="btn btn-success ">Update</button>
-                        <a href="/survey/addQuestion" class="btn btn-secondary ">Cancel</a>
-                    </div>
-                </div>
-
-            </form>
+            </div>
         </div>
     </div>
 
-</div>
-
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
 </html>

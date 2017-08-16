@@ -7,7 +7,7 @@
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
-<div class="container">
+<!--<div class="container">-->
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
     <h3 th:if="${#vars['flash.message.customer']}" th:text="${#vars['flash.message.customer']}" class="alert alert-success"></h3>
 
@@ -35,7 +35,7 @@
         </form>
 
     </div>
-</div>
-
+<!--</div>-->
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
 </html>

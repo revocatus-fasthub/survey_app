@@ -9,9 +9,8 @@
 </head>
 
 <body>
-<div class="container">
 
-    <div th:fragment="header">
+<headers th:fragment="header">
 
         <section>
             <div class="pull-left" style="...">
@@ -47,13 +46,11 @@
                         <li><a href="#" th:href="@{'/survey/customers'}"> Customers</a></li>
                         <li><a href="#" th:href="@{'/survey/customerTransactions'}"> Customer Details</a></li>
 
-
                     </ul>
 
                 </div>
             </div>
         </nav>
-    </div>
-</div>
+    </headers>
 </body>
 </html>

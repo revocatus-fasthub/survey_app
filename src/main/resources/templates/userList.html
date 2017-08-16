@@ -1,18 +1,71 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head lang="en">
+<head lang="en" th:include="fragments/header :: header">
 
     <title>CRDB Survey | Users</title>
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
 
-<div class="container">
+    <div class="main-panel">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
 
-    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+                <div class="col-md-12">
+                    <h3 th:if="${#vars['flash.message.userFail']}" th:text="${#vars['flash.message.userFail']}" class="alert alert-danger"></h3>
+                    <h3 th:if="${#vars['flash.message.user']}" th:text="${#vars['flash.message.user']}" class="alert alert-success"></h3>
 
-    <!--<h3 th:if="${#vars['flash.message.userFail']}" th:text="${#vars['flash.message.userFail']}" class="alert alert-danger"></h3>-->
-    <!--<h3 th:if="${#vars['flash.message.user']}" th:text="${#vars['flash.message.user']}" class="alert alert-success"></h3>-->
+                    <div class="card">
+                        <div class="header">
+                            <div th:fragment="header">
+
+                            <section>
+                            <div class="pull-left" style="padding-right:5px">
+                            <h3>Users</h3>
+                            </div>
+
+                            <div class="pull-right" style="padding-right:2px">
+                            <h3><a th:href="@{'/survey/registration/new'}"><i class="fa fa-user-plus" aria-hidden="true"></i><button class="btn btn-sm">Add</button></a></h3>
+                            </div>
+                            </section>
+                            </div>
+
+                        </div>
+                        <div class="content table-responsive table-full-width">
+                            <div th:if="${not #lists.isEmpty(users)}">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                <th>Id</th>
+                                <th>Username </th>
+                                <!-- <th>Change Password </th> -->
+                                <th>Delete</th>
+                                </thead>
+                                <tbody>
+                                <tr th:each="user : ${users}">
+                                    <!--<td th:text="${user.id}"><a href="/user/${user.id}">Id</a></td>-->
+
+                                    <td th:alt-title="${user.id}"><i class="fa fa-user fa-fw" aria-hidden="true"></i></td>
+                                    <td th:text="${user.username}">username</td>
+
+                                    <!-- <td><a th:href="${'survey/user/' + user.id}">View</a></td>
+                                    <td><a th:href="${'survey/user/edit/' + user.id}">Change Password</a></td> -->
+                                    <td><a th:href="${'/survey/user/delete/' + user.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 
     <!--<div th:fragment="header">-->
         <!--<section>-->
@@ -49,7 +102,9 @@
         <!--</table>-->
 
     <!--</div>-->
-</div>
+<!--</div>-->
 
+
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
 </html>

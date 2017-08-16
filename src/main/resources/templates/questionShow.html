@@ -7,152 +7,156 @@
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
-<div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
-    <h3 th:if="${#vars['flash.message.question']}" th:text="${#vars['flash.message.question']}" class="alert alert-success"></h3>
-    <h3 th:if="${#vars['flash.message.questionError']}" th:text="${#vars['flash.message.questionError']}" class="alert alert-success"></h3>
-    <h3 th:if="${#vars['flash.message.answerSuccess']}" th:text="${#vars['flash.message.answerSuccess']}" class="alert alert-success"></h3>
-    <h3 th:if="${#vars['flash.message.answerError']}" th:text="${#vars['flash.message.answerError']}" class="alert alert-danger"></h3>
+    <div class="main-panel">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
 
-    <h2>Question Details</h2>
-    <div>
-        <form class="form-horizontal">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Qsn Id:</label>
-                <div class="col-sm-10">
-                    <p class="form-control-static" th:text="${question.id}">Qsn Id</p></div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Question:</label>
-                <div class="col-sm-10">
-                    <p class="form-control-static" th:text="${question.qsn}">Question</p>
+                    <div class="col-md-12">
+                        <h3 th:if="${#vars['flash.message.question']}" th:text="${#vars['flash.message.question']}" class="alert alert-success"></h3>
+                        <h3 th:if="${#vars['flash.message.answerSuccess']}" th:text="${#vars['flash.message.answerSuccess']}" class="alert alert-success"></h3>
+                        <h3 th:if="${#vars['flash.message.answerError']}" th:text="${#vars['flash.message.answerError']}" class="alert alert-danger"></h3>
+                        <h3 th:if="${#vars['flash.message.questionError']}" th:text="${#vars['flash.message.questionError']}" class="alert alert-success"></h3>
+
+                        <div class="card">
+
+                            <h2>Question Details</h2>
+                                <form class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Question:</label>
+                                            <p class="form-control-static" th:text="${question.qsn}">Question</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Sequence:</label>
+                                            <p class="form-control-static" th:text="${question.sequence}">Sequence</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Type:</label>
+                                            <p class="form-control-static" th:text="${question.type}">Sequence</p>
+                                    </div>
+                                </form>
+
+                                <hr/><br/>
+
+                            <div>
+                               <form autocomplete="off" action="#" th:action="@{/survey/question/{id}(id=${question.id})}" th:object="${answer}" method="post" class="form-horizontal" role="form">
+                                   <div class="pull-left" th:class="col-md-9" style="padding-right: 10px">
+                                       <input type="text" class="form-control" placeholder="Add New answer/choice" th:field="*{ans}"/>
+                                   </div>
+                                   <div class="pull-left" style="padding-right: 5px">
+                                       <button type="submit" class="btn btn-success">Add Choice</button>
+                                   </div>
+                               </form>
+                           </div>
+                            <hr/>
+
+                        <div class="header">
+                                    <div th:fragment="header">
+                                        <section>
+                                            <div class="pull-left" style="padding-right:5px">
+                                                <h3>Choice</h3>
+                                            </div>
+                                        </section>
+                                    </div>
+
+                            </div>
+                                <div class="content table-responsive table-full-width">
+                                    <div th:if="${not #lists.isEmpty(answers)}">
+                                        <table class="table table-hover table-striped">
+                                            <thead>
+                                            <th>Id</th>
+                                            <th>Answer </th>
+                                            <th>Position</th>
+                                            <th>Count</th>
+                                            <th>Move Up</th>
+                                            <th>Move Down</th>
+                                            <th>Delete</th>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="answer : ${answers}">
+                                                <td th:text="${answer.id}">Id</td>
+                                                <td th:text="${answer.ans}">answer </td>
+                                                <td th:text="${answer.position}">position</td>
+                                                <td th:text="${answer.count}">count</td>
+
+
+                                                <td> <a th:href="${'/survey/answerPosition/' +answer.question.id+'/'+ answer.id+'/'+'up'}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></td>
+                                                <td> <a th:href="${'/survey/answerPosition/'+answer.question.id+'/' + answer.id+'/'+'down'}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></td>
+                                                <td> <a th:href="${'/survey/answer/delete/'+question.id+'/' + answer.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                                                <!--<td><a th:href="${'/survey/question/' + question.id}">Edit</a></td>-->
+
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <hr/>
+
+                                <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+                                <!-- Latest compiled and minified JavaScript -->
+                                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+                                <script src="https://code.highcharts.com/highcharts.js"></script>
+                                <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+
+                                <script th:inline="javascript">
+                                    $(function(){
+                                        Highcharts.chart('container', {
+                                            chart: {
+                                                type: 'column'
+                                            },
+                                            title: {
+                                                text: 'CRDB Satisfactory Survey'
+                                            },
+                                            subtitle: {
+                                                text: 'Question: <p class="form-control-static" th:text="${question.qsn}">Question</p>'
+                                            },
+                                            xAxis: {
+                                                categories: [[${barChartData.keySet()}]],
+                                                crosshair: true
+                                            },
+                                            yAxis: {
+                                                min: 0,
+                                                title: {
+                                                    text: 'Number of Response'
+                                                }
+                                            },
+                                            tooltip: {
+                                                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                                                pointFormat: '<tr>' +
+                                                '<td style="color:{series.#4bb242};padding:0">{series.name}: </td>' +
+                                                '<td style="padding:0"><b>{point.y:.1f} K</b></td>' +
+                                                '</tr>',
+                                                footerFormat: '</table>',
+                                                shared: true,
+                                                useHTML: true
+                                            },
+                                            plotOptions: {
+                                                column: {
+                                                    pointPadding: 0.2,
+                                                    borderWidth: 0
+                                                }
+                                            },
+                                            series: [{
+                                                name: 'Question',
+                                                data: [[${barChartData.values()}]],
+                                                fill: '#4bb242'
+                                            }]
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Sequence:</label>
-                <div class="col-sm-10">
-                    <p class="form-control-static" th:text="${question.sequence}">Sequence</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Type:</label>
-                <div class="col-sm-10">
-                    <p class="form-control-static" th:text="${question.type}">Sequence</p>
-                </div>
-            </div>
-        </form>
-    </div>
-<hr/><br/>
 
-
-    <div class="container">
-
-        <form autocomplete="off" action="#" th:action="@{/survey/question/{id}(id=${question.id})}" th:object="${answer}" method="post" class="form-horizontal" role="form">
-
-            <div class="pull-left" th:class="col-md-9" th:width="60" style="padding-right: 20px">
-                <input type="text" class="form-control" placeholder="Add New answer/choice" th:field="*{ans}"/><br/> <!--th:field="*{ans}"-->
-            </div>
-
-            <div class="pull-left" style="padding-right: 30px">
-                <button type="submit" class="btn btn-success">Add Choice</button>
-            </div>
-        </form>
-
-    </div>
-
-    <hr/>
-
-    <div>
-        <h3 th:if="${#vars['flash.message.answerSuccess']}" th:text="${#vars['flash.message.answerSuccess']}" class="alert alert-success"></h3>
-
-        <h2>Answer Details</h2>
-
-        <table class="table table-striped">
-            <tr>
-                <th>Id</th>
-                <th>Answer </th>
-                <th>Position</th>
-                <th>Qsn_Id</th>
-                <th>Count</th>
-                <th>Move Up</th>
-                <th>Move Down</th>
-                <th>Delete</th>
-            </tr>
-            <tr th:each="answer : ${answers}">
-                <td th:text="${answer.id}">Id</td>
-                <td th:text="${answer.ans}">answer </td>
-                <td th:text="${answer.position}">position</td>
-                <td th:text="${answer.question.id}">qsn Id</td>
-                <td th:text="${answer.count}">count</td>
-
-
-                <td> <a th:href="${'/survey/answerPosition/' +answer.question.id+'/'+ answer.id+'/'+'up'}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></td>
-                <td> <a th:href="${'/survey/answerPosition/'+answer.question.id+'/' + answer.id+'/'+'down'}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></td>
-                <td> <a th:href="${'/survey/answer/delete/'+question.id+'/' + answer.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-                <!--<td><a th:href="${'/survey/question/' + question.id}">Edit</a></td>-->
-
-            </tr>
-        </table>
-
-    </div>
-
-<br/><hr/>
-</div>
-
-<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-
-
-<script th:inline="javascript">
-    $(function(){
-        Highcharts.chart('container', {
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'CRDB Satisfactory Survey'
-            },
-            subtitle: {
-                text: 'Actual Data from customer responses'
-            },
-            xAxis: {
-                categories: [[${barChartData.keySet()}]],
-                crosshair: true
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Number of Response []'
-                }
-            },
-            tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr>' +
-                '<td style="color:{series.#4bb242};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} K</b></td>' +
-                '</tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                }
-            },
-            series: [{
-                name: 'Question ',
-                data: [[${barChartData.values()}]]
-            }]
-        });
-    });
-</script>
-
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
 </html>

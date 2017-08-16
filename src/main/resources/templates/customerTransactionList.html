@@ -7,66 +7,81 @@
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
-<div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
-    <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-success"></h3>
 
-    <div th:if="${not #lists.isEmpty(customerTransactions)}">
+    <div class="main-panel">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
 
+                    <div class="col-md-12">
+                        <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-success"></h3>
 
-        <div th:fragment="header">
-            <section>
-                <div class="pull-left" style="padding-right:5px">
-                    <h3>Customer Transaction List</h3>
+                        <div class="card">
+                            <div class="header">
+                                <div th:fragment="header">
+
+                                    <section>
+                                        <div class="pull-left" style="padding-right:5px">
+                                            <h3>Customer Transaction List</h3>
+                                        </div>
+
+                                        <!--<div class="pull-right" style="padding-right:2px">-->
+                                        <!--&lt;!&ndash;<a href="<c:url value='/download/external' />">Download This File (located outside project, on file system)</a>&ndash;&gt;-->
+                                        <!--<a th:href="@{'/survey/download/pdf/transctionList.pdf'}"><i class="fa fa-download" aria-hidden="true"></i>PDF</a>-->
+                                        <!--</div>-->
+                                    </section>
+                                </div>
+
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <div th:if="${not #lists.isEmpty(customerTransactions)}">
+
+                                <table class="table table-hover table-striped">
+                                        <thead>
+                                        <th>Id</th>
+                                        <th>Customer_Msisdn </th>
+                                        <th>Question</th>
+                                        <th>Answer</th>
+                                        <th>Timestamp</th>
+                                        <!--
+                                        <th>View</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                        -->
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="customerTransaction : ${customerTransactions}">
+                                            <td th:text="${customerTransaction.id}"><a href="/customerTransaction/${customerTransaction.id}">Id</a></td>
+                                            <td th:text="${customerTransaction.customer.msisdn}">Msisdn</td>
+                                            <td th:text="${customerTransaction.question.qsn}">Question</td>
+                                            <td th:if="${ans != null}" th:text="${customerTransaction.answer.ans}">Answer</td>
+                                            <td th:text="${customerTransaction.answerDetails}">Answer Details</td>
+                                            <td th:text="${customerTransaction.timestamp}">timestamp</td>
+                                            <!--
+                                                  th:text="${customerTransaction.answer.ans != null} ? ${customerTransaction.answer.ans} : 'null value'"
+                                                 th:if="${!#strings.isEmpty(customerTransaction)}"
+                                                 <td th:text="${customerTransaction.answer.ans != null ? customerTransaction.answer.ans : '-' }"></td>
+                                             -->
+
+                                            <!--
+                                            <td><a th:href="${'/survey/customerTransaction/' + customerTransaction.id}">View</a></td>
+                                            <td><a th:href="${'/survey/customerTransaction/edit/' + customerTransaction.id}">Edit</a></td>
+                                            <td><a th:href="${'/survey/customerTransaction/delete/' + customerTransaction.id}">Delete</a></td>
+                                            -->
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <!--<div class="pull-right" style="padding-right:2px">-->
-                    <!--&lt;!&ndash;<a href="<c:url value='/download/external' />">Download This File (located outside project, on file system)</a>&ndash;&gt;-->
-                    <!--<a th:href="@{'/survey/download/pdf/transctionList.pdf'}"><i class="fa fa-download" aria-hidden="true"></i>PDF</a>-->
-                <!--</div>-->
-            </section>
+            </div>
         </div>
-
-        <table class="table table-striped">
-            <tr>
-                <th>Id</th>
-                <th>Customer_Msisdn </th>
-                <th>Question</th>
-                <th>Answer</th>
-                <th>Timestamp</th>
-                <!--
-                <th>View</th>
-                <th>Edit</th>
-                <th>Delete</th>
-                -->
-
-            </tr>
-            <tr th:each="customerTransaction : ${customerTransactions}">
-                <td th:text="${customerTransaction.id}"><a href="/customerTransaction/${customerTransaction.id}">Id</a></td>
-                <td th:text="${customerTransaction.customer.msisdn}">Msisdn</td>
-                <td th:text="${customerTransaction.question.qsn}">Question</td>
-                <td th:if="${ans != null}" th:text="${customerTransaction.answer.ans}">Answer</td>
-                <td th:text="${customerTransaction.answerDetails}">Answer Details</td>
-                <td th:text="${customerTransaction.timestamp}">timestamp</td>
-
-                <!--
-                      th:text="${customerTransaction.answer.ans != null} ? ${customerTransaction.answer.ans} : 'null value'"
-                     th:if="${!#strings.isEmpty(customerTransaction)}"
-                     <td th:text="${customerTransaction.answer.ans != null ? customerTransaction.answer.ans : '-' }"></td>
-                 -->
-
-                <!--
-                <td><a th:href="${'/survey/customerTransaction/' + customerTransaction.id}">View</a></td>
-                <td><a th:href="${'/survey/customerTransaction/edit/' + customerTransaction.id}">Edit</a></td>
-                <td><a th:href="${'/survey/customerTransaction/delete/' + customerTransaction.id}">Delete</a></td>
-                -->
-
-            </tr>
-        </table>
-
     </div>
-</div>
 
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
 </html>
