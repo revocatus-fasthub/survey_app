@@ -1,6 +1,7 @@
 package tz.co.fasthub.survey.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -17,6 +18,7 @@ public class Question {
     @Version
     private Long version;
 
+    @NotNull
     private String type;
 
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,6 +20,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
@@ -50,12 +52,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http    .headers().cacheControl().and().defaultsDisabled()
-                .contentTypeOptions();
+//        http    .headers().cacheControl().and().defaultsDisabled()
+//                .contentTypeOptions();
 
         http    .authorizeRequests()
-                .antMatchers("/survey/**").access("hasRole('ADMIN')")
-                .anyRequest().authenticated().and()
+
+                .antMatchers("/survey/users/**").hasRole("ADMIN")
+                .antMatchers("/survey/**").authenticated()
+//                .antMatchers("/survey/users**").hasRole("ADMIN")
+//                .anyRequest().authenticated().and()
+                .anyRequest().permitAll().and()
                 .formLogin()
                 .loginPage("/crdb/login").permitAll().loginProcessingUrl("/login")
                 .usernameParameter("username").passwordParameter("password")

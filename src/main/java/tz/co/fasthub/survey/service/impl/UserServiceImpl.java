@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setCpassword(bCryptPasswordEncoder.encode(user.getCpassword()));
-        user.setRole("ADMIN");
+      //  user.setRole("ADMIN");
        //user.setRoles(new HashSet<>(roleRepository.findAll()));
         userRepository.save(user);
     }
@@ -62,7 +62,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id) {
         userRepository.delete(id);
-
     }
 
 }

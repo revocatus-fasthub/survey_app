@@ -16,7 +16,8 @@ import tz.co.fasthub.survey.domain.Question;
 import tz.co.fasthub.survey.service.AnswerService;
 import tz.co.fasthub.survey.service.CustomerTransactionService;
 import tz.co.fasthub.survey.service.QuestionService;
-import tz.co.fasthub.survey.validator.TalentValidator;
+import tz.co.fasthub.survey.validator.AnswerValidator;
+import tz.co.fasthub.survey.validator.QuestionValidator;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -38,24 +39,26 @@ public class QuestionController {
     private final AnswerService answerService;
     private final CustomerTransactionService customerTransactionService;
 
-    private TalentValidator talentValidator;
+    private QuestionValidator questionValidator;
+    private AnswerValidator answerValidator;
 
     private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
 
-    public TalentValidator getTalentValidator() {
-        return talentValidator;
+    public QuestionValidator getQuestionValidator() {
+        return questionValidator;
     }
 
-    public void setTalentValidator(TalentValidator talentValidator) {
-        this.talentValidator = talentValidator;
+    public void setQuestionValidator(QuestionValidator questionValidator) {
+        this.questionValidator = questionValidator;
     }
 
     @Autowired
-    public QuestionController(QuestionService questionService, AnswerService answerService, CustomerTransactionService customerTransactionService, TalentValidator talentValidator) {
+    public QuestionController(QuestionService questionService, AnswerService answerService, CustomerTransactionService customerTransactionService, QuestionValidator questionValidator, AnswerValidator answerValidator) {
         this.questionService = questionService;
         this.answerService = answerService;
         this.customerTransactionService = customerTransactionService;
-        this.talentValidator = talentValidator;
+        this.questionValidator = questionValidator;
+        this.answerValidator = answerValidator;
     }
 
     @RequestMapping(value = "/questions", method = RequestMethod.GET)
@@ -68,12 +71,21 @@ public class QuestionController {
     // View a specific question and answers by its id
 
     @RequestMapping("question/{qsnid}")
-    public String showQuestion(@PathVariable Long qsnid, @Valid Answer answer, Model model, RedirectAttributes redirectAttributes) {
+    public String showQuestion(@PathVariable Long qsnid, @Valid Answer answer, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         Question question = questionService.getQsnById(qsnid);
 
-            if (answer.getAns() != null) {
-                savedAnswer = answerService.saveByQnsId(answer, question);
+        if(question.getType().equalsIgnoreCase("Open Ended")){
+            return "redirect:/survey/questionOpen/"+question.getId();
+        }else
 
+
+        if (answer.getAns() != null) {
+               answerValidator.validate(answer, result);
+               if(result.hasErrors()) {
+                    redirectAttributes.addFlashAttribute("flash.message.answerError", "Answer field should not be empty");
+                    return "redirect:/survey/question/"+question.getId();
+                }
+                savedAnswer = answerService.saveByQnsId(answer, question);
             }
             List<Answer> answers = answerService.getAnswerByQsnId(question);
             Map<String, Integer> barChartData = new HashMap<>();
@@ -158,12 +170,12 @@ public class QuestionController {
     // Save question to database
 
     @RequestMapping(value = "question", method = RequestMethod.POST)
-    public String saveQuestion(@Valid Question question, @Valid Answer answer, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        model.addAttribute("Question", question);
-        talentValidator.validate(question, result);
+    public String saveQuestion(@Valid Question question, BindingResult result, RedirectAttributes redirectAttributes) {
+   //     model.addAttribute("Question", question);
+        questionValidator.validate(question, result);
         if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("flash.message.questionError", "Error!");
-            return "addQuestion";
+            redirectAttributes.addFlashAttribute("flash.message.questionError", "'Add Question' or 'Select Type' field cannot be empty!");
+            return "redirect:/survey/addQuestion";
         }
         savedQuestion = questionService.save(question);
         Long id = savedQuestion.getId();
@@ -299,7 +311,7 @@ public class QuestionController {
         try {
             if(id!=null){
                 questionService.deleteQuestion(id);
-                redirectAttributes.addFlashAttribute("flash.message.questionError", "Question with id "+id+" has been successfully deleted");
+                redirectAttributes.addFlashAttribute("flash.message.questionSuccess", "Question with id "+id+" has been successfully deleted");
                 return "redirect:/survey/addQuestion";
             }
             else {
@@ -336,6 +348,22 @@ public class QuestionController {
                 }
 
     }
+
+    @RequestMapping("/questionOpen/{qsnId}")
+    public String showOpenQuestion(@PathVariable Long qsnId, @Valid CustomerTransaction answerDetails, BindingResult result, Model model, RedirectAttributes redirectAttributes){
+        Question question = questionService.getQsnById(qsnId);
+
+        List<CustomerTransaction> answers = customerTransactionService.getAnswerByQsnId(question);
+//        List<CustomerTransaction>  customerTransactionList =  customerTransactionService.getAllQuestionAndAnswerDetails(question,answerDetails);
+//        Iterable<CustomerTransaction> customerTransactions = customerTransactionService.listAllCustomerTransactionByAttendedDesc(true);
+
+        model.addAttribute("customerTransactions", answers);
+        model.addAttribute("question", questionService.getQsnById(qsnId));
+
+        return "questionOpenShow";
+    }
+
+
 
     public void count(Question question, Answer answer ) {
 

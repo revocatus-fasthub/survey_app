@@ -17,4 +17,7 @@ public interface CustomerTransactionRepository extends CrudRepository<CustomerTr
 
     List<CustomerTransaction> findAllByQuestionAndAnswer(Question question, Answer answer);
 
+//    List<CustomerTransaction> findAllByQuestionAndAnswerDetails(Question question, CustomerTransaction answerDetails);
+
+    List<CustomerTransaction> findAllByQuestion(Question question);
 }

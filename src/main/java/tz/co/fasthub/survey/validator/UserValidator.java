@@ -39,6 +39,13 @@ public class UserValidator implements Validator {
         if (!user.getCpassword().equals(user.getPassword())) {
             errors.rejectValue("cpassword", "Diff.userForm.passwordConfirm");
         }
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "role", "NotEmpty");
+        if (user.getRole().isEmpty()) {
+            errors.rejectValue("role", "Size.userForm.role");
+        }
+
+
     }
 
 

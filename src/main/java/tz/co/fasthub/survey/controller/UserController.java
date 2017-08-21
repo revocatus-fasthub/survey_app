@@ -22,6 +22,7 @@ import tz.co.fasthub.survey.service.SecurityService;
 import tz.co.fasthub.survey.service.UserService;
 import tz.co.fasthub.survey.validator.UserValidator;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/survey/")
+
 public class UserController {
 
 
@@ -103,6 +105,7 @@ public class UserController {
     public String registration(User userForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         userValidator.validate(userForm, bindingResult);
         if (bindingResult.hasErrors()) {
+//            redirectAttributes.addFlashAttribute("flash.message.userFail", "Failed. Error during registration");
             return "registration";
         }
 
@@ -115,9 +118,12 @@ public class UserController {
     /**
      * List all users
      */
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public String list(Model model) {
+//    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = "users", method = RequestMethod.GET)
+    public String list(Model model, User userForm, HttpServletRequest httpServletRequest) {
         model.addAttribute("users", userService.listAllCustomers());
+//        boolean isAdmin = httpServletRequest.isUserInRole("ADMIN");
+
         return "userList";
     }
 
@@ -177,8 +183,8 @@ public class UserController {
                 user=new User();
                 user.setUsername("admin");
                 user.setPassword("AdMin123");
-                user.setRole("ADMIN");
                 user.setCpassword("AdMin123");
+                user.setRole("ADMIN");
                 userService.save(user);
             }
         };

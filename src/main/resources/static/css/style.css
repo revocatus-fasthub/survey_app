@@ -3,7 +3,7 @@
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  font-family: muli;
+  font-family: arial;
 }
 
 body {
@@ -100,139 +100,11 @@ h1 {
   text-decoration: underline;
   color: #6BA647;
 }
-.fade.in {
-  opacity: 1;
-}
-.alert-success {
-  color: #3c763d;
-  background-color: #dff0d8;
-  border-color: #d6e9c6;
-}
+
 .alert {
-  padding: 15px;
-  margin-bottom: 20px;
-  border: 1px solid transparent;
-  border-radius: 4px;
-}
-.fade {
-  opacity: 0;
-  -webkit-transition: opacity .15s linear;
-  -o-transition: opacity .15s linear;
-  transition: opacity .15s linear;
+  display: none;
+  font-size: 12px;
+  color: #f00;
+  float: left;
 }
 
-.fade.in {
-    opacity: 1;
-}
-.alert-success {
-    color: #3c763d;
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
-}
-.alert {
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-    border-radius: 4px;
-}
-.fade {
-    opacity: 0;
-    -webkit-transition: opacity .15s linear;
-    -o-transition: opacity .15s linear;
-    transition: opacity .15s linear;
-}
-.error-notice {
-    margin: 5px 5px; /* Making sure to keep some distance from all side */
-}
-
-.alert-danger {
-    width: 90%; /* Configure it fit in your design  */
-    margin: 0 auto; /* Centering Stuff */
-    background-color: #ebcccc; /* Default background */
-    padding: 10px;
-    border: 1px solid #eee;
-    border-left-width: 5px;
-    border-radius: 5px;
-    font-family: 'muli', sans-serif;
-    font-size: 12px;
-    text-align: center;
-    color: #843534;
-}
-
-/*.danger {*/
-    /*border-left-color: #d9534f; !* Left side border color *!*/
-    /*background-color: rgba(217, 83, 79, 0.1); !* Same color as the left border with reduced alpha to 0.1 *!*/
-/*}*/
-
-/*.danger strong {*/
-    /*color:  #d9534f;*/
-/*}*/
-
-.warning {
-    border-left-color: #f0ad4e;
-    background-color: rgba(240, 173, 78, 0.1);
-}
-
-.warning strong {
-    color: #f0ad4e;
-}
-
-.info {
-    border-left-color: #5bc0de;
-    background-color: rgba(91, 192, 222, 0.1);
-}
-
-.info strong {
-    color: #5bc0de;
-}
-
-.success {
-    border-left-color: #2b542c;
-    background-color: rgba(43, 84, 44, 0.1);
-}
-
-.success strong {
-    color: #2b542c;
-}
-
-
-/*.alert {*/
-  /*display: inline;*/
-  /*font-size: 12px;*/
-  /*color: #f00;*/
-  /*float: left;*/
-/*}*/
-
-/*@-moz-keyframes wrong-log {*/
-  /*0%, 100% {*/
-    /*left: 0px;*/
-  /*}*/
-  /*20% , 60% {*/
-    /*left: 15px;*/
-  /*}*/
-  /*40% , 80% {*/
-    /*left: -15px;*/
-  /*}*/
-/*}*/
-/*@-webkit-keyframes wrong-log {*/
-  /*0%, 100% {*/
-    /*left: 0px;*/
-  /*}*/
-  /*20% , 60% {*/
-    /*left: 15px;*/
-  /*}*/
-  /*40% , 80% {*/
-    /*left: -15px;*/
-  /*}*/
-/*}*/
-/*@keyframes wrong-log {*/
-  /*0%, 100% {*/
-    /*left: 0px;*/
-  /*}*/
-  /*20% , 60% {*/
-    /*left: 15px;*/
-  /*}*/
-  /*40% , 80% {*/
-    /*left: -15px;*/
-  /*}*/
-/*}*/

@@ -12,82 +12,91 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-
                     <div class="col-md-12">
+
                         <h3 th:if="${#vars['flash.message.question']}" th:text="${#vars['flash.message.question']}" class="alert alert-success"></h3>
                         <h3 th:if="${#vars['flash.message.answerSuccess']}" th:text="${#vars['flash.message.answerSuccess']}" class="alert alert-success"></h3>
                         <h3 th:if="${#vars['flash.message.answerError']}" th:text="${#vars['flash.message.answerError']}" class="alert alert-danger"></h3>
                         <h3 th:if="${#vars['flash.message.questionError']}" th:text="${#vars['flash.message.questionError']}" class="alert alert-success"></h3>
 
+                        <div class="col-md-0 col-md-offset-0.5" >
+
                         <div class="card">
 
-                            <h2>Question Details</h2>
-                                <form class="form-horizontal">
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Question:</label>
-                                            <p class="form-control-static" th:text="${question.qsn}">Question</p>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Sequence:</label>
-                                            <p class="form-control-static" th:text="${question.sequence}">Sequence</p>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Type:</label>
-                                            <p class="form-control-static" th:text="${question.type}">Sequence</p>
-                                    </div>
-                                </form>
-
-                                <hr/><br/>
-
-                            <div>
-                               <form autocomplete="off" action="#" th:action="@{/survey/question/{id}(id=${question.id})}" th:object="${answer}" method="post" class="form-horizontal" role="form">
-                                   <div class="pull-left" th:class="col-md-9" style="padding-right: 10px">
-                                       <input type="text" class="form-control" placeholder="Add New answer/choice" th:field="*{ans}"/>
-                                   </div>
-                                   <div class="pull-left" style="padding-right: 5px">
-                                       <button type="submit" class="btn btn-success">Add Choice</button>
-                                   </div>
-                               </form>
-                           </div>
-                            <hr/>
-
-                        <div class="header">
-                                    <div th:fragment="header">
-                                        <section>
-                                            <div class="pull-left" style="padding-right:5px">
-                                                <h3>Choice</h3>
-                                            </div>
-                                        </section>
-                                    </div>
-
+<!--
+                            <div class="header">
+                                <div th:fragment="header">
+                                    <section>
+                                        <div class="pull-left" style="padding-right:5px">
+                                            <h4>Question Details </h4>
+                                        </div>
+                                    </section>
+                                </div>
                             </div>
-                                <div class="content table-responsive table-full-width">
-                                    <div th:if="${not #lists.isEmpty(answers)}">
+<br/><br/><hr/>
+-->
+                            <div class="content table-responsive table-full-width">
+
                                         <table class="table table-hover table-striped">
-                                            <thead>
-                                            <th>Id</th>
-                                            <th>Answer </th>
-                                            <th>Position</th>
-                                            <th>Count</th>
-                                            <th>Move Up</th>
-                                            <th>Move Down</th>
-                                            <th>Delete</th>
-                                            </thead>
-                                            <tbody>
-                                            <tr th:each="answer : ${answers}">
-                                                <td th:text="${answer.id}">Id</td>
-                                                <td th:text="${answer.ans}">answer </td>
-                                                <td th:text="${answer.position}">position</td>
-                                                <td th:text="${answer.count}">count</td>
-
-
-                                                <td> <a th:href="${'/survey/answerPosition/' +answer.question.id+'/'+ answer.id+'/'+'up'}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></td>
-                                                <td> <a th:href="${'/survey/answerPosition/'+answer.question.id+'/' + answer.id+'/'+'down'}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></td>
-                                                <td> <a th:href="${'/survey/answer/delete/'+question.id+'/' + answer.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-                                                <!--<td><a th:href="${'/survey/question/' + question.id}">Edit</a></td>-->
-
+                                            <tr>
+                                                <thead>
+                                                <!--<h3>Question Details</h3>-->
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Question:</label>
+                                                        <p class="form-control-static" th:text="${question.qsn}">Question</p>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Sequence:</label>
+                                                        <p class="form-control-static" th:text="${question.sequence}">Sequence</p>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Type:</label>
+                                                        <p class="form-control-static" th:text="${question.type}">Sequence</p>
+                                                    </div>
+                                                </thead>
                                             </tr>
+                                            <tr>
+                                                <thead>
+                                                    <form autocomplete="off" action="#" th:action="@{/survey/question/{id}(id=${question.id})}" th:object="${answer}" method="post" class="form-horizontal" role="form">
+                                                        <td colspan="5">
+                                                            <!--<label th:if="${#fields.hasErrors('ans')}" th:errors="*{ans}" class="validation-message" th:class="alert-danger"></label>-->
+                                                            <input type="text" placeholder="Add New answer/choice" class="form-control input-sm" th:field="*{ans}" required="required"/>
+                                                        </td>
+                                                        <td>&nbsp;</td>
+                                                        <td>
+                                                            <button type="submit" class="btn btn-success" >Add Choice</button>
+                                                        </td>
+                                                    </form>
+                                                </thead>
+                                            </tr>
+                                            <div th:if="${not #lists.isEmpty(answers)}">
+                                                <tr>
+                                                <thead>
+                                                    <th>Id</th>
+                                                    <th>Answer </th>
+                                                    <th>Position</th>
+                                                    <th>Count</th>
+                                                    <th>Move Up</th>
+                                                    <th>Move Down</th>
+                                                    <th>Delete</th>
+                                                </thead>
+                                                </tr>
+                                                <tbody>
+                                                <tr th:each="answer : ${answers}">
+                                                    <td th:text="${answer.id}">Id</td>
+                                                    <td th:text="${answer.ans}">answer </td>
+                                                    <td th:text="${answer.position}">position</td>
+                                                    <td th:text="${answer.count}">count</td>
+
+
+                                                    <td> <a th:href="${'/survey/answerPosition/' +answer.question.id+'/'+ answer.id+'/'+'up'}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></td>
+                                                    <td> <a th:href="${'/survey/answerPosition/'+answer.question.id+'/' + answer.id+'/'+'down'}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></td>
+                                                    <td> <a th:href="${'/survey/answer/delete/'+question.id+'/' + answer.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                                                    <!--<td><a th:href="${'/survey/question/' + question.id}">Edit</a></td>-->
+
+                                                </tr>
                                             </tbody>
+                                            </div>
                                         </table>
                                     </div>
                                 </div>
@@ -152,10 +161,12 @@
                                     });
                                 </script>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
+    <!--</div>-->
 
 <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>

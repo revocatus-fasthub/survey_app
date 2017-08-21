@@ -25,4 +25,7 @@ public interface CustomerTransactionService {
     List<CustomerTransaction> getAllQuestionAndAnswer(Question question, Answer answer);
 
 
+//    List<CustomerTransaction> getAllQuestionAndAnswerDetails(Question question, CustomerTransaction answerDetails);
+
+    List<CustomerTransaction> getAnswerByQsnId(Question question);
 }

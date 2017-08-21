@@ -1,12 +1,18 @@
 package tz.co.fasthub.survey.domain;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * Created by root on 7/27/17.
  */
 @Entity
-public class User {
+public class User implements UserDetails{
 
     @Id
     @GeneratedValue
@@ -17,21 +23,19 @@ public class User {
     private String role;
     @Version
     private Long version;
-
+    private boolean enabled;
 
     public User() {
+        enabled = true;
     }
 
     public User(String username, String password, String cpassword,String role, Long version) {
+        this();
         this.username = username;
         this.password = password;
         this.cpassword = cpassword;
         this.role = role;
         this.version = version;
-    }
-
-    public User(User user) {
-
     }
 
     @Override
@@ -46,6 +50,14 @@ public class User {
                 '}';
     }
 
+
+    public boolean isSelected(Long userId){
+        if (userId != null) {
+            return userId.equals(id);
+        }
+        return false;
+    }
+
     public Long getId() {
         return id;
     }
@@ -58,8 +70,37 @@ public class User {
         return username;
     }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return isEnabled();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Arrays.asList(new SimpleGrantedAuthority(role));
     }
 
     public String getPassword() {

@@ -61,6 +61,18 @@ public class CustomerTransactionServiceImpl implements CustomerTransactionServic
 
         return customerTransactionRepository.findAllByQuestionAndAnswer(question, answer);
     }
+/*
 
+    @Override
+    public List<CustomerTransaction> getAllQuestionAndAnswerDetails(Question question, CustomerTransaction answerDetails) {
+
+        return customerTransactionRepository.findAllByQuestionAndAnswerDetails(question, answerDetails);
+    }
+*/
+
+    @Override
+    public List<CustomerTransaction> getAnswerByQsnId(Question question) {
+        return customerTransactionRepository.findAllByQuestion(question);
+    }
 
 }

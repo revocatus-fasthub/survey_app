@@ -12,7 +12,7 @@
         <div class="container-fluid">
             <div class="row">
 
-                <section>
+<!--                <section>
                     <form autocomplete="off" action="#" th:action="@{/survey/question}" th:object="${question}" method="post" class="form-horizontal" role="form">
 
                         <input type="hidden" th:field="*{id}"/>
@@ -24,7 +24,7 @@
 
                         <div class="pull-left" style="padding-right: 30px">
                             <select class="form-group" name="type" id="type" th:field="*{type}">
-                                <option value="0" th:text="${'---Select Type---'}"></option>
+                                <option value="0" th:text="${'-&#45;&#45;Select Type-&#45;&#45;'}"></option>
                                 <option th:value="${'Closed Ended'}" th:selected="${question.isSelected(lastselected)}">Closed Ended</option>
                                 <option th:value="${'Open Ended'}" th:selected="${question.isSelected(lastselected)}">Open Ended</option>
                             </select>
@@ -36,15 +36,14 @@
                         </div>
 
                     </form>
-                </section>
+                </section>-->
 
                 <div class="col-md-12">
 
-                    <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-success"></h3>
-
+                    <h3 th:if="${#vars['flash.message.questionError']}" th:text="${#vars['flash.message.questionError']}" class="alert alert-danger"></h3>
+                    <h3 th:if="${#vars['flash.message.questionSuccess']}" th:text="${#vars['flash.message.questionSuccess']}" class="alert alert-Success"></h3>
 
                     <div class="col-md-0 col-md-offset-0.5" >
-
 
                         <div class="card">
                             <div class="header">
@@ -60,6 +59,31 @@
                             <div class="content table-responsive table-full-width">
                                 <div th:if="${not #lists.isEmpty(questions)}">
                                     <table class="table table-hover table-striped">
+                                        <tr>
+                                            <thead>
+                                            <form autocomplete="off" action="#" th:action="@{/survey/question}" th:object="${question}" method="post" class="form-horizontal" role="form">
+                                                <input type="hidden" th:field="*{id}"/>
+                                                <input type="hidden" th:field="*{version}"/>
+                                                <td colspan="3">
+                                                    <input type="text" placeholder="Add Question" class="form-control input-sm" th:field="*{qsn}" required="required"/>
+                                                    <label th:if="${#fields.hasErrors('qsn')}" th:errors="*{qsn}" class="validation-message" th:class="alert-danger"></label>
+
+                                                </td>
+                                                <td>&nbsp;</td>
+                                                <td colspan="3">
+                                                    <select aria-required="true" class="blood_group form-control" name="type" id="type" th:field="*{type}" >
+                                                        <option value="" th:text="${'--- Select Type ---'}"></option>
+                                                        <option th:value="${'Closed Ended'}" th:selected="${question.isSelected(lastselected)}">Closed Ended</option>
+                                                        <option th:value="${'Open Ended'}" th:selected="${question.isSelected(lastselected)}" >Open Ended</option>
+                                                    </select>
+                                                    <label th:if="${#fields.hasErrors('type')}" th:errors="*{type}" class="validation-message" th:class="alert-danger"></label>
+                                                </td>
+                                                <td>&nbsp;</td>
+                                                <td rowspan="3"><button type="submit" class="btn btn-success btn-sm" >Add</button></td>
+                                            </form>
+                                            </thead>
+                                        </tr>
+                                        <tr>
                                         <thead>
                                             <th>Id</th>
                                             <th>Question </th>
@@ -71,6 +95,7 @@
                                             <th>Edit</th>
                                             <th>Delete</th>
                                         </thead>
+                                        </tr>
                                         <tbody>
                                         <tr th:each="question : ${questions}">
                                             <td> <a th:text="${question.id}" th:alt="Id" th:href="${'/survey/question/'+question.id}"></a></td>
