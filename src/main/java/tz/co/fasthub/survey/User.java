@@ -1,7 +1,7 @@
 package tz.co.fasthub.survey;
 
 /**
- * Created by root on 6/30/17.
+ * Created by naaminicharles on 6/30/17.
  */
 public class User {
 

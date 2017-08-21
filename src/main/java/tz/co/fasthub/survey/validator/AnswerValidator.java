@@ -8,6 +8,9 @@ import org.springframework.validation.Validator;
 import tz.co.fasthub.survey.domain.Answer;
 import tz.co.fasthub.survey.service.AnswerService;
 
+/**
+ * Created by naaminicharles on 7/27/17.
+ */
 @Component
 public class AnswerValidator implements Validator {
 

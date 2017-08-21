@@ -7,7 +7,9 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import tz.co.fasthub.survey.domain.Question;
 import tz.co.fasthub.survey.service.QuestionService;
-
+/**
+ * Created by naaminicharles on 7/27/17.
+ */
 @Component
 public class QuestionValidator implements Validator {
 

@@ -3,7 +3,7 @@ package tz.co.fasthub.survey.domain;
 import javax.persistence.*;
 
 /**
- * Created by root on 8/1/17.
+ * Created by naaminicharles on 8/1/17.
  */
 @Entity
 public class OpenEndedAnswer {

@@ -20,7 +20,7 @@ import java.util.List;
 import static tz.co.fasthub.survey.constants.Constant.restTemplate;
 
 /**
- * Created by Naamini on 6/20/17.
+ * Created by naaminicharles on 6/20/17.
  */
 @RestController
 @RequestMapping(value = "/sms/utc")

@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * Created by root on 7/17/17.
+ * Created by naaminicharles on 7/17/17.
  */
 @Entity
 public class Question {

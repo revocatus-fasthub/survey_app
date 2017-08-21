@@ -9,7 +9,7 @@ import tz.co.fasthub.survey.domain.Question;
 import java.util.List;
 
 /**
- * Created by root on 7/25/17.
+ * Created by naaminicharles on 7/25/17.
  */
 public interface CustomerTransactionRepository extends CrudRepository<CustomerTransaction ,Long>{
     List<CustomerTransaction> findAllByCustomerAndAttendedOrderByIdDesc(Customer customer, boolean attended);

@@ -1,7 +1,7 @@
 package tz.co.fasthub.survey.service;
 
 /**
- * Created by root on 7/27/17.
+ * Created by naaminicharles on 7/27/17.
  */
 public interface SecurityService {
 

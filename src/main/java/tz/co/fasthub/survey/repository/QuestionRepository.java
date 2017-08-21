@@ -6,7 +6,7 @@ import tz.co.fasthub.survey.domain.Question;
 import java.util.List;
 
 /**
- * Created by root on 7/17/17.
+ * Created by naaminicharles on 7/17/17.
  */
 public interface QuestionRepository extends CrudRepository<Question, Long> {
 

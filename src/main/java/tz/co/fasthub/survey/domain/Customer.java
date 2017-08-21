@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * Created by root on 7/25/17.
+ * Created by naaminicharles on 7/25/17.
  */
 @Entity
 public class Customer {

@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
- * Created by root on 7/27/17.
+ * Created by naaminicharles on 7/27/17.
  */
 @Entity
 public class User implements UserDetails{

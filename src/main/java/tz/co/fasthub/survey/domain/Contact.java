@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
- * Created by root on 7/13/17.
+ * Created by naaminicharles on 7/13/17.
  */
 @Entity
 public class Contact {

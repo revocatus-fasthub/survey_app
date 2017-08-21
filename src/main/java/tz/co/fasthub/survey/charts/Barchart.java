@@ -18,7 +18,7 @@ import java.io.OutputStream;
 import java.util.Arrays;
 
 /**
- * Created by root on 7/24/17.
+ * Created by naaminicharles on 7/24/17.
  */
 public class Barchart extends Application {
 

@@ -12,7 +12,7 @@ import tz.co.fasthub.survey.domain.Customer;
 import tz.co.fasthub.survey.service.CustomerService;
 
 /**
- * Created by root on 7/25/17.
+ * Created by naaminicharles on 7/25/17.
  */
 @Controller
 @RequestMapping("/survey/")

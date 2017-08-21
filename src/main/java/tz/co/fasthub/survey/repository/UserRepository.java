@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import tz.co.fasthub.survey.domain.User;
 
 /**
- * Created by root on 7/27/17.
+ * Created by naaminicharles on 7/27/17.
  */
 
 public interface UserRepository extends JpaRepository<User, Long> {

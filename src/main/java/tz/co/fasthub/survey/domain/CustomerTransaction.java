@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by root on 7/25/17.
+ * Created by naaminicharles on 7/25/17.
  */
 @Entity
 public class CustomerTransaction {
