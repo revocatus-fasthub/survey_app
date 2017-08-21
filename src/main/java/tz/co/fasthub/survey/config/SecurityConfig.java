@@ -26,8 +26,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
 
-    private AccessDeniedHandler accessDeniedHandler;
+    private CustomAccessDeniedHandler accessDeniedHandler;
 
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(){
+        return new CustomAccessDeniedHandler();
+    }
 
     @Autowired
     public SecurityConfig(UserDetailsService userDetailsService) {
@@ -69,10 +73,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/login?error")
                 .and()
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/crdb/login")
+//                .and()
+//                .exceptionHandling().accessDeniedPage("/403")
                 .and()
-                .exceptionHandling().accessDeniedPage("/403")
-                .and()
-                .csrf().disable().exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+                .csrf().disable();
+
+        http
+        .exceptionHandling().accessDeniedPage("/403");
+//        accessDeniedHandler(accessDeniedHandler);
 
     }
 
@@ -92,4 +100,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    public void setAccessDeniedHandler(CustomAccessDeniedHandler accessDeniedHandler) {
+        this.accessDeniedHandler = accessDeniedHandler;
+    }
 }

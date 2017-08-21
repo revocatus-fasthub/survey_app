@@ -22,7 +22,6 @@ import tz.co.fasthub.survey.service.SecurityService;
 import tz.co.fasthub.survey.service.UserService;
 import tz.co.fasthub.survey.validator.UserValidator;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -120,9 +119,9 @@ public class UserController {
      */
 //    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "users", method = RequestMethod.GET)
-    public String list(Model model, User userForm, HttpServletRequest httpServletRequest) {
+    public String list(Model model, User userForm) {
+
         model.addAttribute("users", userService.listAllCustomers());
-//        boolean isAdmin = httpServletRequest.isUserInRole("ADMIN");
 
         return "userList";
     }

@@ -41,6 +41,12 @@ public class MainController {
         return "login";
     }
 
+    @RequestMapping(value = "/403")
+    public String exceptionalHandling(){
+        return "403";
+    }
+
+
     /**
      * Login to Page.
      */
