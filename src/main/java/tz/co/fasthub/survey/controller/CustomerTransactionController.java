@@ -77,6 +77,18 @@ public class CustomerTransactionController {
     }
 
 
+    /**
+     * Search customerTransaction.
+     *
+     *
+     * @return
+     */
+   /* @RequestMapping(value = "/search", method=RequestMethod.POST)
+    public String search(@ModelAttribute("searchFilter") FilterDTO filter, Pageable page) {
+        //Add logic here
+        return "results";
+    }*/
+
 
 //    /**
 //     * Download PDF.

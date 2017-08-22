@@ -38,20 +38,30 @@
                     </form>
                 </section>-->
 
-                <div class="col-md-12">
+                <div class="col-md-12" >
 
                     <h3 th:if="${#vars['flash.message.questionError']}" th:text="${#vars['flash.message.questionError']}" class="alert alert-danger"></h3>
                     <h3 th:if="${#vars['flash.message.questionSuccess']}" th:text="${#vars['flash.message.questionSuccess']}" class="alert alert-Success"></h3>
 
                     <div class="col-md-0 col-md-offset-0.5" >
 
-                        <div class="card">
+                        <div class="card" id="">
                             <div class="header">
                                 <div th:fragment="header">
                                     <section>
                                         <div class="pull-left" style="padding-right:5px">
                                             <h3>Questions</h3>
                                         </div>
+
+                                        <div class="pull-right" style="padding-right: 4px">
+                                            <form action="#" method="get">
+                                                <div class="input-group input-sm">
+                                                    <label class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></label>
+                                                    <input class="form-control" id="card" name="q" placeholder="Search" required="required"/>
+                                                </div>
+                                            </form>
+                                        </div>
+
                                     </section>
                                 </div>
 

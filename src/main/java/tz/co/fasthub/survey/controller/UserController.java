@@ -183,7 +183,7 @@ public class UserController {
                 user.setUsername("admin");
                 user.setPassword("AdMin123");
                 user.setCpassword("AdMin123");
-                user.setRole("ADMIN");
+                user.setRole("ROLE_ADMIN");
                 userService.save(user);
             }
         };

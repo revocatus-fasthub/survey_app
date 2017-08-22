@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:top="http://www.w3.org/1999/xhtml">
 <head lang="en" th:include="fragments/header :: header">
 
     <title>CRDB Survey | Users</title>
@@ -25,11 +25,22 @@
                             <h3>Users</h3>
                             </div>
 
-                            <div class="pull-right" style="padding-right:2px">
-                            <h3><a th:href="@{'/survey/registration/new'}"><button class="btn btn-success btn-sm">Add User</button></a></h3>
+                            <div class="pull-right" style="padding-right:10px;" >
+                                <h3><a th:href="@{'/survey/registration/new'}"><button class="btn btn-success btn-sm">Add User</button></a></h3>
+                            </div>
+
+
+                                <div class="pull-right" style="padding-right: inherit">
+                                    <form action="#" method="get">
+                                        <div class="input-group input-sm">
+                                            <label class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></label>
+                                            <input class="form-control" id="card" name="q" placeholder="Search" required="required"/>
+                                        </div>
+                                    </form>
+                                </div>
 
                                 <!--<button type="button" class="btn btn-success btn-sm" id="myBtn">Add user</button>-->
-                            </div>
+                            <!--</div>-->
                             </section>
                             </div>
                         </div>
