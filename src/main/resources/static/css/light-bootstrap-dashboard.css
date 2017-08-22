@@ -163,7 +163,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 }
 
 .ui-slider-handle:focus,
-.navbar-toggle,
+.dropdown-menu,
 input:focus {
   outline: 0 !important;
 }
@@ -1427,6 +1427,7 @@ background-color:#4bb242;
 }
 
 .navbar-nav > li > .dropdown-menu {
+    color: #eee;
   border-radius: 10px;
   margin-top: -5px;
 }
