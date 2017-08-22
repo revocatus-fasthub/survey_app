@@ -2936,7 +2936,7 @@ background-color:#4bb242;
 
   .navbar-toggle .icon-bar {
     display: block;
-    position: relative;
+    /*position: relative;*/
     background: #4bb242;
     width: 24px;
     height: 2px;
