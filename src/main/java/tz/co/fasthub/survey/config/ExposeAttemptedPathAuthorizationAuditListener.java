@@ -16,8 +16,7 @@ import java.util.Map;
 @Component
 public class ExposeAttemptedPathAuthorizationAuditListener extends AbstractAuthorizationAuditListener {
 
-    public static final String AUTHORIZATION_FAILURE
-            = "AUTHORIZATION_FAILURE";
+    private static final String AUTHORIZATION_FAILURE = "AUTHORIZATION_FAILURE";
 
     @Override
     public void onApplicationEvent(AbstractAuthorizationEvent event) {
@@ -26,20 +25,17 @@ public class ExposeAttemptedPathAuthorizationAuditListener extends AbstractAutho
         }
     }
 
-    private void onAuthorizationFailureEvent(
-            AuthorizationFailureEvent event) {
+    private void onAuthorizationFailureEvent(AuthorizationFailureEvent event) {
+
         Map<String, Object> data = new HashMap<>();
-        data.put(
-                "type", event.getAccessDeniedException().getClass().getName());
+        data.put("type", event.getAccessDeniedException().getClass().getName());
         data.put("message", event.getAccessDeniedException().getMessage());
-        data.put(
-                "requestUrl", ((FilterInvocation)event.getSource()).getRequestUrl() );
+        data.put("requestUrl", ((FilterInvocation)event.getSource()).getRequestUrl() );
 
         if (event.getAuthentication().getDetails() != null) {
-            data.put("details",
-                    event.getAuthentication().getDetails());
+            data.put("details", event.getAuthentication().getDetails());
         }
-        publish(new AuditEvent(event.getAuthentication().getName(),
-                AUTHORIZATION_FAILURE, data));
+        publish(new AuditEvent(event.getAuthentication().getName(), AUTHORIZATION_FAILURE, data));
     }
+
 }

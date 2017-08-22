@@ -151,8 +151,6 @@ public class UserController {
             userService.update(userForm);
             redirectAttributes.addFlashAttribute("flash.message.userSuccess", userForm.getUsername()+" has been successfully updated");
             return "redirect:/survey/users";
-
-
     }
 
 
