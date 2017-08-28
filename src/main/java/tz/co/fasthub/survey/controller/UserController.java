@@ -184,7 +184,27 @@ public class UserController {
                 user.setRole("ROLE_ADMIN");
                 userService.save(user);
             }
+
+            User user1 = userService.findByUsername("adminAct");
+            if (user1==null){
+                user1=new User();
+                user1.setUsername("adminAct");
+                user1.setPassword("AdMin123");
+                user1.setCpassword("AdMin123");
+                user1.setRole("ROLE_ACTUATOR");
+                userService.save(user1);
+            }
         };
     }
 
 }
+
+
+
+
+
+
+
+
+
+

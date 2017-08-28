@@ -14,7 +14,7 @@ import tz.co.fasthub.survey.service.AuditLogService;
  * Created by naaminicharles on 8/21/17.
  */
 @Component
-public class LoginAttemptsLogger {
+public class LoginAttemptsLogger{
 
     private final Logger log = LoggerFactory.getLogger(LoginAttemptsLogger.class);
 
@@ -25,25 +25,44 @@ public class LoginAttemptsLogger {
     }
 
     @EventListener
+//    @Async
     public void auditEventHappened(AuditApplicationEvent auditApplicationEvent) {
 
         AuditEvent auditEvent = auditApplicationEvent.getAuditEvent();
 
-        log.info("Principal " + auditEvent.getPrincipal() + " - " + auditEvent.getType());
-
         WebAuthenticationDetails details = (WebAuthenticationDetails) auditEvent.getData().get("details");
 
+        log.info("  Principal " + auditEvent.getPrincipal());
+        log.info("  Type: " + auditEvent.getType());
         log.info("  Remote IP address: " + details.getRemoteAddress());
         log.info("  Session Id: " + details.getSessionId());
+        log.info("  Time Stamp: " +auditEvent.getTimestamp());
         log.info("  Request URL: " + auditEvent.getData().get("requestUrl"));
+        log.info("  Message: " +auditEvent.getData().get("message"));
+        log.info("  Authorities: "+auditEvent.getData().get("authorities"));
 
 
-        AuditLog auditLog = new AuditLog();
+            AuditLog auditLog = new AuditLog();
             auditLog.setUsername(auditEvent.getPrincipal());
             auditLog.setType(auditEvent.getType());
             auditLog.setRemote_ip_address(details.getRemoteAddress());
             auditLog.setSession_id(details.getSessionId());
             auditLog.setRequest_url(String.valueOf(auditEvent.getData().get("requestUrl")));
-        auditLogService.save(auditLog);
+            auditLog.setMessage(String.valueOf(auditEvent.getData().get("message")));
+            auditLog.setAuthorities(String.valueOf(auditEvent.getData().get("authorities")));
+
+            auditLogService.save(auditLog);
     }
+
+/*    @Override
+    protected void onAuditEvent(AuditEvent event) {
+        log.info("*******************************************************");
+        log.info("On audit event: timestamp: {}, principal: {}, type: {}, data: {}",
+                event.getTimestamp(),
+                event.getPrincipal(),
+                event.getType(),
+                event.getData()
+        );
+
+    }*/
 }

@@ -33,7 +33,7 @@
                                     </section>
                                 </div>
                             </div>
-<br/><br/><hr/>
+                            <br/><br/><hr/>
 -->
                             <div class="content table-responsive table-full-width">
 
@@ -140,7 +140,7 @@
                                                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                                                 pointFormat: '<tr>' +
                                                 '<td style="color:{series.#4bb242};padding:0">{series.name}: </td>' +
-                                                '<td style="padding:0"><b>{point.y:.1f} K</b></td>' +
+                                                '<td style="padding:0"><b>{point.y:.0f}</b></td>' +
                                                 '</tr>',
                                                 footerFormat: '</table>',
                                                 shared: true,
@@ -153,7 +153,7 @@
                                                 }
                                             },
                                             series: [{
-                                                name: 'Question',
+                                                name: 'Choice',
                                                 data: [[${barChartData.values()}]],
                                                 fill: '#4bb242'
                                             }]
