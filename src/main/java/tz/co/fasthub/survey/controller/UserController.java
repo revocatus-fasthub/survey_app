@@ -185,7 +185,7 @@ public class UserController {
                 userService.save(user);
             }
 
-            User user1 = userService.findByUsername("adminAct");
+          /*  User user1 = userService.findByUsername("adminAct");
             if (user1==null){
                 user1=new User();
                 user1.setUsername("adminAct");
@@ -193,7 +193,7 @@ public class UserController {
                 user1.setCpassword("AdMin123");
                 user1.setRole("ROLE_ACTUATOR");
                 userService.save(user1);
-            }
+            }*/
         };
     }
 

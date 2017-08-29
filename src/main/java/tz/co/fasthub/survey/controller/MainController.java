@@ -72,7 +72,7 @@ public class MainController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         redirectAttributes.addFlashAttribute("flash.message.user","Successfully logged out");
-        return "login";
+        return "redirect:/crdb/login";
     }
 
 
