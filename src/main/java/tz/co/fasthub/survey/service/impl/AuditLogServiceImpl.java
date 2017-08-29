@@ -24,5 +24,10 @@ public class AuditLogServiceImpl implements AuditLogService {
         return auditLogRepository.save(auditLog);
     }
 
+    @Override
+    public Iterable<AuditLog> listAllAuditEvents() {
+        return auditLogRepository.findAll();
+    }
+
 
 }

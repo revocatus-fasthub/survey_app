@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>CRDB Survey | Audit Event Logs</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-success"></h3>
+
+                        <div class="card" style="overflow: scroll;">
+                            <div class="header">
+                                <div th:fragment="header">
+
+                                    <section>
+                                        <div class="pull-left" style="padding-right:5px">
+                                            <h3>Audit Event Logs</h3>
+                                        </div>
+
+                                        <!--<div class="pull-right" style="padding-right: 4px">
+                                            <form action="#" th:action="@{/survey/transactionSearch}" method="get">
+                                                <div class="input-group input-sm">
+                                                    <label class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></label>
+                                                    <input class="form-control" id="card" name="q" placeholder="Search" required="required"/>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        -->
+                                        <!--<div class="pull-right" style="padding-right:2px">-->
+                                        <!--&lt;!&ndash;<a href="<c:url value='/download/external' />">Download This File (located outside project, on file system)</a>&ndash;&gt;-->
+                                        <!--<a th:href="@{'/survey/download/pdf/transctionList.pdf'}"><i class="fa fa-download" aria-hidden="true"></i>PDF</a>-->
+                                        <!--</div>-->
+                                    </section>
+                                </div>
+
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <div th:if="${not #lists.isEmpty(auditEvents)}">
+                                <table class="table table-hover table-striped"  >
+                                      <tr>
+                                          <thead>
+                                          <th>ID</th>
+                                          <th>Remote IP Address</th>
+                                          <th>Request Url </th>
+                                          <th>Session Id</th>
+                                          <th>Username</th>
+                                          <th>Audit Event Type</th>
+                                          <th>Timestamp</th>
+                                          <th>Message</th>
+                                          <th>Authority</th>
+                                          </thead>
+                                      </tr>
+
+                                         <tbody>
+                                        <tr th:each="auditEvent : ${auditEvents}">
+                                            <td th:text="${auditEvent.id}">id</td>
+                                            <td th:text="${auditEvent.remote_ip_address}">remote_ip_address</td>
+                                            <td th:text="${auditEvent.request_url}">request_url</td>
+                                            <td th:text="${auditEvent.session_id}">sessionId</td>
+                                            <td th:text="${auditEvent.username}">username</td>
+                                            <td th:text="${auditEvent.type}">type</td>
+                                            <td th:text="${auditEvent.timestamp}">timestamp</td>
+                                            <td th:text="${auditEvent.message}">message</td>
+                                            <td th:text="${auditEvent.authorities}">authorities</td>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+</body>
+</html>

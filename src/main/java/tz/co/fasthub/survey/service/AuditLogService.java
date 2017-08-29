@@ -7,4 +7,5 @@ import tz.co.fasthub.survey.domain.AuditLog;
  */
 public interface AuditLogService {
     AuditLog save(AuditLog auditLog);
+    Iterable<AuditLog> listAllAuditEvents();
 }
