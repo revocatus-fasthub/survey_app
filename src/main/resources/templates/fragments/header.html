@@ -81,9 +81,8 @@
                                     </div>
                                 </form>
                             </li>-->
-                            <li><a href="/survey/users" th:href="@{'/survey/users'}"><i class="fa fa-user fa-fw"></i>View Users</a></li>
-                            <!--sec:authorize="hasRole('ROLE_ADMIN')"-->
-                            <li><a href="#"><i class="fa fa-unlock-alt"></i><span class="notification" sec:authentication="name"></span></a></li>
+                            <li><a href="/survey/users" th:href="@{'/survey/users'}" sec:authorize="hasRole('ROLE_ADMIN')"><i class="fa fa-user fa-fw"></i>View Users</a></li>
+                            <li><a href="#"><i class="fa fa-unlock-alt"></i><span sec:authentication="name"></span></a></li>
                             <!--<li class="dropdown">
                                 <a href="#" class="dropdown-toggle"  data-toggle="dropdown">
                                     <i class="fa fa-unlock-alt"></i>

@@ -24,6 +24,7 @@ public interface CustomerTransactionService {
 
     List<CustomerTransaction> getAllQuestionAndAnswer(Question question, Answer answer);
 
+//    Iterable<CustomerTransaction> findTransaction(String customerTransaction);
 
 //    List<CustomerTransaction> getAllQuestionAndAnswerDetails(Question question, CustomerTransaction answerDetails);
 

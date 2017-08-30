@@ -52,13 +52,13 @@ public class MainController {
      */
 
     @RequestMapping("/login")
-    public String getLoginForm(Model model, String error, String logout) {
+    public String getLoginForm(Model model, String error, String logout, RedirectAttributes redirectAttributes) {
         if (error != null) {
             model.addAttribute("message", "Invalid username of password, try again !");
             return "login";
 
         } else if (logout != null) {
-            model.addAttribute("message", "Logged Out successfully, login again to continue !");
+            redirectAttributes.addFlashAttribute("flash.message.logout", "You've been logged out successfully");
             return "login";
         }
 

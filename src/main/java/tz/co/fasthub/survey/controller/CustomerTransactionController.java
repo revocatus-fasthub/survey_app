@@ -83,11 +83,14 @@ public class CustomerTransactionController {
      *
      * @return
      */
-   /* @RequestMapping(value = "/transactionSearch", method=RequestMethod.POST)
-    public String search(@ModelAttribute("searchFilter") FilterDTO filter, Pageable page) {
+/*
+    @RequestMapping(value = "/transactionSearch", method=RequestMethod.POST)
+    public String search(@ModelAttribute("searchFilter") CustomerTransaction transaction, Pageable page) {
         //Add logic here
+        customerTransactionService.findTransaction();
         return "results";
-    }*/
+    }
+*/
 
 
 //    /**

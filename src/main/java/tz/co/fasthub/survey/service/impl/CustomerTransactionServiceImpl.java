@@ -62,6 +62,11 @@ public class CustomerTransactionServiceImpl implements CustomerTransactionServic
         return customerTransactionRepository.findAllByQuestionAndAnswer(question, answer);
     }
 /*
+    @Override
+    public Iterable<CustomerTransaction> findTransaction(String customerTransaction) {
+        return customerTransactionRepository.findTransaction(customerTransaction);
+    }*/
+/*
 
     @Override
     public List<CustomerTransaction> getAllQuestionAndAnswerDetails(Question question, CustomerTransaction answerDetails) {
