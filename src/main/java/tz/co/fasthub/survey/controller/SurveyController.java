@@ -155,7 +155,7 @@ public class SurveyController {
     private String getQuestionOne(Question question) {
         String response=null;
         if (question!=null) {
-            response = question.getQsn();
+            response = question.getQsn() +"\n"+ answerService.getAnswerByQuestion(question);
         }
         return response;
     }
