@@ -201,8 +201,12 @@ input:focus {
 .fa {
   width: 18px;
   text-align: center;
-    /*color: #4bb242;*/
+    color: inherit;
 }
+.fa:hover, .fa:focus {
+    color: #008000;
+}
+
 
 .margin-top {
   margin-top: 50px;
@@ -300,7 +304,7 @@ margin:10px;
   border-radius: 4px;
 }
 .sidebar .nav li:hover > a {
-  background: #008000;
+  background: #4bb242;
   opacity: 1;
 }
 .sidebar .nav li.active > a {
@@ -327,7 +331,7 @@ margin:10px;
 .sidebar .logo,
 body > .navbar-collapse .logo {
   padding: 10px 15px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #008000;
 }
 .sidebar .logo p,
 body > .navbar-collapse .logo p {
@@ -3409,7 +3413,7 @@ fill: #4bb242;
 
 
 H3,a{
-color:#4bb242;
+color:#008000;
 }
 
 .search-form .form-group {  float: right !important;  transition: all 0.35s, border-radius 0s;  width: 32px;  height: 32px;

@@ -43,10 +43,19 @@
 
                                             <label class="col-sm-1 control-label">Type</label>
                                             <select class="form-control" name="type" id="type" th:field="*{type}">
-                                                <option value="0" th:text="${'---Select---'}"></option>
+                                                <option value="0" th:text="${'---Select Type---'}"></option>
                                                 <option th:value="${'Closed Ended'}" th:selected="${question.isSelected(lastselected)}">Closed Ended</option>
                                                 <option th:value="${'Open Ended'}" th:selected="${question.isSelected(lastselected)}">Open Ended</option>
                                             </select>
+                                            <label class="col-sm-1 control-label">Status</label>
+
+                                            <select aria-required="true" class="blood_group form-control" name="type" id="status" th:field="*{status}" >
+                                                <!--<option value="" th:text="${'-&#45;&#45; Select Type -&#45;&#45;'}"></option>-->
+                                                <option th:value="${'Enable'}" th:selected="${question.isEnabled(lastselected)}">Enable</option>
+                                                <option th:value="${'Disable'}" th:selected="${question.isEnabled(lastselected)}" >Disable</option>
+                                            </select>
+
+
                                         </div>
                                     </div>
 
