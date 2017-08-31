@@ -26,15 +26,14 @@
                                             <h3>Customer Transaction List</h3>
                                         </div>
 
-                                  <!--      <div class="pull-right" style="padding-right: 4px">
-                                            <form action="#" th:action="@{/survey/transactionSearch}" th:object="${transaction}" method="get">
+                                        <div class="pull-right" style="padding-right: 4px">
+                                            <form action="#"  th:action="${'/survey/transactionSearch'}" th:object="${transaction}" method="post">
                                                 <div class="input-group input-sm">
                                                     <label class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></label>
                                                     <input class="form-control" id="card" name="q" placeholder="Search" required="required"/>
                                                 </div>
                                             </form>
                                         </div>
-                                  -->
                                         <!--<div class="pull-right" style="padding-right:2px">-->
                                         <!--&lt;!&ndash;<a href="<c:url value='/download/external' />">Download This File (located outside project, on file system)</a>&ndash;&gt;-->
                                         <!--<a th:href="@{'/survey/download/pdf/transctionList.pdf'}"><i class="fa fa-download" aria-hidden="true"></i>PDF</a>-->

@@ -61,11 +61,11 @@ public class CustomerTransactionServiceImpl implements CustomerTransactionServic
 
         return customerTransactionRepository.findAllByQuestionAndAnswer(question, answer);
     }
-/*
+
     @Override
-    public Iterable<CustomerTransaction> findTransaction(String customerTransaction) {
-        return customerTransactionRepository.findTransaction(customerTransaction);
-    }*/
+    public List<CustomerTransaction> findAllByMsisdn(String customerTransaction) {
+        return customerTransactionRepository.findAllByCustomer(customerTransaction);
+    }
 /*
 
     @Override
@@ -78,6 +78,12 @@ public class CustomerTransactionServiceImpl implements CustomerTransactionServic
     @Override
     public List<CustomerTransaction> getAnswerByQsnId(Question question) {
         return customerTransactionRepository.findAllByQuestion(question);
+    }
+
+    @Override
+    public List<CustomerTransaction> search(String query) {
+        return customerTransactionRepository
+                .findAllByCustomerMsisdnContainingOrQuestionQsnContainingIgnoreCaseOrAnswerAnsContainingIgnoreCase(query,query,query);
     }
 
 }

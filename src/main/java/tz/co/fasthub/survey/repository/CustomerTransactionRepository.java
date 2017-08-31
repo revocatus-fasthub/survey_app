@@ -21,5 +21,7 @@ public interface CustomerTransactionRepository extends CrudRepository<CustomerTr
 
     List<CustomerTransaction> findAllByQuestion(Question question);
 
-//    Iterable<CustomerTransaction> findTransaction(String customerTransaction);
+    List<CustomerTransaction> findAllByCustomer(String customerTransaction);
+
+    List<CustomerTransaction> findAllByCustomerMsisdnContainingOrQuestionQsnContainingIgnoreCaseOrAnswerAnsContainingIgnoreCase(String msisdnQuery, String qsnQuery, String ansQuery);
 }

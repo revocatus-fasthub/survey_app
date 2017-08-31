@@ -5,11 +5,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import tz.co.fasthub.survey.domain.CustomerTransaction;
 import tz.co.fasthub.survey.service.CustomerTransactionService;
+
+import java.util.List;
 
 /**
  * Created by naaminicharles on 7/25/17.
@@ -83,14 +86,14 @@ public class CustomerTransactionController {
      *
      * @return
      */
-/*
     @RequestMapping(value = "/transactionSearch", method=RequestMethod.POST)
-    public String search(@ModelAttribute("searchFilter") CustomerTransaction transaction, Pageable page) {
+    public String search(@ModelAttribute("q") String query, Model model) {
         //Add logic here
-        customerTransactionService.findTransaction();
-        return "results";
+        List<CustomerTransaction> msisdn =  customerTransactionService.search(query);
+        log.info("phonne number is: "+msisdn);
+        model.addAttribute("customerTransactions", msisdn);
+        return "customerTransactionList";
     }
-*/
 
 
 //    /**
