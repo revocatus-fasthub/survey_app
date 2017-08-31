@@ -32,15 +32,19 @@ public class Question {
     @OneToMany(mappedBy = "question",cascade = CascadeType.DETACH)
     private List<CustomerTransaction> customerTransaction;
 
+    @NotNull
+    private String status;
+
     public Question() {
     }
 
 
-    public Question(String qsn, int sequence, Long version, String type) {
+    public Question(String qsn, int sequence, Long version, String type, String status) {
         this.qsn = qsn;
         this.sequence = sequence;
         this.version = version;
         this.type = type;
+        this.status = status;
     }
 
     @Override
@@ -51,6 +55,7 @@ public class Question {
                 ", sequence=" + sequence +
                 ", version=" + version +
                 ", type=" + type +
+                ", status=" + status +
                 '}';
     }
 
@@ -62,6 +67,26 @@ public class Question {
         Question question = (Question) o;
 
         return id.equals(question.id);
+    }
+
+
+
+/*
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+*/
+
+    public boolean isEnabled(Long qsnId){
+        if(qsnId!=null){
+            return qsnId.equals(id);
+        }
+        return false;
     }
 
 
@@ -120,5 +145,12 @@ public class Question {
         this.type = type;
     }
 
-  }
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+}
 

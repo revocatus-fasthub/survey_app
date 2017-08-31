@@ -174,7 +174,7 @@ public class QuestionController {
    //     model.addAttribute("Question", question);
         questionValidator.validate(question, result);
         if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("flash.message.questionError", "'Add Question' or 'Select Type' field cannot be empty!");
+            redirectAttributes.addFlashAttribute("flash.message.questionError", "'Type' or 'Status' field cannot be empty!");
             return "redirect:/survey/addQuestion";
         }
         savedQuestion = questionService.save(question);
@@ -378,6 +378,22 @@ public class QuestionController {
             }
         }
 
+    }
+
+
+    @RequestMapping(value = "questionStatus/{id}/status", method = RequestMethod.GET)
+    public String changeStatus(@PathVariable Long id) {
+        Question question = questionService.getQsnById(id);
+
+        if(question.getStatus().equals("Enable")){
+            question.setStatus("Disable");
+        }else {
+            question.setStatus("Enable");
+        }
+
+        questionService.save(question);
+
+        return "redirect:/survey/addQuestion";
     }
 
 }

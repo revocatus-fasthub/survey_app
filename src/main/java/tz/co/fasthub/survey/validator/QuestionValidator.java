@@ -38,6 +38,11 @@ public class QuestionValidator implements Validator {
         {
                 errors.rejectValue("type", "Size.question.type");
         }
+        ValidationUtils.rejectIfEmpty(errors, "status", "NotEmpty");
+        if (question.getType().length()<1)
+        {
+            errors.rejectValue("status", "Size.question.status");
+        }
 
     }
 

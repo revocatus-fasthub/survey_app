@@ -79,26 +79,38 @@
                                                     <label th:if="${#fields.hasErrors('qsn')}" th:errors="*{qsn}" class="validation-message" th:class="alert-danger"></label>
 
                                                 </td>
-                                                <td>&nbsp;</td>
+                                                <!--<td>&nbsp;</td>-->
                                                 <td colspan="3">
                                                     <select aria-required="true" class="blood_group form-control" name="type" id="type" th:field="*{type}" >
-                                                        <option value="" th:text="${'--- Select Type ---'}"></option>
+                                                        <option value="" th:align="center" th:text="${'--- Select Type ---'}"></option>
                                                         <option th:value="${'Closed Ended'}" th:selected="${question.isSelected(lastselected)}">Closed Ended</option>
                                                         <option th:value="${'Open Ended'}" th:selected="${question.isSelected(lastselected)}" >Open Ended</option>
                                                     </select>
                                                     <label th:if="${#fields.hasErrors('type')}" th:errors="*{type}" class="validation-message" th:class="alert-danger"></label>
                                                 </td>
-                                                <td>&nbsp;</td>
+                                                <!--<td>&nbsp;</td>-->
+                                                <td colspan="3">
+                                                    <select aria-required="true" class="blood_group form-control" name="type" id="status" th:field="*{status}" >
+                                                        <!--<option value="" th:text="${'-&#45;&#45; Select Type -&#45;&#45;'}"></option>-->
+                                                        <option th:value="${'Enable'}" th:selected="${question.isEnabled(lastselected)}">Enable</option>
+                                                        <option th:value="${'Disable'}" th:selected="${question.isEnabled(lastselected)}" >Disable</option>
+                                                    </select>
+                                                    <label th:if="${#fields.hasErrors('status')}" th:errors="*{status}" class="validation-message" th:class="alert-danger"></label>
+                                                </td>
+
+                                                <!--<td>&nbsp;</td>-->
                                                 <td rowspan="3"><button type="submit" class="btn btn-success btn-sm" >Add</button></td>
                                             </form>
                                             </thead>
                                         </tr>
+
                                         <tr>
                                         <thead>
                                             <th>Id</th>
                                             <th>Question </th>
                                             <th>Sequence</th>
                                             <th>Type</th>
+                                            <th>Status</th>
                                             <th>Move Up</th>
                                             <th>Move Down</th>
                                             <th>View</th>
@@ -112,6 +124,7 @@
                                             <td th:text="${question.qsn}">Qsn Id</td>
                                             <td th:text="${question.sequence}">sequence</td>
                                             <td th:text="${question.type}">type</td>
+                                            <td > <a th:href="${'/survey/questionStatus/' + question.id+'/'+'status'}"><i th:text="${question.status}" class="fa fa-caret-down" aria-hidden="true"></i></a></td>
 
                                             <td> <a th:href="${'/survey/questionSequence/' + question.id+'/'+'up'}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></td>
                                             <td> <a th:href="${'/survey/questionSequence/' + question.id+'/'+'down'}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></td>
