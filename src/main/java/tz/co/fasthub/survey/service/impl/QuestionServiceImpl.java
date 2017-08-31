@@ -40,8 +40,8 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question getNextQuestion(Question currentCurrent){
-
-        List<Question> questions = listAllQuestionsByAsc();
+        String status = "Enable";
+        List<Question> questions = listAllQuestionsByStatus(status);
         if(!questions.isEmpty()){
             boolean detector=false;
             for (Question question1:questions) {
@@ -67,8 +67,13 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question getQnOneBySequence() {
 
-        List<Question> questions = questionRepository.findAllByOrderBySequenceAsc();
-        for (Question question : questions) {
+        String status = "Enable";
+        List<Question> questionSequence = questionRepository.findAllByOrderBySequenceAsc();
+        List<Question> questionsStatus = questionRepository.findAllByStatus(status);
+        for (Question question : questionSequence) {
+            for (Question selectedQuestion :questionsStatus) {
+                return selectedQuestion;
+            }
             return question;
         }
         return null;
@@ -87,6 +92,13 @@ public class QuestionServiceImpl implements QuestionService {
 
         return questionRepository.findAllByOrderBySequenceAsc();
     }
+
+    @Override
+    public List<Question> listAllQuestionsByStatus(String status) {
+
+        return questionRepository.findAllByStatus(status);
+    }
+
 
     @Override
     public Question update(Question question) {

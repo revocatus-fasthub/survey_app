@@ -21,6 +21,8 @@ public interface QuestionService {
 
     List<Question> listAllQuestionsByAsc();
 
+    List<Question> listAllQuestionsByStatus(String status);
+
     Question update(Question question);
 
     void deleteQuestion(Long id);
