@@ -115,10 +115,10 @@ public class QuestionController {
     @RequestMapping(value = "answer", method = RequestMethod.POST)
     public String saveAnswer(@Valid Answer answer, Model model, RedirectAttributes redirectAttributes){
         Question question = questionService.getQsnById(answer.getQuestion().getId());
-        log.info("qsnid: "+question.getId());
+//        log.info("qsnid: "+question.getId());
 
 
-        log.info(answer.toString());
+//        log.info(answer.toString());
             savedAnswer = answerService.saveByQnsId(answer, question);
         model.addAttribute("answers", answerService.getAnswerByQsnId(question));
         model.addAttribute("question", questionService.getQsnById(question.getId()));

@@ -124,7 +124,7 @@ h1 .subtitle {
 }
 
 .text-success, .text-success:hover {
-  color: #4bb242 !important;
+  color: #008000 !important;
 }
 
 .text-warning, .text-warning:hover {
@@ -201,6 +201,7 @@ input:focus {
 .fa {
   width: 18px;
   text-align: center;
+    /*color: #4bb242;*/
 }
 
 .margin-top {
@@ -235,7 +236,8 @@ input:focus {
   overflow: hidden;
   width: 260px;
   z-index: 4;
-    background-color:#eee;
+    background-color:#008000;
+    /*#eee*/
 }
 .sidebar .sidebar-background {
   position: absolute;
@@ -250,6 +252,7 @@ input:focus {
 .sidebar .logo {
   padding: 10px 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: #008000;
 }
 .sidebar .logo p {
   float: left;
@@ -290,13 +293,14 @@ margin:10px;
   margin-top: 20px;
 }
 .sidebar .nav li > a {
-  color: #4bb242;
+  color: #FFFFFF;
   margin: 5px 15px;
   opacity: .86;
+    /*font-size: large;*/
   border-radius: 4px;
 }
 .sidebar .nav li:hover > a {
-  background: #eee;
+  background: #008000;
   opacity: 1;
 }
 .sidebar .nav li.active > a {
@@ -575,12 +579,12 @@ body > .navbar-collapse[data-color="purple"]:after {
 }
 
 .btn-success {
-background-color:#4bb242;
-  border-color: #4bb242;
+background-color:#008000;
+  border-color: #008000;
   color: #fff;
 }
 .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open > .btn-success.dropdown-toggle {
-  background-color:#4bb242;
+  background-color:#008000;
   color: #fff;
   border-color: #4bb242;
 }
@@ -1066,7 +1070,7 @@ background-color:#4bb242;
   color: #ffffff;
   font-weight: 400;
   padding-bottom: 10px;
-  background-color:#4bb242;
+  background-color:#008000;
 }
 .table .td-actions .btn {
   opacity: 0.36;
@@ -1518,7 +1522,7 @@ background-color:#4bb242;
 }
 
 .navbar-default {
-  background-color: #4bb242;
+  background-color: #008000;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 .navbar-default .navbar-nav > li > a:not(.btn) {
@@ -1627,7 +1631,7 @@ background-color:#4bb242;
   border: 0;
 }
 .navbar-toggle .icon-bar {
-  background-color: #4bb242;
+  background-color: #008000;
 }
 .navbar-toggle .navbar-collapse,
 .navbar-toggle .navbar-form {
@@ -3398,7 +3402,7 @@ background-color:#4bb242;
   }
 }
 .highcharts-point{
-fill: #a7dda2;
+fill: #4bb242;
 }
 
 
