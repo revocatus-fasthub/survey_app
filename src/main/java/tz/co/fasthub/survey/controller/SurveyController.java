@@ -83,7 +83,7 @@ public class SurveyController {
                         response = fetchNextQuestion(customerTransaction);
                     }
                 }else {
-                    response="Sorry Invalid input , try again";
+                    response="Sorry Invalid input , try again"; //+"\n"+fetchNextQuestion(customerTransaction);
                 }
             }else {
                 Question questionOne=questionService.getQnOneBySequence();
@@ -155,7 +155,7 @@ public class SurveyController {
     private String getQuestionOne(Question question) {
         String response=null;
         if (question!=null) {
-            response = question.getQsn() +"\n"+ answerService.getAnswerByQuestion(question);
+            response =  answerService.getAnswerByQuestion(question); //before it had this question.getQsn() +"\n"+ which resulted into sending qsn text twice
         }
         return response;
     }
