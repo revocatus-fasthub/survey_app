@@ -83,7 +83,7 @@ public class SurveyController {
                         response = fetchNextQuestion(customerTransaction);
                     }
                 }else {
-                    response="Sorry Invalid input , try again" +"\n"+fetchPreviousQuestion(customerTransaction);
+                    response="Sorry Invalid input , try again" +"\n\n"+fetchPreviousQuestion(customerTransaction);
                 }
             }else {
                 Question questionOne=questionService.getQnOneBySequence();
