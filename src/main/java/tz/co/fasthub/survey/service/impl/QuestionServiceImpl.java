@@ -59,6 +59,28 @@ public class QuestionServiceImpl implements QuestionService {
         return null;
     }
 
+
+    @Override
+    public Question getPreviousQuestion(Question previousPrevious){
+        String status = "Enable";
+        List<Question> questionList = listAllQuestionsByStatus(status);
+        if(!questionList.isEmpty()){
+            boolean previousDetector=true;
+            for (Question question:questionList) {
+                if (previousDetector){
+                    return question;
+                }
+                if (question.equals(previousPrevious)){
+                    previousDetector=false;
+                }
+
+            }
+        }else {
+            return null;
+        }
+        return null;
+    }
+
     @Override
     public Question getQsnById(Long id) {
         return questionRepository.findOne(id);

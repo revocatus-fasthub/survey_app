@@ -83,7 +83,7 @@ public class SurveyController {
                         response = fetchNextQuestion(customerTransaction);
                     }
                 }else {
-                    response="Sorry Invalid input , try again"; //+"\n"+fetchNextQuestion(customerTransaction);
+                    response="Sorry Invalid input , try again" +"\n"+fetchPreviousQuestion(customerTransaction);
                 }
             }else {
                 Question questionOne=questionService.getQnOneBySequence();
@@ -128,6 +128,23 @@ public class SurveyController {
             if (nextQuestionquestion!=null){
                 response=answerService.getAnswerByQuestion(nextQuestionquestion);
                 customerTransactionService.saveCustomerTransaction(new CustomerTransaction(customerTransaction.getCustomer(),nextQuestionquestion));
+
+            }else {
+                response="Thank you. No more questions";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
+
+    private String fetchPreviousQuestion(CustomerTransaction customerTransaction) {
+        String response = null;
+        try {
+            Question previousQuestion=questionService.getPreviousQuestion(customerTransaction.getQuestion());
+            if (previousQuestion!=null){
+                response=answerService.getAnswerByQuestion(previousQuestion);
+                customerTransactionService.saveCustomerTransaction(new CustomerTransaction(customerTransaction.getCustomer(),previousQuestion));
 
             }else {
                 response="Thank you. No more questions";
