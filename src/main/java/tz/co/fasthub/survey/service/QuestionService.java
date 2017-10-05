@@ -11,6 +11,8 @@ public interface QuestionService {
 
     Question save(Question question);
 
+    Question saveCommentByQsnId(Long id, String comment);
+
     Question getNextQuestion(Question currentCurrent);
 
     Question getPreviousQuestion(Question previousPrevious);
@@ -24,6 +26,8 @@ public interface QuestionService {
     List<Question> listAllQuestionsByAsc();
 
     List<Question> listAllQuestionsByStatus(String status);
+
+    List<Question> listAllQuestionsByStatusAndIsChecked(String status, String isChecked);
 
     Question update(Question question);
 

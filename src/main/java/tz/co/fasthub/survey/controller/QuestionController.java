@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -396,4 +397,32 @@ public class QuestionController {
         return "redirect:/survey/addQuestion";
     }
 
+
+    @RequestMapping(value = "questionChecker/{id}/checker", method = RequestMethod.GET)
+    public String changeCheckedStatus(@PathVariable Long id) {
+        Question question = questionService.getQsnById(id);
+
+        if(question.getIsChecked().equals("Pending")){
+            question.setIsChecked("Approved");
+        }/*else if(question.getIsChecked().equals("Approved")){
+            question.setIsChecked("Pending");
+        }*/else
+            question.setIsChecked("Pending");
+
+        questionService.save(question);
+
+        return "redirect:/survey/addQuestion";
+    }
+
+
+    @RequestMapping(value = "saveComment/{id}/comment", method = RequestMethod.POST)
+    public String saveComment(@ModelAttribute("comment") String comment, @PathVariable Long id){
+        Question question = questionService.getQsnById(id);
+//        log.info("our comment is: "+comment);
+        if(question.getComment().isEmpty() || !question.getComment().isEmpty()){
+          question.setComment(comment);
+        }
+        questionService.save(question);
+        return "redirect:/survey/addQuestion";
+    }
 }

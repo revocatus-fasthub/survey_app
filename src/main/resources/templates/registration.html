@@ -47,7 +47,8 @@
                                     <select aria-required="true" class="blood_group form-control" name="role" id="role" th:field="*{role}" >
                                         <option value="" th:text="${'--- Select Role ---'}"></option>
                                         <option th:value="${'ROLE_ADMIN'}" th:selected="${user.isSelected(lastselected)}">ADMIN</option>
-                                        <option th:value="${'ROLE_USER'}" th:selected="${user.isSelected(lastselected)}" >USER</option>
+                                        <option th:value="${'ROLE_MAKER'}" th:selected="${user.isSelected(lastselected)}">MAKER</option>
+                                        <option th:value="${'ROLE_CHECKER'}" th:selected="${user.isSelected(lastselected)}">CHECKER</option>
                                     </select>
                                 </div>
                                 <label th:if="${#fields.hasErrors('role')}" th:errors="*{role}" class="validation-message" th:class="alert-danger"></label>

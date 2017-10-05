@@ -83,7 +83,7 @@ public class CustomerTransactionServiceImpl implements CustomerTransactionServic
     @Override
     public List<CustomerTransaction> search(String query) {
         return customerTransactionRepository
-                .findAllByCustomerMsisdnContainingOrQuestionQsnContainingIgnoreCaseOrAnswerAnsContainingIgnoreCase(query,query,query);
+                .findAllByAnswerDetailsContainingIgnoreCaseOrCustomerMsisdnContainingOrQuestionQsnContainingIgnoreCaseOrAnswerAnsContainingIgnoreCase(query,query,query,query);
     }
 
 }

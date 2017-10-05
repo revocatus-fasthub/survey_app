@@ -33,15 +33,34 @@ public class QuestionServiceImpl implements QuestionService {
                     }
                 }else {
                     question.setSequence(1);
+
                 }
             }
+
+        if(question.getIsChecked()==null){
+            question.setIsChecked("Pending");
+//            question.setIsCreated("Yes");
+        }
+
         return questionRepository.save(question);
+    }
+
+    @Override
+    public Question saveCommentByQsnId(Long id,String comment) {
+
+        Question question = getQsnById(id);
+        question.setComment(comment);
+
+        questionRepository.save(question);
+
+        return null;
     }
 
     @Override
     public Question getNextQuestion(Question currentCurrent){
         String status = "Enable";
-        List<Question> questions = listAllQuestionsByStatus(status);
+        String checker = "Approved";
+        List<Question> questions = listAllQuestionsByStatusAndIsChecked(status,checker);//listAllQuestionsByStatus(status);
         if(!questions.isEmpty()){
             boolean detector=false;
             for (Question question1:questions) {
@@ -90,8 +109,9 @@ public class QuestionServiceImpl implements QuestionService {
     public Question getQnOneBySequence() {
 
         String status = "Enable";
+        String isChecked = "Approved";
         List<Question> questionSequence = questionRepository.findAllByOrderBySequenceAsc();
-        List<Question> questionsStatus = questionRepository.findAllByStatus(status);
+        List<Question> questionsStatus = questionRepository.findAllByStatusAndIsChecked(status,isChecked);//questionRepository.findAllByStatus(status);
         for (Question question : questionSequence) {
             for (Question selectedQuestion :questionsStatus) {
                 return selectedQuestion;
@@ -121,10 +141,18 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository.findAllByStatus(status);
     }
 
+    @Override
+    public List<Question> listAllQuestionsByStatusAndIsChecked(String status, String isChecked) {
+
+        return questionRepository.findAllByStatusAndIsChecked(status,isChecked);
+    }
+
 
     @Override
     public Question update(Question question) {
         question.setSequence(question.getSequence());
+        question.setIsChecked("Pending");
+//        question.setIsCreated("Yes");
         return questionRepository.save(question);
     }
 

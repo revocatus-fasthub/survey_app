@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head lang="en" th:include="fragments/header :: header">
 
     <title>CRDB Survey | Add Question</title>
@@ -70,8 +70,8 @@
                                 <div th:if="${not #lists.isEmpty(questions)}">
                                     <table class="table table-hover table-striped">
                                         <tr>
-                                            <thead>
-                                            <form autocomplete="off" action="#" th:action="@{/survey/question}" th:object="${question}" method="post" class="form-horizontal" role="form">
+                                            <thead sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')">
+                                            <form autocomplete="off"  action="#" th:action="@{/survey/question}" th:object="${question}" method="post" class="form-horizontal" role="form">
                                                 <input type="hidden" th:field="*{id}"/>
                                                 <input type="hidden" th:field="*{version}"/>
                                                 <td colspan="3">
@@ -111,11 +111,17 @@
                                             <th>Sequence</th>
                                             <th>Type</th>
                                             <th>Status</th>
-                                            <th>Move Up</th>
-                                            <th>Move Down</th>
+                                            <th sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')">Move Up</th>
+                                            <th sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')">Move Down</th>
+                                            <!--<th>Is_Created</th>-->
+                                            <th>Is_Checked</th>
                                             <th>View</th>
-                                            <th>Edit</th>
-                                            <th>Delete</th>
+                                            <th sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')">Edit</th>
+                                            <!--<th sec:authorize="hasRole('ROLE_CHECKER')">Add Comments</th>-->
+                                            <th sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')">Delete</th>
+                                            <th sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')">Comments</th>
+                                            <th sec:authorize="hasRole('ROLE_CHECKER')" colspan="2">Comments</th>
+
                                         </thead>
                                         </tr>
                                         <tbody>
@@ -124,15 +130,44 @@
                                             <td th:text="${question.qsn}">Qsn Id</td>
                                             <td th:text="${question.sequence}">sequence</td>
                                             <td th:text="${question.type}">type</td>
+
+                                            <!--status: enabled/disabled-->
                                             <td > <a th:href="${'/survey/questionStatus/' + question.id+'/'+'status'}"><i th:text="${question.status}" class="fa fa-caret-down" aria-hidden="true"></i></a></td>
 
-                                            <td> <a th:href="${'/survey/questionSequence/' + question.id+'/'+'up'}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></td>
-                                            <td> <a th:href="${'/survey/questionSequence/' + question.id+'/'+'down'}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></td>
-                                            <!--<i class="fa fa-long-arrow-down" aria-hidden="true"></i>-->
+                                            <!--change sequence function-->
+                                            <td sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')"> <a th:href="${'/survey/questionSequence/' + question.id+'/'+'up'}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></td>
+                                            <td sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')"> <a th:href="${'/survey/questionSequence/' + question.id+'/'+'down'}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></td>
 
+                                            <!--is the question created? .. useless for now hence commented out-->
+                                            <!--<td th:text="${question.isCreated}">isCreated</td>-->
+
+                                            <!--specific to role CHECKER to update the status to approved or leave it pending-->
+                                            <td sec:authorize="hasRole('ROLE_CHECKER')" > <a th:href="${'/survey/questionChecker/' + question.id+'/'+'checker'}"><i th:text="${question.isChecked}" class="fa fa-caret-down" aria-hidden="true"></i></a></td>
+
+                                            <!--specific to role ADMIN/MAKER they can just view the status but can't do anything-->
+                                            <td sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')" th:text="${question.isChecked}"></td>
+
+                                            <!--view question in details-->
                                             <td><a th:href="${'/survey/question/' + question.id}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
-                                            <td><a th:href="${'/survey/question/edit/' + question.id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-                                            <td><a th:href="${'/survey/question/delete/' + question.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+
+                                            <!--editing and deleting a question can only be done by an aDMIN/MAKER-->
+                                            <td sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')"><a th:href="${'/survey/question/edit/' + question.id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+                                            <td sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')"><a th:href="${'/survey/question/delete/' + question.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+
+                                           <!-- <td sec:authorize="hasRole('ROLE_CHECKER')"><a th:href="${'/survey/question/edit/' + question.id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>-->
+
+                                            <!--Comments section-->
+                                            <td sec:authorize="hasRole('ROLE_MAKER')" th:text="${question.comment}"></td>
+
+                                            <td sec:authorize="hasRole('ROLE_CHECKER')">
+                                                <form action="#"  th:action="${'/survey/saveComment/' + question.id+'/'+'comment'}" th:object="${question}" method="post">
+                                                    <textarea name="comment"></textarea>
+                                                    <!--<a th:href="${'/survey/saveComment/' + question.id+'/'+'comment'}">Save</a>-->
+                                                    <button type="submit">Save</button>
+                                                </form>
+                                            </td>
+                                            <td sec:authorize="hasRole('ROLE_CHECKER')" th:text="${question.comment}"></td>
+
                                         </tr>
                                         </tbody>
                                     </table>

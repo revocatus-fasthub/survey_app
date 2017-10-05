@@ -28,8 +28,12 @@
                                     <th>Question </th>
                                     <th>Sequence</th>
                                     <th>Type</th>
+<!--
                                     <th>Move Up</th>
                                     <th>Move Down</th>
+-->
+                                    <th>IsCreated</th>
+                                    <th>IsChecked</th>
                                     <th>View</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
@@ -40,8 +44,10 @@
                                     <td th:text="${question.sequence}">sequence</td>
                                     <td th:text="${question.type}">type</td>
 
+<!--
                                     <td> <a th:href="${'/survey/questionSequence/' + question.id+'/'+'up'}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></td>
                                     <td> <a th:href="${'/survey/questionSequence/' + question.id+'/'+'down'}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></td>
+-->
 
 
                                     <td><a th:href="${'/survey/question/' + question.id}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>

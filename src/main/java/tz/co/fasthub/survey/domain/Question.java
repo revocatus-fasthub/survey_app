@@ -13,8 +13,11 @@ public class Question {
     @GeneratedValue
     @Id
     private Long id;
+
     private String qsn;
+
     private int sequence;
+
     @Version
     private Long version;
 
@@ -35,16 +38,27 @@ public class Question {
     @NotNull
     private String status;
 
+    @Column(name="is_Checked")
+    private String isChecked;//checker
+//
+//    @Column(name="is_Created")
+//    private String isCreated;//maker
+
+    private String comment;
+
     public Question() {
     }
 
 
-    public Question(String qsn, int sequence, Long version, String type, String status) {
+    public Question(String qsn, int sequence, Long version, String type, String status, String isChecked, String isCreated, String comment) {
         this.qsn = qsn;
         this.sequence = sequence;
         this.version = version;
         this.type = type;
         this.status = status;
+        this.isChecked = isChecked;
+        this.comment = comment;
+//        this.isCreated = isCreated;
     }
 
     @Override
@@ -56,6 +70,9 @@ public class Question {
                 ", version=" + version +
                 ", type=" + type +
                 ", status=" + status +
+                ", isChecked=" + isChecked +
+                ", comment=" + comment +
+//                ", isCreated=" + isCreated +
                 '}';
     }
 
@@ -68,8 +85,6 @@ public class Question {
 
         return id.equals(question.id);
     }
-
-
 
 /*
     @Override
@@ -151,6 +166,31 @@ public class Question {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+
+    public String getIsChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(String isChecked) {
+        this.isChecked = isChecked;
+    }
+
+    /*public String getIsCreated() {
+        return isCreated;
+    }
+
+    public void setIsCreated(String isCreated) {
+        this.isCreated = isCreated;
+    }*/
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }
 
