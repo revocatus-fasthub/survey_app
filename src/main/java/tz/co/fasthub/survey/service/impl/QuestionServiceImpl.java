@@ -80,9 +80,10 @@ public class QuestionServiceImpl implements QuestionService {
 
 
     @Override
-    public Question getPreviousQuestion(Question previousPrevious){
+    public Question getCurrentQuestion(Question previousPrevious){
         String status = "Enable";
-        List<Question> questionList = listAllQuestionsByStatus(status);
+        String checker = "Approved";
+        List<Question> questionList = listAllQuestionsByStatusAndIsChecked(status,checker);//listAllQuestionsByStatus(status);
         if(!questionList.isEmpty()){
             boolean previousDetector=true;
             for (Question question:questionList) {
@@ -99,6 +100,9 @@ public class QuestionServiceImpl implements QuestionService {
         }
         return null;
     }
+
+
+
 
     @Override
     public Question getQsnById(Long id) {
