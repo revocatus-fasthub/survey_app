@@ -85,13 +85,13 @@ public class QuestionServiceImpl implements QuestionService {
         String checker = "Approved";
         List<Question> questionList = listAllQuestionsByStatusAndIsChecked(status,checker);//listAllQuestionsByStatus(status);
         if(!questionList.isEmpty()){
-            boolean previousDetector=true;
+            boolean currentDetector=false;
             for (Question question:questionList) {
-                if (previousDetector){
+                if (currentDetector){
                     return question;
                 }
                 if (question.equals(previousPrevious)){
-                    previousDetector=false;
+                    currentDetector=false;
                 }
 
             }
