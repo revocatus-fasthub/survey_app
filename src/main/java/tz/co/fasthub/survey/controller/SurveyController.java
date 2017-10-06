@@ -141,13 +141,11 @@ public class SurveyController {
     private String fetchPreviousQuestion(CustomerTransaction customerTransaction) {
         String response = null;
         try {
-            Question previousQuestion=questionService.getPreviousQuestion(customerTransaction.getQuestion());
-            if (previousQuestion!=null){
-                response=answerService.getAnswerByQuestion(previousQuestion);
-                customerTransactionService.saveCustomerTransaction(new CustomerTransaction(customerTransaction.getCustomer(),previousQuestion));
 
+            if (customerTransaction.getQuestion()!=null){
+                response=answerService.getAnswerByQuestion(customerTransaction.getQuestion());
             }else {
-                response="Thank you. No more questions";
+                response="Thank you. No questions";
             }
         } catch (Exception e) {
             e.printStackTrace();
