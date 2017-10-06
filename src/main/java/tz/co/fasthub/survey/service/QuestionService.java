@@ -15,7 +15,7 @@ public interface QuestionService {
 
     Question getNextQuestion(Question currentCurrent);
 
-    Question getCurrentQuestion(Question previousPrevious);
+//    Question getCurrentQuestion(Question previousPrevious);
 
     Question getQsnById(Long id);
 

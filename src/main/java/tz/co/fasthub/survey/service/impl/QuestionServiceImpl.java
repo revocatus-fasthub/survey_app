@@ -79,6 +79,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
 
+/*
     @Override
     public Question getCurrentQuestion(Question previousPrevious){
         String status = "Enable";
@@ -100,6 +101,7 @@ public class QuestionServiceImpl implements QuestionService {
         }
         return null;
     }
+*/
 
 
 
