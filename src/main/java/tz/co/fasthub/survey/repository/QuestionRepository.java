@@ -14,7 +14,7 @@ public interface QuestionRepository extends CrudRepository<Question, Long> {
     List<Question> findAllByOrderBySequenceDesc();
 
     List<Question> findAllByStatus(String status);
-    List<Question> findAllByStatusAndIsChecked(String status, String isChecked);
+    List<Question> findAllByStatusAndIsCheckedOrderBySequenceAsc(String status, String isChecked);
 //    List<Question> findAllByOrderBySequenceAndStatus(int sequence, String status);
 
 

@@ -110,9 +110,9 @@ public class QuestionServiceImpl implements QuestionService {
 
         String status = "Enable";
         String isChecked = "Approved";
-        List<Question> questionSequence = questionRepository.findAllByOrderBySequenceAsc();
-        List<Question> questionsStatus = questionRepository.findAllByStatusAndIsChecked(status,isChecked);//questionRepository.findAllByStatus(status);
-        for (Question question : questionSequence) {
+//        List<Question> questionSequence = questionRepository.findAllByOrderBySequenceAsc();
+        List<Question> questionsStatus = questionRepository.findAllByStatusAndIsCheckedOrderBySequenceAsc(status,isChecked);//questionRepository.findAllByStatus(status);
+        for (Question question : questionsStatus) {
             for (Question selectedQuestion :questionsStatus) {
                 return selectedQuestion;
             }
@@ -144,7 +144,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> listAllQuestionsByStatusAndIsChecked(String status, String isChecked) {
 
-        return questionRepository.findAllByStatusAndIsChecked(status,isChecked);
+        return questionRepository.findAllByStatusAndIsCheckedOrderBySequenceAsc(status,isChecked);
     }
 
 
