@@ -67,7 +67,7 @@
 
                             </div>
                             <div class="content table-responsive table-full-width">
-                                <div th:if="${not #lists.isEmpty(questions)}">
+                                <div>
                                     <table class="table table-hover table-striped">
                                         <tr>
                                             <thead sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')">
@@ -99,12 +99,12 @@
                                                 </td>
 
                                                 <!--<td>&nbsp;</td>-->
-                                                <td rowspan="3"><button type="submit" class="btn btn-success btn-sm" >Add</button></td>
+                                                <td rowspan="3"><button type="submit" class="btn add-question btn-sm" >Add</button></td>
                                             </form>
                                             </thead>
                                         </tr>
 
-                                        <tr>
+                                        <tr th:if="${not #lists.isEmpty(questions)}">
                                         <thead>
                                             <th>Id</th>
                                             <th>Question </th>
@@ -124,7 +124,7 @@
 
                                         </thead>
                                         </tr>
-                                        <tbody>
+                                        <tbody th:if="${not #lists.isEmpty(questions)}">
                                         <tr th:each="question : ${questions}">
                                             <td> <a th:text="${question.id}" th:alt="Id" th:href="${'/survey/question/'+question.id}"></a></td>
                                             <td th:text="${question.qsn}">Qsn Id</td>

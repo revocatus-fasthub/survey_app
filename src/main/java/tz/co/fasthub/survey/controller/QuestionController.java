@@ -310,16 +310,9 @@ public class QuestionController {
     @RequestMapping("question/delete/{id}")
     public String deleteQuestion(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
-            if(id!=null){
                 questionService.deleteQuestion(id);
                 redirectAttributes.addFlashAttribute("flash.message.questionSuccess", "Question with id "+id+" has been successfully deleted");
                 return "redirect:/survey/addQuestion";
-            }
-            else {
-                redirectAttributes.addFlashAttribute("flash.message.questionError", "Error! \nCannot delete question with id "+id+". This question has other details in the Customer Details list");
-                return "redirect:/survey/addQuestion";
-            }
-
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("flash.message.questionError", "Failed" +
                     "! \nCannot delete question with id "+id+". \n\nThis question has other details in the Customer Details list" );
