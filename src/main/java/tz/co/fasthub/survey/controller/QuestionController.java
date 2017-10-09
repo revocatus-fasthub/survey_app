@@ -412,9 +412,9 @@ public class QuestionController {
     public String saveComment(@ModelAttribute("comment") String comment, @PathVariable Long id){
         Question question = questionService.getQsnById(id);
 //        log.info("our comment is: "+comment);
-        if(question.getComment().isEmpty() || !question.getComment().isEmpty()){
+        /*if(question.getComment().isEmpty() || !question.getComment().isEmpty()){
           question.setComment(comment);
-        }
+        }*/
         questionService.save(question);
         return "redirect:/survey/addQuestion";
     }

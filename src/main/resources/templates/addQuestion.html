@@ -80,7 +80,7 @@
 
                                                 </td>
                                                 <!--<td>&nbsp;</td>-->
-                                                <td colspan="3">
+                                                <td colspan="4">
                                                     <select aria-required="true" class="blood_group form-control" name="type" id="type" th:field="*{type}" >
                                                         <option value="" th:align="center" th:text="${'--- Select Type ---'}"></option>
                                                         <option th:value="${'Closed Ended'}" th:selected="${question.isSelected(lastselected)}">Closed Ended</option>
@@ -89,7 +89,7 @@
                                                     <label th:if="${#fields.hasErrors('type')}" th:errors="*{type}" class="validation-message" th:class="alert-danger"></label>
                                                 </td>
                                                 <!--<td>&nbsp;</td>-->
-                                                <td colspan="3">
+                                                <td colspan="4">
                                                     <select aria-required="true" class="blood_group form-control" name="type" id="status" th:field="*{status}" >
                                                         <!--<option value="" th:text="${'-&#45;&#45; Select Type -&#45;&#45;'}"></option>-->
                                                         <option th:value="${'Enable'}" th:selected="${question.isEnabled(lastselected)}">Enable</option>
@@ -99,7 +99,7 @@
                                                 </td>
 
                                                 <!--<td>&nbsp;</td>-->
-                                                <td rowspan="3"><button type="submit" class="btn add-question btn-sm" >Add</button></td>
+                                                <td rowspan="3"><button type="submit" class="btn btn-success" >Add</button></td>
                                             </form>
                                             </thead>
                                         </tr>
@@ -133,6 +133,7 @@
 
                                             <!--status: enabled/disabled-->
                                             <td > <a th:href="${'/survey/questionStatus/' + question.id+'/'+'status'}"><i th:text="${question.status}" class="fa fa-caret-down" aria-hidden="true"></i></a></td>
+
 
                                             <!--change sequence function-->
                                             <td sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')"> <a th:href="${'/survey/questionSequence/' + question.id+'/'+'up'}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></td>

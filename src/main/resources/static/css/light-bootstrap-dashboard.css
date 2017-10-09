@@ -590,36 +590,36 @@ background-color:#008000;
 .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open > .btn-success.dropdown-toggle {
   background-color:#008000;
   color: #fff;
-  border-color: #4bb242;
+  border-color: #008000;
 }
 .btn-success.disabled, .btn-success.disabled:hover, .btn-success.disabled:focus, .btn-success.disabled.focus, .btn-success.disabled:active, .btn-success.disabled.active, .btn-success:disabled, .btn-success:disabled:hover, .btn-success:disabled:focus, .btn-success:disabled.focus, .btn-success:disabled:active, .btn-success:disabled.active, .btn-success[disabled], .btn-success[disabled]:hover, .btn-success[disabled]:focus, .btn-success[disabled].focus, .btn-success[disabled]:active, .btn-success[disabled].active, fieldset[disabled] .btn-success, fieldset[disabled] .btn-success:hover, fieldset[disabled] .btn-success:focus, fieldset[disabled] .btn-success.focus, fieldset[disabled] .btn-success:active, fieldset[disabled] .btn-success.active {
-  background-color: #4bb242;
-  border-color: #4bb242;
+  background-color: #008000;
+  border-color: #008000;
 }
 .btn-success.btn-fill {
   color: #FFFFFF;
-  background-color: #4bb242;
+  background-color: #008000;
 
 }
 .btn-success.btn-fill:hover, .btn-success.btn-fill:focus, .btn-success.btn-fill:active, .btn-success.btn-fill.active, .open > .btn-success.btn-fill.dropdown-toggle {
-  background-color: #4bb242;
+  background-color: #008000;
   color: #FFFFFF;
 }
 .btn-success.btn-fill .caret {
   border-top-color: #FFFFFF;
 }
 .btn-success .caret {
-  border-top-color: #4bb242;
+  border-top-color: #008000;
 }
 
 .btn-info {
-  border-color: #4bb242;
+  border-color: #008000;
   color: #fff;
 }
 .btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .open > .btn-info.dropdown-toggle {
   background-color: transparent;
   color: #42d0ed;
-  border-color: #6BA647;
+  border-color: #008000;
 }
 .btn-info.disabled, .btn-info.disabled:hover, .btn-info.disabled:focus, .btn-info.disabled.focus, .btn-info.disabled:active, .btn-info.disabled.active, .btn-info:disabled, .btn-info:disabled:hover, .btn-info:disabled:focus, .btn-info:disabled.focus, .btn-info:disabled:active, .btn-info:disabled.active, .btn-info[disabled], .btn-info[disabled]:hover, .btn-info[disabled]:focus, .btn-info[disabled].focus, .btn-info[disabled]:active, .btn-info[disabled].active, fieldset[disabled] .btn-info, fieldset[disabled] .btn-info:hover, fieldset[disabled] .btn-info:focus, fieldset[disabled] .btn-info.focus, fieldset[disabled] .btn-info:active, fieldset[disabled] .btn-info.active {
   background-color: transparent;
@@ -627,19 +627,19 @@ background-color:#008000;
 }
 .btn-info.btn-fill {
   color: #FFFFFF;
-  background-color: #6BA647;
+  background-color: #008000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 .btn-info.btn-fill:hover, .btn-info.btn-fill:focus, .btn-info.btn-fill:active, .btn-info.btn-fill.active, .open > .btn-info.btn-fill.dropdown-toggle {
-  background-color: #6BA647;
+  background-color: #008000;
   color: #FFFFFF;
 }
 .btn-info.btn-fill .caret {
   border-top-color: #FFFFFF;
 }
 .btn-info .caret {
-  border-top-color: #6BA647;
+  border-top-color: #008000;
 }
 
 .btn-warning {
@@ -686,14 +686,14 @@ background-color:#008000;
   border-color: #FF4A55;
 }
 .btn-danger.btn-fill {
-  color: #FFFFFF;
+  color: #840002;
   background-color: #FF4A55;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 .btn-danger.btn-fill:hover, .btn-danger.btn-fill:focus, .btn-danger.btn-fill:active, .btn-danger.btn-fill.active, .open > .btn-danger.btn-fill.dropdown-toggle {
   background-color: #EE2D20;
-  color: #FFFFFF;
+  color: #840002;
 }
 .btn-danger.btn-fill .caret {
   border-top-color: #FFFFFF;
@@ -921,6 +921,7 @@ background-color:#008000;
   border-color: #4bb242;
   color: #4bb242;
 }
+
 .form-control:focus + .input-group-addon, .form-control:focus ~ .input-group-addon {
   background-color: #FFFFFF;
   border-color: #9A9A9A;
@@ -966,7 +967,8 @@ background-color:#008000;
 .alert {
   border: 0;
   border-radius: 0;
-  color: #FFFFFF;
+  background-color: #ffe6e6;
+  color: #990000;
   padding: 10px 15px;
   font-size: 14px;
 }
@@ -1042,6 +1044,8 @@ background-color:#008000;
   background-color: #ffe6e6;
   color: #990000;
 }
+
+
 
 .table .radio,
 .table .checkbox {
@@ -1336,10 +1340,14 @@ background-color:#008000;
   color: #ffffff;
   text-indent: 1px;
 }
+.span{
+  color:#3c763d;
+}
 
 .has-switch .switch-off span.switch-right {
   background-color: #DDDDDD;
 }
+
 
 .has-switch label {
   border-radius: 12px;
