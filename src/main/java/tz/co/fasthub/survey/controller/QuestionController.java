@@ -21,6 +21,7 @@ import tz.co.fasthub.survey.validator.AnswerValidator;
 import tz.co.fasthub.survey.validator.QuestionValidator;
 
 import javax.validation.Valid;
+import javax.xml.stream.events.Comment;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -407,15 +408,13 @@ public class QuestionController {
         return "redirect:/survey/addQuestion";
     }
 
-
     @RequestMapping(value = "saveComment/{id}/comment", method = RequestMethod.POST)
     public String saveComment(@ModelAttribute("comment") String comment, @PathVariable Long id){
         Question question = questionService.getQsnById(id);
-//        log.info("our comment is: "+comment);
-        /*if(question.getComment().isEmpty() || !question.getComment().isEmpty()){
-          question.setComment(comment);
-        }*/
-        questionService.save(question);
+        log.info("our comment is: "+comment);
+        questionService.saveCommentByQsnId(id, comment);
         return "redirect:/survey/addQuestion";
     }
+
+
 }
