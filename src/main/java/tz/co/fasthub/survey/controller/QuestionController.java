@@ -182,7 +182,7 @@ public class QuestionController {
         savedQuestion = questionService.save(question);
         Long id = savedQuestion.getId();
 
-        redirectAttributes.addFlashAttribute("flash.message.question", "Question " + id + " Successfully Saved!");
+        redirectAttributes.addFlashAttribute("flash.message.question", "Question " + id + " Successfully Saved Waiting for Authorization!");
         return "redirect:/survey/question/" + id;
 
     }

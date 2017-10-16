@@ -130,7 +130,7 @@ public class SurveyController {
                 customerTransactionService.saveCustomerTransaction(new CustomerTransaction(customerTransaction.getCustomer(),nextQuestionquestion));
 
             }else {
-                response="Thank you. No more questions";
+                response="Thank you.";
             }
         } catch (Exception e) {
             e.printStackTrace();
