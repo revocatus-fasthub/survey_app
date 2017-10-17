@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import tz.co.fasthub.survey.constants.Constant;
 import tz.co.fasthub.survey.domain.Customer;
 import tz.co.fasthub.survey.domain.User;
 import tz.co.fasthub.survey.repository.UserRepository;
@@ -122,13 +123,15 @@ public class UserController {
         try {
             sendMail(userForm.getEmail(), "SURVEY CRDB ACCOUNT REGISTRATION",
                     "Welcome " + userForm.getFirstName() + " " + userForm.getLastName() +
-                            ",\n\nThis a automatic reply from our Online Application Tool.\n\n" +
+                            ",\n\nThis is an automatic reply from our Online Application Tool.\n\n" +
                             "You can log into the system with the following account information:" +
                                     "\n\nUsername: "+userForm.getUsername()+
-                                    "\n\nPassword: \n\n\nRegards");
+                                    "\n\nPassword: "+ Constant.nakedPassword+"\n\n\nRegards");
+            log.info("Email Sent to: "+userForm.getFirstName());
         } catch (MailException me)
         {
             redirectAttributes.addFlashAttribute("flash.message", "Email not sent! " +me.getMessage());
+            log.info("Failed to send Email to "+userForm.getFirstName());
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("flash.message", "Uncaught Exception: " + e.getMessage());
         }

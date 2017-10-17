@@ -12,6 +12,8 @@ import java.util.ArrayList;
  */
 public class Constant {
 
+   public static String nakedPassword;
+
     public static final String GW_URL="http://gravity.fasthub.co.tz:8088/fasthub/messaging/json/api";
     public static final int channel=117274; //116275
     public static final String password="NDQ4NzJlMjY4MmM3Y2YxYjg2ZjlmNTg5NTE0NDQyYzljZWYwNTg3N2JkMGM4NmY4MTNjMjI1ZjNkZDgzODA1OQ=="; //"OWQzOGQ4MWRkZDg3ZWY0NmU4MDQwMWVlNTY2NDY0ZTg5MmI2YjdlOGY5OTg4ZDBjNDJiNzBmZjYyMzg3ZDZiNw==";

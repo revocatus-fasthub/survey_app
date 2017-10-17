@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import tz.co.fasthub.survey.constants.Constant;
 import tz.co.fasthub.survey.domain.User;
 import tz.co.fasthub.survey.repository.UserRepository;
 import tz.co.fasthub.survey.service.UserService;
@@ -29,6 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
+       Constant.nakedPassword  = user.getPassword();
+        logger.info("naked password: "+Constant.nakedPassword);
+
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setCpassword(bCryptPasswordEncoder.encode(user.getCpassword()));
       //  user.setRole("ADMIN");
