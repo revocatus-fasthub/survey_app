@@ -967,8 +967,8 @@ background-color:#008000;
 .alert {
   border: 0;
   border-radius: 0;
-  background-color: #ffe6e6;
-  color: #990000;
+  background-color: #a1e82c;
+  color: #ffffff;
   padding: 10px 15px;
   font-size: 14px;
 }
@@ -1037,12 +1037,12 @@ background-color:#008000;
 }
 
 .alert-warning {
-  background-color: #fc8196;
+  background-color: #a1e82c;
 }
 
 .alert-danger {
-  background-color: #ffe6e6;
-  color: #990000;
+  background-color: #a1e82c;
+  color: #FFFFFF;
 }
 
 

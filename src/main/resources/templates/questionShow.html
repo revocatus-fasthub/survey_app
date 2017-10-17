@@ -58,12 +58,12 @@
                                             <tr>
                                                 <thead sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')">
                                                     <form autocomplete="off" action="#" th:action="@{/survey/question/{id}(id=${question.id})}" th:object="${answer}" method="post" class="form-horizontal" role="form">
-                                                        <td colspan="5">
+                                                        <td colspan="3">
                                                             <!--<label th:if="${#fields.hasErrors('ans')}" th:errors="*{ans}" class="validation-message" th:class="alert-danger"></label>-->
                                                             <input type="text" placeholder="Add Choice" class="form-control input-sm" th:field="*{ans}" required="required"/>
                                                         </td>
                                                         <!--<td>&nbsp;</td>-->
-                                                        <td>
+                                                        <td colspan="4">
                                                             <button type="submit" class="btn btn-success" >Add Choice</button>
                                                         </td>
                                                     </form>
@@ -72,25 +72,25 @@
                                             <div th:if="${not #lists.isEmpty(answers)}">
                                                 <tr>
                                                 <thead>
-                                                    <th>Id</th>
-                                                    <th>Answer </th>
+                                                    <th colspan="2">Id</th>
+                                                    <th colspan="2">Answer </th>
                                                     <th>Position</th>
                                                     <th>Count</th>
-                                                    <th>Move Up</th>
-                                                    <th>Move Down</th>
+                                                    <!--<th>Move Up</th>
+                                                    <th>Move Down</th>-->
                                                     <th sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')">Delete</th>
                                                 </thead>
                                                 </tr>
                                                 <tbody>
                                                 <tr th:each="answer : ${answers}">
-                                                    <td th:text="${answer.id}">Id</td>
-                                                    <td th:text="${answer.ans}">answer </td>
+                                                    <td colspan="2" th:text="${answer.id}">Id</td>
+                                                    <td colspan="2" th:text="${answer.ans}">answer </td>
                                                     <td th:text="${answer.position}">position</td>
                                                     <td th:text="${answer.count}">count</td>
 
 
-                                                    <td> <a th:href="${'/survey/answerPosition/' +answer.question.id+'/'+ answer.id+'/'+'up'}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></td>
-                                                    <td> <a th:href="${'/survey/answerPosition/'+answer.question.id+'/' + answer.id+'/'+'down'}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></td>
+                                                    <!--<td> <a th:href="${'/survey/answerPosition/' +answer.question.id+'/'+ answer.id+'/'+'up'}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></td>
+                                                    <td> <a th:href="${'/survey/answerPosition/'+answer.question.id+'/' + answer.id+'/'+'down'}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></td>-->
                                                     <td sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')"> <a th:href="${'/survey/answer/delete/'+question.id+'/' + answer.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                                                     <!--<td><a th:href="${'/survey/question/' + question.id}">Edit</a></td>-->
 
