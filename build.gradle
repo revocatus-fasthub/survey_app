@@ -48,8 +48,8 @@ dependencies {
 	compile group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.2.2'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '1.5.4.RELEASE'
-
-
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+    compile('org.springframework.boot:spring-boot-starter-mail')
 
 }
 

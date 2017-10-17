@@ -17,6 +17,9 @@ public class User implements UserDetails{
     @Id
     @GeneratedValue
     private Long id;
+    private String firstName;
+    private String lastName;
+    private String email;
     private String username;
     private String password;
     private String cpassword;
@@ -29,8 +32,11 @@ public class User implements UserDetails{
         enabled = true;
     }
 
-    public User(String username, String password, String cpassword,String role, Long version) {
+    public User(String firstName, String lastName, String email, String username, String password, String cpassword, String role, Long version) {
         this();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
         this.username = username;
         this.password = password;
         this.cpassword = cpassword;
@@ -133,5 +139,29 @@ public class User implements UserDetails{
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

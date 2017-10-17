@@ -23,6 +23,25 @@
                             <form autocomplete="off" action="#" th:action="@{/survey/saveregistration}" th:object="${user}" method="post" class="form-horizontal" role="form" style="color:#eee;">
                                 <input type="hidden" th:field="*{id}"/>
                                 <br/>
+
+                                <div class="input-group input-sm">
+                                    <label class="input-group-addon" for="firstName"><i class="fa fa-user fa-fw" aria-hidden="true"></i></label>
+                                    <input type="text" class="form-control" id="firstName" placeholder="First Name" th:field="*{firstName}"/>
+                                </div>
+                                <label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="validation-message" th:class="alert-danger"></label>
+
+                                <div class="input-group input-sm">
+                                    <label class="input-group-addon" for="lastName"><i class="fa fa-user fa-fw" aria-hidden="true"></i></label>
+                                    <input type="text" class="form-control" id="lastName" placeholder="Last Name" th:field="*{lastName}"/>
+                                </div>
+                                <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="validation-message" th:class="alert-danger"></label>
+
+                                <div class="input-group input-sm">
+                                    <label class="input-group-addon" for="email"><i class="fa fa-envelope" aria-hidden="true"></i></label>
+                                    <input type="email" class="form-control" id="email" placeholder="Email" th:field="*{email}"/>
+                                </div>
+                                <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="validation-message" th:class="alert-danger"></label>
+
                                 <div class="input-group input-sm">
                                     <label class="input-group-addon" for="username"><i class="fa fa-user" aria-hidden="true"></i></label>
                                     <input type="text" class="form-control" id="username" placeholder="Username" th:field="*{username}"/>
