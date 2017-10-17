@@ -130,7 +130,7 @@ public class SurveyController {
                 customerTransactionService.saveCustomerTransaction(new CustomerTransaction(customerTransaction.getCustomer(),nextQuestionquestion));
 
             }else {
-                response="Thank you.";
+                response="Thank you. No more questions";
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -145,7 +145,7 @@ public class SurveyController {
             if (customerTransaction.getQuestion()!=null){
                 response=answerService.getAnswerByQuestion(customerTransaction.getQuestion());
             }else {
-                response="Thank you.";
+                response="Thank you. No questions";
             }
         } catch (Exception e) {
             e.printStackTrace();

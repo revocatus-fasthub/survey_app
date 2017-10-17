@@ -90,7 +90,7 @@ public class AnswerServiceImpl implements AnswerService {
             stringBuilder.append("\n");
             for (Answer answer: question.getAnswer()){
                 stringBuilder.append(answer.getPosition());
-                stringBuilder.append(".");
+                stringBuilder.append(". ");
                 stringBuilder.append(answer.getAns());
                 stringBuilder.append("\n");
             }

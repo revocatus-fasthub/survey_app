@@ -5,6 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,15 +51,20 @@ public class UserController {
 
     private final UserValidator userValidator;
 
+    private JavaMailSender javaMailSender;
+
     QuestionController questionController;
 
     @Autowired
-    public UserController(BCryptPasswordEncoder bCryptPasswordEncoder, UserService userService, AnswerService answerService, CustomerService customerService, SecurityService securityService, UserValidator userValidator) {
+    public UserController(BCryptPasswordEncoder bCryptPasswordEncoder, UserService userService,
+                          AnswerService answerService, CustomerService customerService, SecurityService securityService,
+                          UserValidator userValidator, JavaMailSender javaMailSender) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userService = userService;
         this.customerService = customerService;
         this.securityService = securityService;
         this.userValidator = userValidator;
+        this.javaMailSender = javaMailSender;
     }
 
 
@@ -110,6 +118,23 @@ public class UserController {
 
         userService.save(userForm);
       //securityService.autologin(user.getUsername(), user.getPassword());
+
+        try {
+            sendMail(userForm.getEmail(), "SURVEY CRDB ACCOUNT REGISTRATION",
+                    "Welcome " + userForm.getFirstName() + " " + userForm.getLastName() +
+                            ",\n\nThis a automatic reply from our Online Application Tool.\n\n" +
+                            "You can log into the system with the following account information:" +
+                                    "\n\nUsername: "+userForm.getUsername()+
+                                    "\n\nPassword: \n\n\nRegards");
+        } catch (MailException me)
+        {
+            redirectAttributes.addFlashAttribute("flash.message", "Email not sent! " +me.getMessage());
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("flash.message", "Uncaught Exception: " + e.getMessage());
+        }
+
+
+
         redirectAttributes.addFlashAttribute("flash.message.user", "Success. New user registered");
         return "redirect:/survey/users";
     }
@@ -171,6 +196,16 @@ public class UserController {
         return "redirect:/survey/users";
     }
 
+
+    private void sendMail(String to, String subject, String body) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(body);
+        javaMailSender.send(message);
+    }
+
+
     @Bean
     CommandLineRunner setupUsers(UserRepository userRepository){
 
@@ -178,6 +213,9 @@ public class UserController {
             User user = userService.findByUsername("admin");
             if (user==null){
                 user=new User();
+                user.setFirstName("CRDB");
+                user.setLastName("ADMIN");
+                user.setEmail("naamini.charles@fasthub.co.tz");
                 user.setUsername("admin");
                 user.setPassword("AdMin123");
                 user.setCpassword("AdMin123");

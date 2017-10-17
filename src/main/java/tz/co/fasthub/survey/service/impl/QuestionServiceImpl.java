@@ -79,18 +79,20 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
 
+/*
     @Override
-    public Question getPreviousQuestion(Question previousPrevious){
+    public Question getCurrentQuestion(Question previousPrevious){
         String status = "Enable";
-        List<Question> questionList = listAllQuestionsByStatus(status);
+        String checker = "Approved";
+        List<Question> questionList = listAllQuestionsByStatusAndIsChecked(status,checker);//listAllQuestionsByStatus(status);
         if(!questionList.isEmpty()){
-            boolean previousDetector=true;
+            boolean currentDetector=true;
             for (Question question:questionList) {
-                if (previousDetector){
+                if (currentDetector){
                     return question;
                 }
                 if (question.equals(previousPrevious)){
-                    previousDetector=false;
+                    currentDetector=false;
                 }
 
             }
@@ -99,6 +101,10 @@ public class QuestionServiceImpl implements QuestionService {
         }
         return null;
     }
+*/
+
+
+
 
     @Override
     public Question getQsnById(Long id) {

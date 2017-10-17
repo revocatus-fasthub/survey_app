@@ -110,7 +110,7 @@
                                             <th>Question </th>
                                             <th>Sequence</th>
                                             <th>Type</th>
-                                            <th>Status</th>
+                                            <th sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')">Status</th>
                                             <th sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')">Move Up</th>
                                             <th sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')">Move Down</th>
                                             <!--<th>Is_Created</th>-->
@@ -132,7 +132,7 @@
                                             <td th:text="${question.type}">type</td>
 
                                             <!--status: enabled/disabled-->
-                                            <td > <a th:href="${'/survey/questionStatus/' + question.id+'/'+'status'}"><i th:text="${question.status}" class="fa fa-caret-down" aria-hidden="true"></i></a></td>
+                                            <td sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')" > <a th:href="${'/survey/questionStatus/' + question.id+'/'+'status'}"><i th:text="${question.status}" class="fa fa-caret-down" aria-hidden="true"></i></a></td>
 
 
                                             <!--change sequence function-->
