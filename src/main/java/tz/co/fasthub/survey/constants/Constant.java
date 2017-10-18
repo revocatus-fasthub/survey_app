@@ -5,6 +5,7 @@ import tz.co.fasthub.survey.domain.Answer;
 import tz.co.fasthub.survey.domain.Channel;
 import tz.co.fasthub.survey.domain.Question;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -13,6 +14,9 @@ import java.util.ArrayList;
 public class Constant {
 
    public static String nakedPassword;
+   public static JLabel label = new JLabel();
+
+   public static String SURVEY_CRDB_HOMEPage = "http://survey.opestechnologies.co.tz:8081/crdb/login";//"<a href=\"http://survey.opestechnologies.co.tz:8081/crdb/login\">Survey HomePage</a>";
 
     public static final String GW_URL="http://gravity.fasthub.co.tz:8088/fasthub/messaging/json/api";
     public static final int channel=117274; //116275

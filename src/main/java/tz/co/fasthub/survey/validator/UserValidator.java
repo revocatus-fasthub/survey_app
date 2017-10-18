@@ -7,6 +7,10 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import tz.co.fasthub.survey.domain.User;
 import tz.co.fasthub.survey.service.UserService;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by naaminicharles on 7/27/17.
  */
@@ -19,13 +23,17 @@ public class UserValidator implements Validator {
           (?=.*\d)		#   must contains one digit from 0-9
           (?=.*[a-z])		#   must contains one lowercase characters
           (?=.*[A-Z])		#   must contains one uppercase characters
+          (?=\\S+$)         #   no whitespace allowed in the entire string
           (?=.*[@#$%])		#   must contains one special symbols in the list "@#$%"
                       .		#     match anything with previous condition checking
                         {6,20}	#        length at least 6 characters and maximum of 20
         )		# End of group
     */
 
-    private static final String PASSWORD_PATTERN = "((?=.*[@#$%_-&]).{8,20})";
+    private Pattern pattern;
+    private Matcher matcher;
+
+    private static String PASSWORD_PATTERN = "(?=.*[@#$-%^&+=]).{8,20}";
 
     @Autowired
     private UserService userService;
@@ -53,7 +61,16 @@ public class UserValidator implements Validator {
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
-        if (user.getPassword().length() < 6 || user.getPassword().length() > 32) {
+        if(user.getPassword() != null){
+            pattern = Pattern.compile(PASSWORD_PATTERN);
+            matcher = pattern.matcher(user.getPassword());
+        }
+        /*else {
+            errors.rejectValue("password", "NotEmpty");
+        }*/
+        if(!matcher.matches()){
+//        if(!user.getPassword().matches(PASSWORD_PATTERN)){
+//        if (user.getPassword().length() < 6 || user.getPassword().length() > 32) {
             errors.rejectValue("password", "Size.userForm.password");
         }
 
@@ -70,17 +87,4 @@ public class UserValidator implements Validator {
     }
 
 
-    public void validatePassword(Object o, Errors errors) {
-        User user = (User) o;
-
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
-        if(user.getPassword().equals(PASSWORD_PATTERN)){
-//        if (user.getPassword().length() < 6 || user.getPassword().length() > 32) {
-            errors.rejectValue("password", "Size.userForm.password");
-        }
-
-        if (!user.getCpassword().equals(user.getPassword())) {
-            errors.rejectValue("cpassword", "Diff.userForm.passwordConfirm");
-        }
-    }
 }

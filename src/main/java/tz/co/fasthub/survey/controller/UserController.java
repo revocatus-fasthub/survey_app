@@ -56,6 +56,7 @@ public class UserController {
 
     QuestionController questionController;
 
+
     @Autowired
     public UserController(BCryptPasswordEncoder bCryptPasswordEncoder, UserService userService,
                           AnswerService answerService, CustomerService customerService, SecurityService securityService,
@@ -125,8 +126,10 @@ public class UserController {
                     "Welcome " + userForm.getFirstName() + " " + userForm.getLastName() +
                             ",\n\nThis is an automatic reply from our Online Application Tool.\n\n" +
                             "You can log into the system with the following account information:" +
-                                    "\n\nUsername: "+userForm.getUsername()+
-                                    "\n\nPassword: "+ Constant.nakedPassword+"\n\n\nRegards");
+                                    "\n\n\tUsername: "+userForm.getUsername()+
+                                    "\n\n\tPassword: "+ Constant.nakedPassword+
+                                    "\n\n" +Constant.SURVEY_CRDB_HOMEPage+
+                                    "\n\n\nRegards");
             log.info("Email Sent to: "+userForm.getFirstName());
         } catch (MailException me)
         {
@@ -170,7 +173,7 @@ public class UserController {
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String saveEditedUser(User userForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-     userValidator.validatePassword(userForm,bindingResult);
+     userValidator.validate(userForm,bindingResult);
           if (bindingResult.hasErrors()) {
               return "userEditForm";
           }
