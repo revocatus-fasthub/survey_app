@@ -130,11 +130,11 @@ public class UserController {
                                     "\n\n\tPassword: "+ Constant.nakedPassword+
                                     "\n\n" +Constant.SURVEY_CRDB_HOMEPage+
                                     "\n\n\nRegards");
-            log.info("Email Sent to: "+userForm.getFirstName());
+            log.info("Email Sent to: "+userForm.getFirstName()+": "+userForm.getEmail());
         } catch (MailException me)
         {
             redirectAttributes.addFlashAttribute("flash.message", "Email not sent! " +me.getMessage());
-            log.info("Failed to send Email to "+userForm.getFirstName());
+            log.info("Failed to send Email to "+userForm.getFirstName()+": "+userForm.getEmail());
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("flash.message", "Uncaught Exception: " + e.getMessage());
         }
