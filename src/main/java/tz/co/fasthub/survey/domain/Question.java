@@ -44,9 +44,6 @@ public class Question {
 
     @Column(name="is_Checked")
     private String isChecked;//checker
-//
-//    @Column(name="is_Created")
-//    private String isCreated;//maker
 
     private String comment;
 
@@ -54,7 +51,7 @@ public class Question {
     }
 
 
-    public Question(String qsn, int sequence, Long version, String type, User user, String status, String isChecked, String isCreated, String comment) {
+    public Question(String qsn, int sequence, Long version, String type, User user, String status, String isChecked, String comment) {
         this.qsn = qsn;
         this.sequence = sequence;
         this.version = version;
@@ -63,7 +60,6 @@ public class Question {
         this.status = status;
         this.isChecked = isChecked;
         this.comment = comment;
-//        this.isCreated = isCreated;
     }
 
     @Override
@@ -181,14 +177,6 @@ public class Question {
     public void setIsChecked(String isChecked) {
         this.isChecked = isChecked;
     }
-
-    /*public String getIsCreated() {
-        return isCreated;
-    }
-
-    public void setIsCreated(String isCreated) {
-        this.isCreated = isCreated;
-    }*/
 
     public String getComment() {
         return comment;

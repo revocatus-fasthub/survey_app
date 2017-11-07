@@ -56,7 +56,8 @@
                                                 </thead>
                                             </tr>
                                             <tr>
-                                                <thead sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')">
+                                                <thead>
+                                                <!--sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')"-->
                                                     <form autocomplete="off" action="#" th:action="@{/survey/question/{id}(id=${question.id})}" th:object="${answer}" method="post" class="form-horizontal" role="form">
                                                         <td colspan="3">
                                                             <!--<label th:if="${#fields.hasErrors('ans')}" th:errors="*{ans}" class="validation-message" th:class="alert-danger"></label>-->

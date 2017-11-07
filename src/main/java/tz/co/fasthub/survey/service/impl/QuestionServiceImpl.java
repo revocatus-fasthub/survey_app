@@ -1,5 +1,7 @@
 package tz.co.fasthub.survey.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tz.co.fasthub.survey.domain.Question;
@@ -15,6 +17,8 @@ import java.util.List;
 @Service("questionService")
 public class QuestionServiceImpl implements QuestionService {
 
+    private static final Logger log = LoggerFactory.getLogger(QuestionServiceImpl.class);
+
     private final QuestionRepository questionRepository;
 
     @Autowired
@@ -24,7 +28,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question save(Question question) {
-    if(question.getId()== null) {
+        if(question.getId()== null) {
                 List<Question> questions = listAllQuestionsByDesc();
                 if(!questions.isEmpty()){
                     for (Question question1:questions) {

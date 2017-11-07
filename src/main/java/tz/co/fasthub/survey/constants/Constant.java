@@ -4,6 +4,7 @@ import org.springframework.web.client.RestTemplate;
 import tz.co.fasthub.survey.domain.Answer;
 import tz.co.fasthub.survey.domain.Channel;
 import tz.co.fasthub.survey.domain.Question;
+import tz.co.fasthub.survey.domain.User;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ public class Constant {
 
    public static String nakedPassword;
    public static JLabel label = new JLabel();
+
+   public static User userById = new User();
 
    public static String SURVEY_CRDB_HOMEPage = "http://survey.opestechnologies.co.tz:8081/crdb/login";//"<a href=\"http://survey.opestechnologies.co.tz:8081/crdb/login\">Survey HomePage</a>";
 

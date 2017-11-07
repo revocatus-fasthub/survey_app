@@ -14,21 +14,21 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import tz.co.fasthub.survey.domain.Answer;
 import tz.co.fasthub.survey.domain.CustomerTransaction;
 import tz.co.fasthub.survey.domain.Question;
-import tz.co.fasthub.survey.domain.User;
 import tz.co.fasthub.survey.service.AnswerService;
 import tz.co.fasthub.survey.service.CustomerTransactionService;
 import tz.co.fasthub.survey.service.QuestionService;
+import tz.co.fasthub.survey.service.UserService;
 import tz.co.fasthub.survey.validator.AnswerValidator;
 import tz.co.fasthub.survey.validator.QuestionValidator;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static tz.co.fasthub.survey.constants.Constant.savedAnswer;
-import static tz.co.fasthub.survey.constants.Constant.savedQuestion;
+import static tz.co.fasthub.survey.constants.Constant.*;
 
 /**
  * Created by naaminicharles on 7/17/17.
@@ -45,6 +45,7 @@ public class QuestionController {
     private AnswerValidator answerValidator;
 
     private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
+    private final UserService userService;
 
     public QuestionValidator getQuestionValidator() {
         return questionValidator;
@@ -55,12 +56,13 @@ public class QuestionController {
     }
 
     @Autowired
-    public QuestionController(QuestionService questionService, AnswerService answerService, CustomerTransactionService customerTransactionService, QuestionValidator questionValidator, AnswerValidator answerValidator) {
+    public QuestionController(QuestionService questionService, AnswerService answerService, CustomerTransactionService customerTransactionService, QuestionValidator questionValidator, AnswerValidator answerValidator, UserService userService) {
         this.questionService = questionService;
         this.answerService = answerService;
         this.customerTransactionService = customerTransactionService;
         this.questionValidator = questionValidator;
         this.answerValidator = answerValidator;
+        this.userService = userService;
     }
 
     @RequestMapping(value = "/questions", method = RequestMethod.GET)
@@ -172,16 +174,21 @@ public class QuestionController {
     // Save question to database
 
     @RequestMapping(value = "question", method = RequestMethod.POST)
-    public String saveQuestion(@Valid Question question, BindingResult result, RedirectAttributes redirectAttributes) {
-   //     model.addAttribute("Question", question);
-        User user = new User();
-        //get user's id
-        log.info("user's id = "+user.getId()+" and username is "+user.getUsername());
+    public String saveQuestion(@Valid Question question, BindingResult result, RedirectAttributes redirectAttributes, Principal principal) {
+
+        String username = principal.getName(); //get logged in username
+
+        userById = userService.getUserById(userService.findByUsername(username).getId());
+
+        log.info("user's id = "+userById+" and username is "+username);
+
+        question.setUser(userById);
         questionValidator.validate(question, result);
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("flash.message.questionError", "'Type' or 'Status' field cannot be empty!");
             return "redirect:/survey/addQuestion";
         }
+        question.setUser(userById);
         savedQuestion = questionService.save(question);
 
         Long id = savedQuestion.getId();
@@ -397,16 +404,28 @@ public class QuestionController {
 
 
     @RequestMapping(value = "questionChecker/{id}/checker", method = RequestMethod.GET)
-    public String changeCheckedStatus(@PathVariable Long id) {
+    public String changeCheckedStatus(@PathVariable Long id, Principal principal) {
         Question question = questionService.getQsnById(id);
 
-        if(question.getIsChecked().equals("Pending")){
-            question.setIsChecked("Approved");
-        }/*else if(question.getIsChecked().equals("Approved")){
-            question.setIsChecked("Pending");
-        }*/else
-            question.setIsChecked("Pending");
 
+        String username = principal.getName(); //get logged in username
+
+        userById = userService.getUserById(userService.findByUsername(username).getId());
+
+        //approve qsn iff; id of the one who created the qsn (question.getUser) is not equal to the one logged in user at the moment (userById).
+        if(!userById.equals(question.getUser())){
+
+            if(question.getIsChecked().equals("Pending")){
+                question.setIsChecked("Approved");
+            }/*else if(question.getIsChecked().equals("Approved")){
+            question.setIsChecked("Pending");
+              }*/
+            else {
+                question.setIsChecked("Pending");
+            }
+
+        }
+        //else do nothing but save
         questionService.save(question);
 
         return "redirect:/survey/addQuestion";

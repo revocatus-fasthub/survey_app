@@ -70,7 +70,8 @@
                                 <div>
                                     <table class="table table-hover table-striped">
                                         <tr>
-                                            <thead sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')">
+                                            <thead>
+                                            <!--sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')"-->
                                             <form autocomplete="off"  action="#" th:action="@{/survey/question}" th:object="${question}" method="post" class="form-horizontal" role="form">
                                                 <input type="hidden" th:field="*{id}"/>
                                                 <input type="hidden" th:field="*{version}"/>
@@ -142,8 +143,10 @@
                                             <!--is the question created? .. useless for now hence commented out-->
                                             <!--<td th:text="${question.isCreated}">isCreated</td>-->
 
-                                            <!--specific to role CHECKER to update the status to approved or leave it pending-->
-                                            <td sec:authorize="hasRole('ROLE_CHECKER')" > <a th:href="${'/survey/questionChecker/' + question.id+'/'+'checker'}"><i th:text="${question.isChecked}" class="fa fa-caret-down" aria-hidden="true"></i></a></td>
+                                            <!--specific to role CHECKER to update the status to approved or leave it pending
+                                            sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN','ROLE_CHECKER')"
+                                            -->
+                                            <td> <a th:href="${'/survey/questionChecker/' + question.id+'/'+'checker'}"><i th:text="${question.isChecked}" class="fa fa-caret-down" aria-hidden="true"></i></a></td>
 
                                             <!--specific to role ADMIN/MAKER they can just view the status but can't do anything-->
                                             <td sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')" th:text="${question.isChecked}"></td>
