@@ -189,6 +189,7 @@ public class QuestionController {
             return "redirect:/survey/addQuestion";
         }
         question.setUser(userById);
+        question.setUsername(username);
         savedQuestion = questionService.save(question);
 
         Long id = savedQuestion.getId();
@@ -432,11 +433,23 @@ public class QuestionController {
     }
 
     @RequestMapping(value = "saveComment/{id}/comment", method = RequestMethod.POST)
-    public String saveComment(@ModelAttribute("comment") String comment, @PathVariable Long id){
+    public String saveComment(@ModelAttribute("comment") String comment, @PathVariable Long id, Principal principal){
         Question question = questionService.getQsnById(id);
-        log.info("our comment is: "+comment);
-        questionService.saveCommentByQsnId(id, comment);
+
+        String username = principal.getName(); //get logged in username
+
+        userById = userService.getUserById(userService.findByUsername(username).getId());
+
+
+            if(!userById.equals(question.getUser())){
+
+                log.info("our comment is: "+comment);
+
+                questionService.saveCommentByQsnId(id, comment);
+            }
+
         return "redirect:/survey/addQuestion";
+
     }
 
 

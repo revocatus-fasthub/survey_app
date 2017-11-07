@@ -47,11 +47,13 @@ public class Question {
 
     private String comment;
 
+    private String username; //get username from user id
+
     public Question() {
     }
 
 
-    public Question(String qsn, int sequence, Long version, String type, User user, String status, String isChecked, String comment) {
+    public Question(String qsn, int sequence, Long version, String type, User user, String status, String isChecked, String comment, String username) {
         this.qsn = qsn;
         this.sequence = sequence;
         this.version = version;
@@ -60,6 +62,7 @@ public class Question {
         this.status = status;
         this.isChecked = isChecked;
         this.comment = comment;
+        this.username = username;
     }
 
     @Override
@@ -192,6 +195,14 @@ public class Question {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
 
