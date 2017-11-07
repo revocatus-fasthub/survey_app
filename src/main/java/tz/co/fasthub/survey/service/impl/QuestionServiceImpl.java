@@ -8,6 +8,7 @@ import tz.co.fasthub.survey.domain.Question;
 import tz.co.fasthub.survey.repository.QuestionRepository;
 import tz.co.fasthub.survey.service.QuestionService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,10 +52,10 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question saveCommentByQsnId(Long id,String comment) {
+        List<Question> questionArrayList= new ArrayList<Question>();
 
         Question question = getQsnById(id);
         question.setComment(comment);
-
         questionRepository.save(question);
 
         return null;
