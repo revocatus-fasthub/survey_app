@@ -149,7 +149,7 @@
                                             <td> <a th:href="${'/survey/questionChecker/' + question.id+'/'+'checker'}"><i th:text="${question.isChecked}" class="fa fa-caret-down" aria-hidden="true"></i></a></td>
 
                                             <!--specific to role ADMIN/MAKER they can just view the status but can't do anything-->
-                                            <td sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')" th:text="${question.isChecked}"></td>
+                                            <!--<td sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')" th:text="${question.isChecked}"></td>-->
 
                                             <!--view question in details-->
                                             <td><a th:href="${'/survey/question/' + question.id}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
