@@ -54,11 +54,12 @@ public class Question {
     }
 
 
-    public Question(String qsn, int sequence, Long version, String type, String status, String isChecked, String isCreated, String comment) {
+    public Question(String qsn, int sequence, Long version, String type, User user, String status, String isChecked, String isCreated, String comment) {
         this.qsn = qsn;
         this.sequence = sequence;
         this.version = version;
         this.type = type;
+        this.user = user;
         this.status = status;
         this.isChecked = isChecked;
         this.comment = comment;
@@ -76,7 +77,7 @@ public class Question {
                 ", status=" + status +
                 ", isChecked=" + isChecked +
                 ", comment=" + comment +
-//                ", isCreated=" + isCreated +
+                ", user=" + user +
                 '}';
     }
 

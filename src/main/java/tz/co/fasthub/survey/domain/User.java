@@ -34,7 +34,7 @@ public class User implements UserDetails{
     private Long version;
     private boolean enabled;
 
-    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Question> questions;
 
     public User() {
@@ -172,5 +172,13 @@ public class User implements UserDetails{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 }
