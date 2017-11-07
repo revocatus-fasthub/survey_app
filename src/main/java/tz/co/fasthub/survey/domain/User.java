@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by naaminicharles on 7/27/17.
@@ -32,6 +33,9 @@ public class User implements UserDetails{
     @Version
     private Long version;
     private boolean enabled;
+
+    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL)
+    private List<Question> questions;
 
     public User() {
         enabled = true;

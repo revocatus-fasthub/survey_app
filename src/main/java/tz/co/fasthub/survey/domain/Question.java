@@ -31,9 +31,13 @@ public class Question {
     @OneToMany(mappedBy = "question",cascade = CascadeType.DETACH)
     private List<OpenEndedAnswer> openEndedAnswers;
 
-
     @OneToMany(mappedBy = "question",cascade = CascadeType.DETACH)
     private List<CustomerTransaction> customerTransaction;
+
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "userId")
+    private User user;
+
 
     @NotNull
     private String status;
@@ -191,6 +195,14 @@ public class Question {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
 

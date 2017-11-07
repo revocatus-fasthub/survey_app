@@ -25,6 +25,16 @@ public class MainController {
     @Autowired
     private UserSearch userSearch;
 
+    @RequestMapping(value = "/workspace")
+    public String workspace(){
+        return "workspace";
+    }
+
+
+    @RequestMapping(value = "/demoIndex")
+    public String demoindex(){
+        return "demo";
+    }
 
     @RequestMapping(value = "/survey/viewController")
     public String viewController(){

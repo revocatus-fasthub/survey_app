@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import tz.co.fasthub.survey.domain.Answer;
 import tz.co.fasthub.survey.domain.CustomerTransaction;
 import tz.co.fasthub.survey.domain.Question;
+import tz.co.fasthub.survey.domain.User;
 import tz.co.fasthub.survey.service.AnswerService;
 import tz.co.fasthub.survey.service.CustomerTransactionService;
 import tz.co.fasthub.survey.service.QuestionService;
@@ -21,7 +22,6 @@ import tz.co.fasthub.survey.validator.AnswerValidator;
 import tz.co.fasthub.survey.validator.QuestionValidator;
 
 import javax.validation.Valid;
-import javax.xml.stream.events.Comment;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -174,12 +174,16 @@ public class QuestionController {
     @RequestMapping(value = "question", method = RequestMethod.POST)
     public String saveQuestion(@Valid Question question, BindingResult result, RedirectAttributes redirectAttributes) {
    //     model.addAttribute("Question", question);
+        User user = new User();
+        //get user's id
+        log.info("user's id = "+user.getId()+" and username is "+user.getUsername());
         questionValidator.validate(question, result);
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("flash.message.questionError", "'Type' or 'Status' field cannot be empty!");
             return "redirect:/survey/addQuestion";
         }
         savedQuestion = questionService.save(question);
+
         Long id = savedQuestion.getId();
 
         redirectAttributes.addFlashAttribute("flash.message.question", "Question " + id + " Successfully Saved Waiting for Authorization!");
