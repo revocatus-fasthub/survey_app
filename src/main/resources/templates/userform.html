@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>CRDB Survey | Edit User</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<!--<div class="container">-->
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <div class="row">
+        <div class="col-md-9 col-md-offset-3">
+            <h3 th:if="${#vars['flash.message.userSuccess']}" th:text="${#vars['flash.message.userSuccess']}" class="alert alert-success"></h3>
+
+            <form autocomplete="off" action="#" th:action="@{/saveregistration}" th:object="${user}" method="post" class="form-horizontal" role="form">
+
+                <h2>Edit User</h2>
+
+                <input type="hidden" th:field="*{id}"/>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <input type="text" placeholder="First Name" class="form-control" th:field="*{firstName}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <input type="text" placeholder="Last Name" class="form-control" th:field="*{lastName}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <input type="text" th:placeholder="Email" class="form-control" th:field="*{email}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <input type="text" th:placeholder="Username" class="form-control" th:field="*{username}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <input type="password" th:placeholder="Password" class="form-control" th:field="*{password}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <input type="password" th:placeholder="ConfirmPassword" class="form-control" th:field="*{cpassword}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <button type="submit" class="btn btn-primary btn-block">Save</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+<!--</div>-->
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:top="http://www.w3.org/1999/xhtml">
+<head lang="en" th:include="fragments/header :: header">
+
+    <title>CRDB Survey | Users</title>
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+
+                <div class="col-md-12">
+                    <h3 th:if="${#vars['flash.message.userFail']}" th:text="${#vars['flash.message.userFail']}" class="alert alert-danger"></h3>
+                    <h3 th:if="${#vars['flash.message.user']}" th:text="${#vars['flash.message.user']}" class="alert alert-success"></h3>
+
+                    <div class="card">
+                        <div class="header">
+                            <div th:fragment="header">
+
+                            <section>
+                            <div class="pull-left" style="padding-right:5px">
+                            <h3>Users</h3>
+                            </div>
+
+                            <div class="pull-right" style="padding-right:10px;" >
+                                <h3><a th:href="@{'/survey/registration/new'}"><button class="btn btn-success btn-sm">Add User</button></a></h3>
+                            </div>
+
+
+                                <div class="pull-right" style="padding-right: inherit">
+                                    <form action="#" method="get">
+                                        <div class="input-group input-sm">
+                                            <label class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></label>
+                                            <input class="form-control" id="card" name="q" placeholder="Search" required="required"/>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <!--<button type="button" class="btn btn-success btn-sm" id="myBtn">Add user</button>-->
+                            <!--</div>-->
+                            </section>
+                            </div>
+                        </div>
+                        <div class="content table-responsive table-full-width">
+                            <div th:if="${not #lists.isEmpty(users)}">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                <th>Id</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Username </th>
+                                <th>Role</th>
+                                <!-- <th>Change Password </th> -->
+                                <th>Delete</th>
+                                </thead>
+                                <tbody>
+                                <tr th:each="user : ${users}">
+                                    <!--<td th:text="${user.id}"><a href="/user/${user.id}">Id</a></td>-->
+
+                                    <td th:alt-title="${user.id}"><i class="fa fa-user" aria-hidden="true"></i></td>
+                                    <td th:text="${user.firstName}">firstName</td>
+                                    <td th:text="${user.lastName}">firstName</td>
+                                    <td th:text="${user.email}">firstName</td>
+                                    <td th:text="${user.username}">username</td>
+                                    <td th:text="${user.role}">role</td>
+
+                                    <!-- <td><a th:href="${'survey/user/' + user.id}">View</a></td>
+                                    <td><a th:href="${'survey/user/edit/' + user.id}">Change Password</a></td> -->
+                                    <td><a th:href="${'/survey/user/delete/' + user.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!--
+/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/
+-->
+<!--
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="padding:35px 50px;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="logo" align="center">
+                        <img src="/image/CRDB-U.png" th:src="@{/images/CRDB-U.png}" width="190px" height="100px"/><br/>
+                    </div>
+                </div>
+                <div class="modal-body" style="padding:40px 50px;">
+                    <form autocomplete="off" action="#" th:action="@{/survey/saveregistration}" th:object="${user}" method="post" class="form-horizontal" role="form">
+                        &lt;!&ndash;<input type="hidden" th:field="*{id}"/>&ndash;&gt;
+                        <div class="input-group input-sm">
+                            <label class="input-group-addon" for="username"><i class="fa fa-user" aria-hidden="true"></i></label>
+                            <input type="text" class="form-control" id="username" placeholder="Username" th:field="*{username}"/>
+                        </div>
+                        <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="validation-message" th:class="alert-danger"></label>
+
+                        <div class="input-group input-sm">
+                            <label class="input-group-addon" for="password"><i class="fa fa-key" aria-hidden="true"></i></label>
+                            <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}"/>
+                        </div>
+                        <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message" th:class="alert-danger"></label>
+
+
+                        <div class="input-group input-sm">
+                            <label class="input-group-addon" for="cpassword"><i class="fa fa-lock" aria-hidden="true"></i></label>
+                            <input type="password" class="form-control" id="cpassword" placeholder="Confirm Password" th:field="*{cpassword}"/>
+                        </div>
+                        <label th:if="${#fields.hasErrors('cpassword')}" th:errors="*{cpassword}" class="validation-message" th:class="alert-danger"></label>
+
+                        <center>
+                            <button type="submit" class="btn btn-success "><i class="fa fa-sign-in" aria-hidden="true"></i>
+                                Register </button>
+                        </center>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">
+                        <i class="fa fa-times-circle" aria-hidden="true"></i>
+                         Cancel</button>
+                    &lt;!&ndash;<p>CRDB BANK ULIPO TUPO</p>&ndash;&gt;
+
+                    /*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+-->
+
+    <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+
+</body>
+
+<!--
+<script src="/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/js/light-bootstrap-dashboard.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#myBtn").click(function(){
+            $("#myModal").modal();
+        });
+    });
+</script>-->
+</html>

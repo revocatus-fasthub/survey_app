@@ -18,7 +18,10 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 
-version = '0.0.1-SNAPSHOT'
+    jar{
+        baseName = 'survey_app'
+        version = '0.0.1-SNAPSHOT'
+        }
 sourceCompatibility = 1.8
 
 repositories {
@@ -30,14 +33,24 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	//compile('org.springframework.boot:spring-boot-starter-data-rest')
 	compile('org.springframework.boot:spring-boot-starter-jdbc')
-	//compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+	compile("org.springframework.boot:spring-boot-devtools")
 	compile('org.hibernate:hibernate-core')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile group: 'org.json', name: 'json', version: '20090211'
 	runtime('mysql:mysql-connector-java')
-	//testCompile('org.springframework.boot:spring-boot-starter-test')
-	//testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity4")
+	compile('com.lowagie:itext:2.1.7')
+    // https://mvnrepository.com/artifact/org.hibernate/hibernate-search-orm
+    compile group: 'org.hibernate', name: 'hibernate-search-orm', version: '5.6.1.Final'
+	// https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect
+	compile group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.2.2'
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '1.5.4.RELEASE'
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+    compile('org.springframework.boot:spring-boot-starter-mail')
+
 }
 
 springBoot{

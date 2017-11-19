@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>CRDB Survey | Customers</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <h3 th:if="${#vars['flash.message.customer']}" th:text="${#vars['flash.message.customer']}" class="alert alert-success"></h3>
+
+                        <div class="card">
+                            <div class="header">
+                                <div th:fragment="header">
+                                    <section>
+                                        <div class="pull-left" style="padding-right:5px">
+                                            <h3>Customers</h3>
+                                        </div>
+
+                                <!--        <div class="pull-right" style="padding-right: 4px">
+                                            <form action="#" method="get">
+                                                <div class="input-group input-sm">
+                                                    <label class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></label>
+                                                    <input class="form-control" id="card" name="q" placeholder="Search" required="required"/>
+                                                </div>
+                                            </form>
+                                        </div>
+-->
+                                    </section>
+                                </div>
+
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <div th:if="${not #lists.isEmpty(customers)}">
+                                <table class="table table-hover table-striped">
+                                        <thead>
+                                            <th>Id</th>
+                                            <th>Msisdn </th>
+                                            <th>Email</th>
+
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="customer : ${customers}">
+                                            <!--<td th:text="${customer.id}"><a href="/customer/${customer.id}">Id</a></td>-->
+                                            <!--<td th:text="${customer.id}"> </td>-->
+                                            <td th:alt-title="${customer.id}"><i class="fa fa-user-circle" aria-hidden="true"></i></td>
+                                            <td th:text="${customer.msisdn}">Msisdn</td>
+                                            <td th:text="${customer.email}">Email</td>
+
+                                            <!--
+                                              <td><a th:href="${'/survey/customer/' + customer.id}">View</a></td>
+                                              <td><a th:href="${'/survey/customer/edit/' + customer.id}">Edit</a></td>
+                                            <td><a th:href="${'/survey/customer/delete/' + customer.id}">Delete</a></td>
+                                            -->
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+</body>
+</html>

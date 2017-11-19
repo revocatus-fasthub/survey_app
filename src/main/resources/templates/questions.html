@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>CRDB Survey | Questions</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                        <h3 th:if="${#vars['flash.message.questionSuccess']}" th:text="${#vars['flash.message.questionSuccess']}" class="alert alert-success"></h3>
+                        <h3 th:if="${#vars['flash.message.questionError']}" th:text="${#vars['flash.message.questionError']}" class="alert alert-danger"></h3>
+                        <h3 th:if="${#vars['flash.message.answerSuccess']}" th:text="${#vars['flash.message.answerSuccess']}" class="alert alert-success"></h3>
+
+                        <div th:if="${not #lists.isEmpty(questions)}">
+                            <h3>Questions</h3>
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Question </th>
+                                    <th>Sequence</th>
+                                    <th>Type</th>
+<!--
+                                    <th>Move Up</th>
+                                    <th>Move Down</th>
+-->
+                                    <th>IsCreated</th>
+                                    <th>IsChecked</th>
+                                    <th>View</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                                <tr th:each="question : ${questions}">
+                                    <td th:text="${question.id}"><a href="/question/${question.id}"><i class="fa fa-th" aria-hidden="true"></i></a></td>
+                                    <td th:text="${question.qsn}">Qsn Id</td>
+                                    <td th:text="${question.sequence}">sequence</td>
+                                    <td th:text="${question.type}">type</td>
+
+<!--
+                                    <td> <a th:href="${'/survey/questionSequence/' + question.id+'/'+'up'}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></td>
+                                    <td> <a th:href="${'/survey/questionSequence/' + question.id+'/'+'down'}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></td>
+-->
+
+
+                                    <td><a th:href="${'/survey/question/' + question.id}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+                                    <td><a th:href="${'/survey/question/edit/' + question.id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+                                    <td><a th:href="${'/survey/question/delete/' + question.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+</body>
+</html>

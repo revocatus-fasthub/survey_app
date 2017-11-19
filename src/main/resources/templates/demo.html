@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Demo | Index</title>
+
+    <link href="../static/css/demoIndex.css" th:href="@{/css/demoIndex.css}" rel="stylesheet"  media="screen" />
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"  media="screen" />
+    <link href="../static/css/animate.min.css" th:href="@{/css/animate.min.css}" rel="stylesheet"  media="screen"/>
+    <link href="../static/css/light-bootstrap-dashboard.css" th:href="@{/css/light-bootstrap-dashboard.css}" rel="stylesheet"/>
+
+
+</head>
+<body>
+<!--
+    <div class="main-panel">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                        -->
+
+        <div class="card" id="">
+            <!--<div th:fragment="header">-->
+                <section>
+                    <div class="pull-right" style="padding-right:5px">
+                        <button >+ New Reminder</button>
+                    </div>
+                </section>
+            <!--</div>-->
+
+                    <div class="header">
+                        <table class="table table-hover table-striped">
+                            <tr>
+                                <thead>
+                                    <td colspan="3">
+                                        <label>
+                                            <p>REf No:</p>
+                                            <p>Court: High Court</p>
+                                            <p>Mbwana Vs Boniface</p>
+                                            <p>Lead Advocate:</p>
+                                        </label>
+                                    </td>
+                                <td colspan="4">
+                                    <label>
+                                        <p>porte: 12/01/2012</p>
+                                        <p>4 weeks, 20 days</p>
+                                    </label>
+                                </td>
+
+                                </thead>
+                            </tr>
+                        </table>
+                    </div>
+
+            <table class="table table-hover table-striped">
+            <tr>
+                <thead>
+                <td colspan="4">
+                    <div class="tab">
+                        <button class="tablinks" onclick="openTab(event, 'None')" id="defaultOpen" tabindex="0">None</button>
+                        <button class="tablinks" onclick="openTab(event, 'History')">History</button>
+                        <button class="tablinks" onclick="openTab(event, 'Notes')">Notes</button>
+                        <button class="tablinks" onclick="openTab(event, 'Documents')">Documents</button>
+                        <button class="tablinks" onclick="openTab(event, 'Reminder')">Reminder</button>
+                    </div>
+
+                    <div id="None" class="tabcontent">
+                        <h3>None</h3>
+                        <p>None is ... Stripe enables you to accept payments in minutes.
+                            Collect your customers' payment information easily and securely on web or
+                            mobile, and create charges server-side in 100+ currencies. United States
+                            users can accept Visa Mastercard American Express Discover JCB Diners Club
+                            credit and debit cards. </p>
+                    </div>
+
+
+                    <div id="History" class="tabcontent">
+                        <h3>History</h3>
+                        <p>History is ... Stripe enables you to accept payments in minutes.
+                            Collect your customers' payment information easily and securely on web or
+                            mobile, and create charges server-side in 100+ currencies. United States
+                            users can accept Visa Mastercard American Express Discover JCB Diners Club
+                            credit and debit cards. </p>
+                    </div>
+
+                    <div id="Notes" class="tabcontent">
+                        <h3>Notes</h3>
+                        <p>Notes ... Stripe enables you to accept payments in minutes.
+                            Collect your customers' payment information easily and securely on web or
+                            mobile, and create charges server-side in 100+ currencies. United States
+                            users can accept Visa Mastercard American Express Discover JCB Diners Club
+                            credit and debit cards.</p>
+                    </div>
+
+                    <div id="Documents" class="tabcontent">
+                        <h3>Documents</h3>
+                        <p>Documents  ... Stripe enables you to accept payments in minutes.
+                            Collect your customers' payment information easily and securely on web or
+                            mobile, and create charges server-side in 100+ currencies. United States
+                            users can accept Visa Mastercard American Express Discover JCB Diners Club
+                            credit and debit cards.</p>
+                    </div>
+
+                    <div id="Reminder" class="tabcontent">
+                        <h3>Reminder</h3>
+                        <p>Reminder  ... Stripe enables you to accept payments in minutes.
+                            Collect your customers' payment information easily and securely on web or
+                            mobile, and create charges server-side in 100+ currencies. United States
+                            users can accept Visa Mastercard American Express Discover JCB Diners Club
+                            credit and debit cards.</p>
+                    </div>
+
+                </td>
+                </thead>
+            </tr>
+            </table>
+
+        </div>
+<!--            </div>
+      </div>
+   </div>
+</div>
+</div>
+-->
+            <script>
+                function openCity(evt, cityName) {
+                    var i, tabcontent, tablinks;
+                    tabcontent = document.getElementsByClassName("tabcontent");
+                    for (i = 0; i &lt; tabcontent.length; i++) {
+                        tabcontent[i].style.display = "none";
+                    }
+                    tablinks = document.getElementsByClassName("tablinks");
+                    for (i = 0; i &lt; tablinks.length; i++) {
+                        tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    }
+                    document.getElementById(cityName).style.display = "block";
+                    evt.currentTarget.className += " active";
+                }
+
+                // Get the element with id="defaultOpen" and click on it
+                document.getElementById("defaultOpen").click();
+            </script>
+
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head lang="en" th:include="fragments/header :: header">
+
+    <title>CRDB Survey | Add Question</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="main-panel">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+
+<!--                <section>
+                    <form autocomplete="off" action="#" th:action="@{/survey/question}" th:object="${question}" method="post" class="form-horizontal" role="form">
+
+                        <input type="hidden" th:field="*{id}"/>
+                        <input type="hidden" th:field="*{version}"/>
+
+                        <div class="pull-left" th:class="col-md-9" th:width="60" style="padding-right: 20px">
+                            <input type="text" placeholder="Add Question" class="col-md-10" th:field="*{qsn}"/>
+                        </div>
+
+                        <div class="pull-left" style="padding-right: 30px">
+                            <select class="form-group" name="type" id="type" th:field="*{type}">
+                                <option value="0" th:text="${'-&#45;&#45;Select Type-&#45;&#45;'}"></option>
+                                <option th:value="${'Closed Ended'}" th:selected="${question.isSelected(lastselected)}">Closed Ended</option>
+                                <option th:value="${'Open Ended'}" th:selected="${question.isSelected(lastselected)}">Open Ended</option>
+                            </select>
+
+                        </div>
+
+                        <div class="pull-right" style="padding-right:40px" >
+                            <button type="submit" class="btn btn-success">Add</button>
+                        </div>
+
+                    </form>
+                </section>-->
+
+                <div class="col-md-12" >
+
+                    <h3 th:if="${#vars['flash.message.questionError']}" th:text="${#vars['flash.message.questionError']}" class="alert alert-danger"></h3>
+                    <h3 th:if="${#vars['flash.message.questionSuccess']}" th:text="${#vars['flash.message.questionSuccess']}" class="alert alert-Success"></h3>
+
+                    <div class="col-md-0 col-md-offset-0.5" >
+
+                        <div class="card" id="">
+                            <div class="header">
+                                <div th:fragment="header">
+                                    <section>
+                                        <div class="pull-left" style="padding-right:5px">
+                                            <h3>Questions</h3>
+                                        </div>
+
+                                    <!--    <div class="pull-right" style="padding-right: 4px">
+                                            <form action="#" method="get">
+                                                <div class="input-group input-sm">
+                                                    <label class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></label>
+                                                    <input class="form-control" id="card" name="q" placeholder="Search" required="required"/>
+                                                </div>
+                                            </form>
+                                        </div>
+-->
+                                    </section>
+                                </div>
+
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <div>
+                                    <table class="table table-hover table-striped">
+                                        <tr>
+                                            <thead>
+                                            <!--sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')"-->
+                                            <form autocomplete="off"  action="#" th:action="@{/survey/question}" th:object="${question}" method="post" class="form-horizontal" role="form">
+                                                <input type="hidden" th:field="*{id}"/>
+                                                <input type="hidden" th:field="*{version}"/>
+                                                <td colspan="3">
+                                                    <input type="text" placeholder="Add Question" class="form-control input-sm" th:field="*{qsn}" required="required"/>
+                                                    <label th:if="${#fields.hasErrors('qsn')}" th:errors="*{qsn}" class="validation-message" th:class="alert-danger"></label>
+
+                                                </td>
+                                                <!--<td>&nbsp;</td>-->
+                                                <td colspan="4">
+                                                    <select aria-required="true" class="blood_group form-control" name="type" id="type" th:field="*{type}" >
+                                                        <option value="" th:align="center" th:text="${'--- Select Type ---'}"></option>
+                                                        <option th:value="${'Closed Ended'}" th:selected="${question.isSelected(lastselected)}">Closed Ended</option>
+                                                        <option th:value="${'Open Ended'}" th:selected="${question.isSelected(lastselected)}" >Open Ended</option>
+                                                    </select>
+                                                    <label th:if="${#fields.hasErrors('type')}" th:errors="*{type}" class="validation-message" th:class="alert-danger"></label>
+                                                </td>
+                                                <!--<td>&nbsp;</td>-->
+                                                <td colspan="4">
+                                                    <select aria-required="true" class="blood_group form-control" name="type" id="status" th:field="*{status}" >
+                                                        <!--<option value="" th:text="${'-&#45;&#45; Select Type -&#45;&#45;'}"></option>-->
+                                                        <option th:value="${'Enable'}" th:selected="${question.isEnabled(lastselected)}">Enable</option>
+                                                        <option th:value="${'Disable'}" th:selected="${question.isEnabled(lastselected)}" >Disable</option>
+                                                    </select>
+                                                    <label th:if="${#fields.hasErrors('status')}" th:errors="*{status}" class="validation-message" th:class="alert-danger"></label>
+                                                </td>
+
+                                                <!--<td>&nbsp;</td>-->
+                                                <td rowspan="3"><button type="submit" class="btn btn-success" >Add</button></td>
+                                            </form>
+                                            </thead>
+                                        </tr>
+
+                                        <tr th:if="${not #lists.isEmpty(questions)}" class="content table-responsive table-full-width">
+                                        <thead>
+                                            <th>Id</th>
+                                            <th>Question </th>
+                                            <th>Sequence</th>
+                                            <th>Type</th>
+                                            <!--removed  sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')" for status, move up and down, edit,delete-->
+                                            <th >Status</th>
+                                            <th sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')">Move Up</th>
+                                            <th sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')">Move Down</th>
+                                            <!--<th>Is_Created</th>-->
+                                            <th>Is_Checked</th>
+                                            <th>View</th>
+                                            <th sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')">Edit</th>
+                                            <!--<th sec:authorize="hasRole('ROLE_CHECKER')">Add Comments</th>-->
+                                            <th sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')">Delete</th>
+<!--                                            <th sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')">Comments</th>
+                                            <th sec:authorize="hasRole('ROLE_CHECKER')" colspan="2">Comments</th>
+-->
+                                            <!--<th>Add Comment</th>-->
+                                            <th colspan="2">Comments</th>
+
+                                        </thead>
+                                        </tr>
+                                        <tbody th:if="${not #lists.isEmpty(questions)}">
+                                        <tr th:each="question : ${questions}">
+                                            <td> <a th:text="${question.id}" th:alt="Id" th:href="${'/survey/question/'+question.id}"></a></td>
+                                            <td th:text="${question.qsn}">Qsn Id</td>
+                                            <td th:text="${question.sequence}">sequence</td>
+                                            <td th:text="${question.type}">type</td>
+
+                                            <!--status: enabled/disabled sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')"-->
+                                            <td> <a th:href="${'/survey/questionStatus/' + question.id+'/'+'status'}"><i th:text="${question.status}" class="fa fa-caret-down" aria-hidden="true"></i></a></td>
+
+
+                                            <!--change sequence function-->
+                                            <td sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')"> <a th:href="${'/survey/questionSequence/' + question.id+'/'+'up'}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></td>
+                                            <td sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')"> <a th:href="${'/survey/questionSequence/' + question.id+'/'+'down'}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></td>
+
+                                            <!--is the question created? .. useless for now hence commented out-->
+                                            <!--<td th:text="${question.isCreated}">isCreated</td>-->
+
+                                            <!--specific to role CHECKER to update the status to approved or leave it pending
+                                            sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN','ROLE_CHECKER')"
+                                            -->
+                                            <td> <a th:href="${'/survey/questionChecker/' + question.id+'/'+'checker'}"><i th:text="${question.isChecked}" class="fa fa-caret-down" aria-hidden="true"></i></a></td>
+
+                                            <!--specific to role ADMIN/MAKER they can just view the status but can't do anything-->
+                                            <!--<td sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')" th:text="${question.isChecked}"></td>-->
+
+                                            <!--view question in details-->
+                                            <td><a th:href="${'/survey/question/' + question.id}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+
+                                            <!--editing and deleting a question can only be done by an aDMIN/MAKER-->
+                                            <td sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')"><a th:href="${'/survey/question/edit/' + question.id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+                                            <td sec:authorize="hasAnyRole('ROLE_MAKER','ROLE_ADMIN')"><a th:href="${'/survey/question/delete/' + question.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+
+                                           <!-- <td sec:authorize="hasRole('ROLE_CHECKER')"><a th:href="${'/survey/question/edit/' + question.id}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>-->
+
+                                            <!--Comments section-->
+                                            <!--<td sec:authorize="hasRole('ROLE_MAKER')" th:text="${question.comment}"></td>-->
+
+                                            <td th:if="${question.username} != ${#authentication.getName()}">
+                                                <!--sec:authorize="hasRole('ROLE_CHECKER')"-->
+                                                <form action="#"  th:action="${'/survey/saveComment/' + question.id+'/'+'comment'}" th:object="${question}" method="post">
+                                                    <textarea placeholder="Add Comment" name="comment"></textarea>
+                                                    <!--<a th:href="${'/survey/saveComment/' + question.id+'/'+'comment'}">Save</a>-->
+                                                    <button type="submit">Save</button>
+                                                </form>
+                                            </td>
+                                            <td th:if="${question.username} == ${#authentication.getName()}" th:text="${question.comment}"></td>
+                                            <!--sec:authorize="hasRole('ROLE_CHECKER')-->
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+</body>
+</html>

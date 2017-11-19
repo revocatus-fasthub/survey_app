@@ -1,16 +1,77 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head lang="en">
-    <title>Index</title>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>CRDB Survey | Index</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
-<h2>Good Morning</h2>
-<ul>
-<li><p> <a th:href="@{'/survey/viewSurvey/1'}"> View Survey</a></p></li>
-<li><p> <a th:href="@{'/survey/viewCollector/1'}"> View Collector</a></p></li>
-    <li><p> <a th:href="@{'/survey/viewResponses/1'}"> View Response</a></p></li>
-    <li><p> <a th:href="@{'/survey/viewQuestions/1'}"> View Questions</a></p></li>
-    <li><p> <a th:href="@{'/survey/qsnOne/1'}"> get Question one</a></p></li>
-</ul>
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <h3 th:if="${#vars['flash.message.user']}" th:text="${#vars['flash.message.user']}" class="alert alert-success"></h3>
+
+    <div class="main-panel">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+                        <!-- Latest compiled and minified JavaScript -->
+                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+                        <script src="https://code.highcharts.com/highcharts.js"></script>
+                        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+
+                        <script th:inline="javascript">
+                            $(function(){
+                                Highcharts.chart('container', {
+                                    chart: {
+                                        type: 'pie',
+                                        margin: 40,
+                                        pieHole: 0.5,
+                                        color: '#4bb242'
+                                    },
+                                    title: {
+                                        text: 'CRDB Satisfactory Survey'
+                                    },
+                                    subtitle: {
+                                        text: 'Number of Customers participated in the survey'
+                                    },
+                                    tooltip: {
+                                        pointFormat: '<b>{series.name}: {point.y:.0f}</b>'
+//                                        format: '<b>{series.name}</b>: {point.y:.1f}'
+                                    },
+                                    plotOptions: {
+                                        pie: {
+                                            allowPointSelect: true,
+                                            cursor: 'pointer',
+                                            dataLabels: {
+                                                enabled: true,
+                                                format: '<b>{series.name}</b>: {point.y:.0f}',
+                                                color: '#4bb242'
+                                            },
+                                            depth: 35
+                                        }
+                                    },
+                                    series: [{
+                                        name: 'Customers',
+                                        data: [[${pieChartData.values()}]]
+                                    }]
+                                });
+                            });
+                        </script>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
 </html>

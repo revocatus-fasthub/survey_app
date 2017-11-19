@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>Login</title>
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
+</head>
+<body>
+<br/><br/>
+<div class="container">
+
+
+    <div class="container">
+        <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-danger" ></h3>
+        <h3 th:if="${#vars['flash.message.user']}" th:text="${#vars['flash.message.user']}" class="alert alert-success"></h3>
+        <h3 th:if="${#vars['flash.message.userLogin']}" th:text="${#vars['flash.message.userLogin']}" class="alert alert-success"></h3>
+        <h3 th:if="${#vars['flash.message.logout']}" th:text="${#vars['flash.message.logout']}" class="alert alert-success"></h3>
+
+            <div class="login-form">
+                      <center>
+                          <img src="../static/images/logo1.png" width="270" height="130" th:src="@{/images/logo1.png}"/>
+                      </center>
+                    <!--<div class="panel-heading">-->
+                       <!--<center> <h3 class="panel-title" >Please sign in</h3></center>-->
+                    <!--</div>-->
+
+                        <form th:action="${'/login'}" th:object="${user}" th:value="${'/login'}" method="post" class="form-horizontal">
+
+                            <div th:if="${param.logout}">
+                                <div class="alert alert-success fade in ">
+                                    <p>You have been logged out successfully.</p>
+                                </div>
+                            </div>
+
+                            <div th:if="${param.error}">
+                                <div class="alert alert-danger">
+                                    <p>Invalid username or password.</p>
+                                </div>
+                            </div>
+
+
+                            <div th:if="${param.accessDenied!=null}">
+                                <div class="alert alert-danger">
+                                    <p>Access Denied: You are not authorised! </p>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <div class="form-group">
+                                <!--<label class="input-group-addon" for="username"><i class="fa fa-user" aria-hidden="true"></i></label>-->
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required="required"/>
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </div>
+                            <div class="form-group log-status">
+                                <!--<label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label>-->
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required="required"/>
+                                <i class="fa fa-lock"></i>
+                            <br/>
+                            </div>
+
+                            <!--<div class="input-group input-sm">-->
+                                <button class="log-btn" type="submit">
+                                    Login
+                                </button>
+                            <!--</div>-->
+                            <br/>
+
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+
+                            <!--<div class="form-">-->
+                                <!--<input type="submit" width="80%" class="btn btn-block btn-success" value="Log in"/>-->
+                            <!--</div><br/>-->
+
+                            <!---->
+                            <!--<div class="row">-->
+                                    <!--<input type="submit"  class="btn btn-block btn-success" value="Log in"/><br/>-->
+                            <!--</div>-->
+                        </form>
+
+                    </div>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>CRDB Survey | Show Questions</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    <div class="main-panel">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                            <h3 th:if="${#vars['flash.message.question']}" th:text="${#vars['flash.message.question']}" class="alert alert-success"></h3>
+                            <h3 th:if="${#vars['flash.message.questionError']}" th:text="${#vars['flash.message.questionError']}" class="alert alert-success"></h3>
+                            <h3 th:if="${#vars['flash.message.answerSuccess']}" th:text="${#vars['flash.message.answerSuccess']}" class="alert alert-success"></h3>
+                            <h3 th:if="${#vars['flash.message.answerError']}" th:text="${#vars['flash.message.answerError']}" class="alert alert-danger"></h3>
+                        <div class="col-md-0 col-md-offset-0.5" >
+
+                            <div class="card">
+
+                                <div class="content table-responsive table-full-width">
+                                        <table class="table table-hover table-striped">
+                                            <tr>
+                                                <thead>
+                                                <!--<h3>Question Details</h3>-->
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">Question:</label>
+                                                    <p class="form-control-static" th:text="${question.qsn}">Question</p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">Sequence:</label>
+                                                    <p class="form-control-static" th:text="${question.sequence}">Sequence</p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label">Type:</label>
+                                                    <p class="form-control-static" th:text="${question.type}">Sequence</p>
+                                                </div>
+                                                </thead>
+                                            </tr>
+                                            <div th:if="${not #lists.isEmpty(customerTransactions)}">
+                                                <tr>
+                                                <thead>
+                                                    <th>Id</th>
+                                                    <th>Msisdn</th>
+                                                    <th>Answer </th>
+                                                    <th>Qsn_Id</th>
+                                                </thead>
+                                                </tr>
+                                                <tbody>
+                                                    <tr th:each="customerTransaction : ${customerTransactions}">
+                                                        <td th:text="${customerTransaction.id}"></td>
+                                                        <td th:text="${customerTransaction.customer.msisdn}"></td>
+                                                        <td th:text="${customerTransaction.answerDetails}">answer </td>
+                                                        <td th:text="${customerTransaction.question.id}">qsn Id</td>
+                                                    </tr>
+                                                </tbody>
+                                            </div>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!--</div>-->
+
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+</body>
+</html>

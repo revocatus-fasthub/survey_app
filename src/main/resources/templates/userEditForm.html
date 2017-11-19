@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>CRDB Survey | Edit User</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<!--<div class="container">-->
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+    <div class="row">
+        <div class="col-md-9 col-md-offset-3">
+
+            <h3 th:if="${#vars['flash.message.userError']}" th:text="${#vars['flash.message.userSuccess']}" class="alert alert-danger"></h3>
+            <h3 th:if="${#vars['flash.message.userSuccess']}" th:text="${#vars['flash.message.userSuccess']}" class="alert alert-success"></h3>
+
+            <form autocomplete="off" action="#" th:action="@{/update}" th:object="${user}" method="post" class="form-horizontal" role="form">
+
+                <h2>Change Password</h2>
+
+                <input type="hidden" th:field="*{id}"/>
+                <input type="hidden" th:field="*{version}"/>
+                <div class="form-group">
+                    <div class="col-sm-7">
+                        <input type="password" th:placeholder="Password" class="form-control" th:field="*{password}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-7">
+                        <input type="password" th:placeholder="ConfirmPassword" class="form-control" th:field="*{cpassword}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-7">
+                        <button type="submit" class="btn btn-primary btn-block">Update</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+<!--</div>-->
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+</body>
+</html>

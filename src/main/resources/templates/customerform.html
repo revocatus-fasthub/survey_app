@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>CRDB Survey | Add Customer</title>
+
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<!--<div class="container">-->
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+    <div class="row">
+        <div class="col-md-9 col-md-offset-3">
+            <h3 th:if="${#vars['flash.message.customer']}" th:text="${#vars['flash.message.customer']}" class="alert alert-success"></h3>
+
+            <form autocomplete="off" action="#" th:action="@{/customer}" th:object="${customer}" method="post" class="form-horizontal" role="form">
+
+                <h2>Register Customer</h2>
+
+                <input type="hidden" th:field="*{id}"/>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        Msisdn: <input type="tel" class="form-control" th:field="*{msisdn}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        Email: <input type="text" class="form-control" th:field="*{email}"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+<!--</div>-->
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+</body>
+</html>

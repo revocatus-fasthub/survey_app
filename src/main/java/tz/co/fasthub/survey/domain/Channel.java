@@ -3,7 +3,7 @@ package tz.co.fasthub.survey.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- * Created by root on 6/7/17.
+ * Created by naaminicharles on 6/7/17.
  */
 
 @JsonIgnoreProperties(ignoreUnknown = true)

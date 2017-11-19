@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head lang="en" th:fragment="header">
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+    <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"  media="screen" />
+    <link href="../../static/css/animate.min.css" th:href="@{/css/animate.min.css}" rel="stylesheet"  media="screen"/>
+    <link href="../../static/css/light-bootstrap-dashboard.css" th:href="@{/css/light-bootstrap-dashboard.css}" rel="stylesheet"/>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'/>
+
+    <script src="../../static/js/jquery-1.10.2.js" th:src="@{/js/jquery-1.10.2.js}" type="text/javascript"></script>
+    <script src="../../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+    <script src="../../static/js/bootstrap-checkbox-radio-switch.js" th:src="@{/js/bootstrap-checkbox-radio-switch.js}"></script>
+    <script src="../../static/js/chartist.min.js" th:src="@{/js/chartist.min.js}"></script>
+    <script src="../../static/js/bootstrap-notify.js" th:src="@{/js/bootstrap-notify.js}"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="../../static/js/light-bootstrap-dashboard.js" th:src="@{/js/light-bootstrap-dashboard.js}"></script>
+    <script src="../../static/js/demo.js" th:src="@{/js/demo.js}"></script>
+
+
+</head>
+
+<body>
+
+<div th:fragment="header">
+
+        <div class="sidebar">
+            <div class="sidebar-wrapper">
+                <div class="logo" align="center">
+                    <img src="/images/CRDB_new_logo.png" th:src="@{/images/CRDB_new_logo.png}"  width="170px" height="80px"/>
+                </div>
+                <ul class="nav">
+
+                    <li>
+                        <a href="/survey/index" th:href="@{'/survey/index'}"><i class="fa fa-home" aria-hidden="true"></i>  Home</a>
+                    </li>
+                    <li>
+                        <a href="/survey/addQuestion" th:href="@{'/survey/addQuestion'}"><i class="fa fa-plus-square" aria-hidden="true"></i>Question</a>
+                    </li>
+                    <li>
+                        <a href="/survey/customers" th:href="@{'/survey/customers'}"><i class="fa fa-plus-square" aria-hidden="true"></i>Customers</a>
+                    </li>
+                    <li>
+                        <a href="/survey/customerTransactions" th:href="@{'/survey/customerTransactions'}"><i class="fa fa-info-circle" aria-hidden="true"></i>  Customer Details</a>
+                    </li>
+
+                    <li>
+                        <a href="/survey/auditEvents" th:href="@{'/survey/auditEvents'}" sec:authorize="hasRole('ROLE_ADMIN')"><i class="fa fa-info-circle" aria-hidden="true"></i>  Audit Logs</a>
+                    </li>
+
+                    <!--<li>-->
+                    <!--<a href="#"><i class="fa fa-area-chart" aria-hidden="true"></i>  View Report</a>-->
+                    <!--</li>-->
+                </ul>
+            </div>
+                </div>
+
+        <div class="main-panel">
+            <nav class="navbar navbar-default navbar-fixed">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <!--<li>
+                                <form action="#" method="get">
+                                    <div class="input-group input-sm">
+                                        <label class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></label>
+                                        <input class="form-control" id="card" name="q" placeholder="Search" required="required"/>
+                                    </div>
+                                </form>
+                            </li>-->
+                            <li><a href="/survey/users" th:href="@{'/survey/users'}" sec:authorize="hasRole('ROLE_ADMIN')"><i class="fa fa-user fa-fw"></i>View Users</a></li>
+                            <li><a href="#"><i class="fa fa-unlock-alt"></i><span sec:authentication="name"></span></a></li>
+                            <li><a href="#"><i class="fa fa-briefcase"></i><span sec:authentication="principal.authorities"></span></a></li>
+                            <!--<li class="dropdown">
+                                <a href="#" class="dropdown-toggle"  data-toggle="dropdown">
+                                    <i class="fa fa-unlock-alt"></i>
+                                    &lt;!&ndash;<b class="caret"></b>&ndash;&gt;
+                                    <span class="notification" sec:authentication="name"></span>
+                                </a>
+                            </li>-->
+                            <li>
+                                <li><a href="/logout" th:href="@{'/logout'}" sec:authorize="isAuthenticated()"><i class="fa fa-sign-out fa-fw" ></i> Logout</a></li>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="content">
+            <div class="container-fluid">
+            <div class="row">
+            <div class="col-md-12">
+
+            <!--<div class="card">-->
+            <!--<div class="header">-->
+
+            <!--<h4 class="title">CRDB USERS</h4>-->
+            <!--</div>-->
+            <!--<div class="content">-->
+                <!--<h4>dfghjkl;cvbhjkl; </h4>-->
+            <!--</div>-->
+            <!--</div>-->
+            </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+    </div>
+
+
+
+</body>
+<!--
+
+<script src="/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/js/light-bootstrap-dashboard.js"></script>
+-->
+
+</html>

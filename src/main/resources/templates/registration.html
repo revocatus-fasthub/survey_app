@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>CRDB Survey| Registration</title>
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+<div class="main-panel">
+        <div class="content">
+            <div class="container">
+                <div class="row" align="center">
+                    <div class='col-md-3'></div>
+                    <div class="col-md-3">
+
+                    <h3 th:if="${#vars['flash.message.user']}" th:text="${#vars['flash.message.user']}" class="alert alert-success"></h3>
+
+                        <div id="panel">
+                            <div class="logo" align="center">
+                                <img src="/image/logo.png" th:src="@{/images/logo.png}" width="170px" height="80px"/>
+                            </div>
+                            <form autocomplete="off" action="#" th:action="@{/survey/saveregistration}" th:object="${user}" method="post" class="form-horizontal" role="form" style="color:#eee;">
+                                <input type="hidden" th:field="*{id}"/>
+                                <br/>
+
+                                <div class="input-group input-sm">
+                                    <label class="input-group-addon" for="firstName"><i class="fa fa-user fa-fw" aria-hidden="true"></i></label>
+                                    <input type="text" class="form-control" id="firstName" placeholder="First Name" th:field="*{firstName}"/>
+                                </div>
+                                <label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="validation-message" th:class="alert-danger"></label>
+
+                                <div class="input-group input-sm">
+                                    <label class="input-group-addon" for="lastName"><i class="fa fa-user fa-fw" aria-hidden="true"></i></label>
+                                    <input type="text" class="form-control" id="lastName" placeholder="Last Name" th:field="*{lastName}"/>
+                                </div>
+                                <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="validation-message" th:class="alert-danger"></label>
+
+                                <div class="input-group input-sm">
+                                    <label class="input-group-addon" for="email"><i class="fa fa-envelope" aria-hidden="true"></i></label>
+                                    <input type="email" class="form-control" id="email" placeholder="Email" th:field="*{email}"/>
+                                </div>
+                                <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="validation-message" th:class="alert-danger"></label>
+
+                                <div class="input-group input-sm">
+                                    <label class="input-group-addon" for="username"><i class="fa fa-user" aria-hidden="true"></i></label>
+                                    <input type="text" class="form-control" id="username" placeholder="Username" th:field="*{username}"/>
+                                </div>
+                                <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="validation-message" th:class="alert-danger"></label>
+
+                                <div class="input-group input-sm">
+                                    <label class="input-group-addon" for="password"><i class="fa fa-key" aria-hidden="true"></i></label>
+                                    <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}"/>
+                                </div>
+                                <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message" th:class="alert-danger"></label>
+
+                                <div class="input-group input-sm">
+                                    <label class="input-group-addon" for="cpassword"><i class="fa fa-lock" aria-hidden="true"></i></label>
+                                    <input type="password" class="form-control" id="cpassword" placeholder="Confirm Password" th:field="*{cpassword}"/>
+                                </div>
+                                <label th:if="${#fields.hasErrors('cpassword')}" th:errors="*{cpassword}" class="validation-message" th:class="alert-danger"></label>
+
+                                <div class="input-group input-sm">
+                                    <label class="input-group-addon" for="role"><i class="fa fa-briefcase" aria-hidden="true"></i></label>
+
+                                    <select aria-required="true" class="blood_group form-control" name="role" id="role" th:field="*{role}" >
+                                        <option value="" th:text="${'--- Select Role ---'}"></option>
+                                        <option th:value="${'ROLE_ADMIN'}" th:selected="${user.isSelected(lastselected)}">ADMIN</option>
+                                        <option th:value="${'ROLE_MAKER'}" th:selected="${user.isSelected(lastselected)}">MAKER</option>
+                                        <option th:value="${'ROLE_CHECKER'}" th:selected="${user.isSelected(lastselected)}">CHECKER</option>
+                                    </select>
+                                </div>
+                                <label th:if="${#fields.hasErrors('role')}" th:errors="*{role}" class="validation-message" th:class="alert-danger"></label>
+
+                                <br/>
+                                <center>
+                                    <button type="submit" class=" btn btn-success submit-button"><i class="fa fa-sign-in" aria-hidden="true"></i>
+                                        Register</button>
+                                </center>
+
+                            </form>
+
+                        </div>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+        </div>
+</div>
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+</body>
+<script src="/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/js/light-bootstrap-dashboard.js"></script>
+
+</html>

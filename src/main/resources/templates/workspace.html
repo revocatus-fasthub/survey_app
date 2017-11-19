@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+
+<!--[if IE 9]>
+<html class="lt-ie10" lang="en" >
+<![endif]-->
+<html class="no-js" lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>CARDS</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css"/>
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css' rel='stylesheet' type='text/css'/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/js/foundation.min.js"></script>
+
+    </head>
+<body>
+<div class="container"><hr/>
+    <div class="large-12 columns">
+        <div class="row">
+            <div class="container">
+                <div class="large-4 columns">
+                    <label>
+                        <p>REf No:</p>
+                        <p>Court: High Court</p>
+                        <p>Mbwana Vs Boniface</p>
+                        <p>Lead Advocate:</p>
+                    </label>
+                </div>
+                <div class="large-4 columns">
+                    <div class="row">
+                        <label>
+                            <p>porte: 12/01/2012</p>
+                            <p>4 weeks, 20 days</p>
+                        </label>
+                    </div>
+                </div>
+                <div align="right" class="large-4 columns">
+                    <section>
+                        <div>
+                            <a th:href="@{'#'}"><button class="btn btn-success btn-sm">+New Reminder</button></a>
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns">
+            <nav class="top-bar data-topbar">
+                <ul class="title-area">
+                    <li class="toggle-topbar menu-icon">
+                        <a href="#"><span>menu</span></a>
+                    </li>
+                </ul>
+
+                <section class="top-bar-section">
+                    <ul class="left">
+                        <li>
+                             <a href="#">&nbsp;</a>
+                        </li>
+
+                    </ul>
+                        <ul class="right">
+                            <ul class="tabs" data-tab-role="tablist" data-tabs-id = "tabs_example">
+                                <li class="tab-title active" role="presentation"><a href="#panel2-1" role="tab" tabindex="0" aria-selected="true" aria-controls="panel2-1">History</a></li>
+                                <li class="tab-title" role="presentation"><a href="#panel2-2" role="tab" tabindex="0" aria-selected="false" aria-controls="panel2-2">Notes</a></li>
+                                <li class="tab-title" role="presentation"><a href="#panel2-3" role="tab" tabindex="0" aria-selected="false" aria-controls="panel2-3">Documents</a></li>
+                                <li class="tab-title" role="presentation"><a href="#panel2-4" role="tab" tabindex="0" aria-selected="false" aria-controls="panel2-4">Reminder</a></li>
+                            </ul>
+                        </ul>
+                 </section>
+            </nav>
+        </div>
+    </div><br/>
+    <div class="row">
+        <div class="row">
+            <div class="large-12 columns">
+                <div class="row">
+                    <div class="large-7 columns">
+                        <div class="panel radius">
+                            <div class="row">
+                                <div class="large-6 small-6 columns">
+                                    <h4>Header</h4>
+                                    <hr/>
+                                        <h5 class="subheader">
+                                            Your ContentYour ContentYour ContentYour ContentvvvvYour ContentYour ContentYour ContentYour Contentvvvv
+                                        <table>
+                                            <thead>
+                                            <tr>
+                                                <th>Doc Name</th>
+                                                <th>Last updated</th>
+                                                <th>Created</th>
+                                                <th>Change</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>
+
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+                                        </h5>
+                                        <input type="file" name="file" />
+                                </div>
+
+                         <!--   <div class="large-6 small-6 columns">
+                                <p>Your ContentYour ContentYour ContentYour ContentvvvvYour ContentYour ContentYour ContentYour Contentvvvv
+                                    Your ContentYour ContentYour ContentYour ContentvvvvYour ContentYour ContentYour ContentYour Contentvvvv
+                                </p>
+                            </div>
+                         -->
+                        </div>
+
+                     <div class="row">
+                         <div class="panel radius callout" style="text-align: center">
+                             <strong>Your ContentYour ContentYour ContentYour ContentvvvvYour ContentYour ContentYour ContentYour </strong>
+                         </div>
+                         <div class="panel radius callout" style="text-align: center">
+                             <strong>Your ContentYour ContentYour ContentYour ContentYour Contentvvvv Your ContentYour ContentYour </strong>
+                         </div>
+                         <div class="panel radius callout" style="text-align: center">
+                             <strong>Your ContentYour ContentYour ContentYour ContentYour ContentvvvvvYour ContentYour ContentYour</strong>
+                         </div>
+                    </div>
+                </div>
+                </div>
+
+                <div class="large-5 columns">
+                    <div class="row">
+
+                        <div class="tabs-content" data-tabs-content ="tabs_example">
+                            <section role="tabpanel" aria-hidden="false" class="content active" id="panel2-1">
+                                <h2>History panel content goes here...</h2>
+                            </section>
+                            <section role="tabpanel" aria-hidden="true" class="content" id="panel2-2">
+                                <h2>Notes panel content goes here...</h2>
+                            </section>
+                            <section role="tabpanel" aria-hidden="true" class="content" id="panel2-3">
+                                <h2>Documents panel content goes here...</h2>
+                            </section>
+                            <section role="tabpanel" aria-hidden="true" class="content" id="panel2-4">
+                                <h2>Reminder panel content goes here...</h2>
+                            </section>
+                        </div>
+
+                    </div>
+                </div>
+             </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <footer class="row">
+            <div class="large-12 columns">
+                <hr/>
+                <div class="row">
+                    <div class="large-6 columns">
+                         <p>© Copyright</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            $(document).ready(function() {
+                $(document).foundation();
+            })
+        </script>
+       <!-- <script>
+              $(document).foundation();
+              $(document).foundation('tab', 'reflow');
+
+    </script>-->
+</body>
+</html>

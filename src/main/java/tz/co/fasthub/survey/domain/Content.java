@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 /**
- * Created by root on 6/16/17.
+ * Created by naaminicharles on 6/16/17.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Content {
