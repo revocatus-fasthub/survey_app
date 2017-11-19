@@ -92,7 +92,6 @@ public class SurveyController {
 
         log.info("received message from gravity: "+text+ " from "+msisdn);
         String response = null;
-        boolean isAnswerCorrect=false;
 
 
         Customer customer=customerService.getCustomerByMsisdn(msisdn);
@@ -135,17 +134,20 @@ public class SurveyController {
 
 
             if (questionOne!=null) {
+                Answer preselectedAnswer=null;
+
                 for (Answer answer : questionOne.getAnswer()) {
                     if (text!=null&&parseIntInput(text)!=0&&parseIntInput(text)==answer.getPosition()){
-                        isAnswerCorrect=true;
+                        preselectedAnswer=answer;
                         break;
                     }
                 }
-                if (isAnswerCorrect==false) {
+                customerTransaction=new CustomerTransaction(createdCustomer,questionOne);
+                if (preselectedAnswer==null) {
                     response = this.getQuestionOne(questionOne);
-                    customerTransaction=new CustomerTransaction(createdCustomer,questionOne);
-                }else if (isAnswerCorrect==true){
-                    response="Processing Correct Answer";
+                }else if (preselectedAnswer!=null){
+                    customerTransaction.setAnswer(preselectedAnswer);
+                    response = fetchNextQuestion(customerTransaction);
                 }
             }else {
                 response="Sorry, no questions";
