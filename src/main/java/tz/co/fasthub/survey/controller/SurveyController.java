@@ -28,18 +28,14 @@ public class SurveyController {
 //http://survey.fasthub.co.tz:8081/sms/utc?id=74&serviceNumber=665656&text=Test&msisdn=254791199624&date=2016-05-18&operator=safaricom-soap
     //http://127.0.0.1:8081/sms/utc?id=74&serviceNumber=0785723360&text=FastHub&msisdn=255754088816&date=2016-05-18&operator=safaricom-soap
 
+    private static final Logger log = LoggerFactory.getLogger(SurveyController.class);
     @Autowired
     private SurveyMonkeyController surveyMonkeyController;
-
     private  QuestionService questionService;
-
     private  AnswerService answerService;
-
     private  SurveyService surveyService;
     private  CustomerService customerService;
     private CustomerTransactionService customerTransactionService;
-
-    private static final Logger log = LoggerFactory.getLogger(SurveyController.class);
 
     @Autowired
     public SurveyController(SurveyService surveyService, QuestionService questionService, AnswerService answerService, CustomerService customerService, CustomerTransactionService customerTransactionService) {
@@ -48,6 +44,42 @@ public class SurveyController {
         this.answerService = answerService;
         this.customerService = customerService;
         this.customerTransactionService = customerTransactionService;
+    }
+
+    public static int parseIntInput(String intInput) {
+
+        int returnResult = 0;
+        try {
+            returnResult = Integer.parseInt(intInput);
+        } catch (NumberFormatException e) {
+            e.getMessage();
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
+        return returnResult;
+
+    }
+
+    private static void sendAMessageToGravity(String id, String msisdn, String response, String serviceNumber) {
+        try {
+            List<MessageHandler> messages = new ArrayList<>();
+            MessageHandler messageHandler = new MessageHandler(id,response,msisdn,serviceNumber);
+            messages.add(messageHandler);
+
+            Content content = new Content(Constant.channelLink, messages);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            log.info(String.valueOf(content));
+            HttpEntity<Content> entity = new HttpEntity<>(content,headers);
+            log.info(String.valueOf(entity));
+            Object responseMEssage= restTemplate.postForObject(Constant.GW_URL,entity,Object.class);
+            log.info("response from gravity: " +responseMEssage);
+        } catch (RestClientException e) {
+            e.printStackTrace();
+        }
     }
 
     @RequestMapping(params = {"id", "serviceNumber", "text", "msisdn", "date", "operator"}, method = RequestMethod.GET, produces = "text/plain")
@@ -60,6 +92,7 @@ public class SurveyController {
 
         log.info("received message from gravity: "+text+ " from "+msisdn);
         String response = null;
+        boolean isAnswerCorrect=false;
 
 
         Customer customer=customerService.getCustomerByMsisdn(msisdn);
@@ -90,19 +123,30 @@ public class SurveyController {
                 if (questionOne!=null) {
                     response = this.getQuestionOne(questionOne);
                     customerTransaction=new CustomerTransaction(customer,questionOne);
-
                 }else {
                     response="Sorry , no questions";
                 }
             }
         }else {
+
             customer=new Customer(msisdn);
             Customer createdCustomer=customerService.saveCustomer(customer);
             Question questionOne=questionService.getQnOneBySequence();
 
+
             if (questionOne!=null) {
-                response = this.getQuestionOne(questionOne);
-                customerTransaction=new CustomerTransaction(createdCustomer,questionOne);
+                for (Answer answer : questionOne.getAnswer()) {
+                    if (text!=null&&parseIntInput(text)!=0&&parseIntInput(text)==answer.getPosition()){
+                        isAnswerCorrect=true;
+                        break;
+                    }
+                }
+                if (isAnswerCorrect==false) {
+                    response = this.getQuestionOne(questionOne);
+                    customerTransaction=new CustomerTransaction(createdCustomer,questionOne);
+                }else if (isAnswerCorrect==true){
+                    response="Processing Correct Answer";
+                }
             }else {
                 response="Sorry, no questions";
             }
@@ -153,46 +197,11 @@ public class SurveyController {
         return response;
     }
 
-    public static int parseIntInput(String intInput) {
-
-        int returnResult = 0;
-        try {
-            returnResult = Integer.parseInt(intInput);
-        } catch (NumberFormatException e) {
-            e.getMessage();
-        } catch (Exception e) {
-            e.getMessage();
-        }
-
-        return returnResult;
-
-    }
     private String getQuestionOne(Question question) {
         String response=null;
         if (question!=null) {
             response =  answerService.getAnswerByQuestion(question); //before it had this question.getQsn() +"\n"+ which resulted into sending qsn text twice
         }
         return response;
-    }
-
-    private static void sendAMessageToGravity(String id, String msisdn, String response, String serviceNumber) {
-        try {
-            List<MessageHandler> messages = new ArrayList<>();
-            MessageHandler messageHandler = new MessageHandler(id,response,msisdn,serviceNumber);
-            messages.add(messageHandler);
-
-            Content content = new Content(Constant.channelLink, messages);
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-
-            log.info(String.valueOf(content));
-            HttpEntity<Content> entity = new HttpEntity<>(content,headers);
-            log.info(String.valueOf(entity));
-            Object responseMEssage= restTemplate.postForObject(Constant.GW_URL,entity,Object.class);
-            log.info("response from gravity: " +responseMEssage);
-        } catch (RestClientException e) {
-            e.printStackTrace();
-        }
     }
 }
