@@ -189,7 +189,7 @@ public class SurveyController {
             if (customerTransaction.getQuestion()!=null){
                 response=answerService.getAnswerByQuestion(customerTransaction.getQuestion());
             }else {
-                response="Thank you. No questions";
+                response="Thank you.";
             }
         } catch (Exception e) {
             e.printStackTrace();
