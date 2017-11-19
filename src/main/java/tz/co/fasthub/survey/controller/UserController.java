@@ -221,7 +221,7 @@ public class UserController {
                 user=new User();
                 user.setFirstName("CRDB");
                 user.setLastName("ADMIN");
-                user.setEmail("naamini.charles@fasthub.co.tz");
+                user.setEmail("support@opestechnologies.co.tz");
                 user.setUsername("admin");
                 user.setPassword("AdMin123");
                 user.setCpassword("AdMin123");
