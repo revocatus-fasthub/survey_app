@@ -96,6 +96,7 @@ public class SurveyController {
 
         Customer customer = customerService.getCustomerByMsisdn(msisdn);
         CustomerTransaction customerTransaction = null;
+        Answer preselectedAnswer = null;
         Answer lastSentAnswer = null;
 
 
@@ -103,7 +104,7 @@ public class SurveyController {
             customerTransaction = customerTransactionService.getOneTransactionByCustomerDesc(customer, false);
 
             if (customerTransaction != null) {
-                log.info("Found Existing Transaction: "+customerTransaction);
+                log.info("Found Existing Transaction: " + customerTransaction);
                 Answer answer = answerService.getAllByQuestionAndPosition(customerTransaction.getQuestion(), parseIntInput(text));
                 if (answer != null || customerTransaction.getQuestion().getType().equals("Open Ended")) {
 
@@ -123,7 +124,6 @@ public class SurveyController {
                 if (questionOne != null) {
                     customerTransaction = new CustomerTransaction(customer, questionOne);
 
-                    Answer preselectedAnswer = null;
 
                     for (Answer answer : questionOne.getAnswer()) {
                         if (text != null && parseIntInput(text) != 0 && parseIntInput(text) == answer.getPosition()) {
@@ -134,7 +134,7 @@ public class SurveyController {
                     if (preselectedAnswer == null) {
                         response = this.getQuestionOne(questionOne);
                     } else if (preselectedAnswer != null) {
-                        customerTransaction.setAnswer(preselectedAnswer);
+                        customerTransaction.setAnswerDetails(text);
                         response = fetchNextQuestion(customerTransaction);
                     }
                 } else {
@@ -151,8 +151,6 @@ public class SurveyController {
             if (questionOne != null) {
 
 
-                Answer preselectedAnswer = null;
-
                 for (Answer answer : questionOne.getAnswer()) {
                     if (text != null && parseIntInput(text) != 0 && parseIntInput(text) == answer.getPosition()) {
                         preselectedAnswer = answer;
@@ -163,7 +161,7 @@ public class SurveyController {
                 if (preselectedAnswer == null) {
                     response = this.getQuestionOne(questionOne);
                 } else if (preselectedAnswer != null) {
-                    customerTransaction.setAnswer(preselectedAnswer);
+                    customerTransaction.setAnswerDetails(text);
                     response = fetchNextQuestion(customerTransaction);
                 }
 
@@ -175,7 +173,14 @@ public class SurveyController {
         }
 
         if (customerTransaction != null) {
-            customerTransactionService.saveCustomerTransaction(customerTransaction);
+            CustomerTransaction customerTransaction1 = customerTransactionService.saveCustomerTransaction(customerTransaction);
+
+            if (customerTransaction1 != null && preselectedAnswer != null) {
+                customerTransaction1.setAnswer(preselectedAnswer);
+                customerTransactionService.saveCustomerTransaction(customerTransaction1);
+            }
+
+
         }
 
 
