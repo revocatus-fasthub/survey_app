@@ -31,10 +31,10 @@ public class SurveyController {
     private static final Logger log = LoggerFactory.getLogger(SurveyController.class);
     @Autowired
     private SurveyMonkeyController surveyMonkeyController;
-    private  QuestionService questionService;
-    private  AnswerService answerService;
-    private  SurveyService surveyService;
-    private  CustomerService customerService;
+    private QuestionService questionService;
+    private AnswerService answerService;
+    private SurveyService surveyService;
+    private CustomerService customerService;
     private CustomerTransactionService customerTransactionService;
 
     @Autowired
@@ -64,7 +64,7 @@ public class SurveyController {
     private static void sendAMessageToGravity(String id, String msisdn, String response, String serviceNumber) {
         try {
             List<MessageHandler> messages = new ArrayList<>();
-            MessageHandler messageHandler = new MessageHandler(id,response,msisdn,serviceNumber);
+            MessageHandler messageHandler = new MessageHandler(id, response, msisdn, serviceNumber);
             messages.add(messageHandler);
 
             Content content = new Content(Constant.channelLink, messages);
@@ -73,94 +73,112 @@ public class SurveyController {
             headers.setContentType(MediaType.APPLICATION_JSON);
 
             log.info(String.valueOf(content));
-            HttpEntity<Content> entity = new HttpEntity<>(content,headers);
+            HttpEntity<Content> entity = new HttpEntity<>(content, headers);
             log.info(String.valueOf(entity));
-            Object responseMEssage= restTemplate.postForObject(Constant.GW_URL,entity,Object.class);
-            log.info("response from gravity: " +responseMEssage);
+            Object responseMEssage = restTemplate.postForObject(Constant.GW_URL, entity, Object.class);
+            log.info("response from gravity: " + responseMEssage);
         } catch (RestClientException e) {
             e.printStackTrace();
         }
     }
 
     @RequestMapping(params = {"id", "serviceNumber", "text", "msisdn", "date", "operator"}, method = RequestMethod.GET, produces = "text/plain")
-    public ResponseEntity index (@RequestParam("id") String id,
-                                 @RequestParam("serviceNumber") String serviceNumber,
-                                 @RequestParam("text") String text,
-                                 @RequestParam("msisdn") String msisdn,
-                                 @RequestParam("date") String date,
-                                 @RequestParam("operator") String operator) throws JSONException {
+    public ResponseEntity index(@RequestParam("id") String id,
+                                @RequestParam("serviceNumber") String serviceNumber,
+                                @RequestParam("text") String text,
+                                @RequestParam("msisdn") String msisdn,
+                                @RequestParam("date") String date,
+                                @RequestParam("operator") String operator) throws JSONException {
 
-        log.info("received message from gravity: "+text+ " from "+msisdn);
+        log.info("received message from gravity: " + text + " from " + msisdn);
         String response = null;
 
 
-        Customer customer=customerService.getCustomerByMsisdn(msisdn);
+        Customer customer = customerService.getCustomerByMsisdn(msisdn);
         CustomerTransaction customerTransaction = null;
-        Answer lastSentAnswer=null;
+        Answer lastSentAnswer = null;
 
 
-        if (customer!=null){
-            customerTransaction=customerTransactionService.getOneTransactionByCustomerDesc(customer,false);
+        if (customer != null) {
+            customerTransaction = customerTransactionService.getOneTransactionByCustomerDesc(customer, false);
 
-            if (customerTransaction!=null){
-                Answer answer=answerService.getAllByQuestionAndPosition(customerTransaction.getQuestion(),parseIntInput(text));
-                if (answer!=null || customerTransaction.getQuestion().getType().equals("Open Ended")){
+            if (customerTransaction != null) {
+                Answer answer = answerService.getAllByQuestionAndPosition(customerTransaction.getQuestion(), parseIntInput(text));
+                if (answer != null || customerTransaction.getQuestion().getType().equals("Open Ended")) {
 
-                    if (customerTransaction.getAnswer()!=null){
+                    if (customerTransaction.getAnswer() != null) {
                         response = fetchNextQuestion(customerTransaction);
-                    }   else {
+                    } else {
                         customerTransaction.setAnswer(answer);
                         customerTransaction.setAnswerDetails(text);
                         customerTransaction.setAttended(true);
                         response = fetchNextQuestion(customerTransaction);
                     }
-                }else {
-                    response="Sorry Invalid input , try again" +"\n\n"+fetchPreviousQuestion(customerTransaction);
+                } else {
+                    response = "Sorry Invalid input , try again" + "\n\n" + fetchPreviousQuestion(customerTransaction);
                 }
-            }else {
-                Question questionOne=questionService.getQnOneBySequence();
-                if (questionOne!=null) {
-                    response = this.getQuestionOne(questionOne);
-                    customerTransaction=new CustomerTransaction(customer,questionOne);
-                }else {
-                    response="Sorry , no questions";
+            } else {
+                Question questionOne = questionService.getQnOneBySequence();
+                if (questionOne != null) {
+                    customerTransaction = new CustomerTransaction(customer, questionOne);
+
+                    Answer preselectedAnswer = null;
+
+                    for (Answer answer : questionOne.getAnswer()) {
+                        if (text != null && parseIntInput(text) != 0 && parseIntInput(text) == answer.getPosition()) {
+                            preselectedAnswer = answer;
+                            break;
+                        }
+                    }
+                    if (preselectedAnswer == null) {
+                        response = this.getQuestionOne(questionOne);
+                    } else if (preselectedAnswer != null) {
+                        customerTransaction.setAnswer(preselectedAnswer);
+                        response = fetchNextQuestion(customerTransaction);
+                    }
+                } else {
+                    response = "Sorry , no questions";
                 }
             }
-        }else {
+        } else {
 
-            customer=new Customer(msisdn);
-            Customer createdCustomer=customerService.saveCustomer(customer);
-            Question questionOne=questionService.getQnOneBySequence();
+            customer = new Customer(msisdn);
+            Customer createdCustomer = customerService.saveCustomer(customer);
+            Question questionOne = questionService.getQnOneBySequence();
 
 
-            if (questionOne!=null) {
-                Answer preselectedAnswer=null;
+            if (questionOne != null) {
+
+
+                Answer preselectedAnswer = null;
 
                 for (Answer answer : questionOne.getAnswer()) {
-                    if (text!=null&&parseIntInput(text)!=0&&parseIntInput(text)==answer.getPosition()){
-                        preselectedAnswer=answer;
+                    if (text != null && parseIntInput(text) != 0 && parseIntInput(text) == answer.getPosition()) {
+                        preselectedAnswer = answer;
                         break;
                     }
                 }
-                customerTransaction=new CustomerTransaction(createdCustomer,questionOne);
-                if (preselectedAnswer==null) {
+                customerTransaction = new CustomerTransaction(createdCustomer, questionOne);
+                if (preselectedAnswer == null) {
                     response = this.getQuestionOne(questionOne);
-                }else if (preselectedAnswer!=null){
+                } else if (preselectedAnswer != null) {
                     customerTransaction.setAnswer(preselectedAnswer);
                     response = fetchNextQuestion(customerTransaction);
                 }
-            }else {
-                response="Sorry, no questions";
+
+
+            } else {
+                response = "Sorry, no questions";
             }
 
         }
 
-        if (customerTransaction!=null) {
+        if (customerTransaction != null) {
             customerTransactionService.saveCustomerTransaction(customerTransaction);
         }
 
 
-        if (response!=null) {
+        if (response != null) {
             sendAMessageToGravity(id, msisdn, response, serviceNumber);
         }
 
@@ -170,13 +188,13 @@ public class SurveyController {
     private String fetchNextQuestion(CustomerTransaction customerTransaction) {
         String response = null;
         try {
-            Question nextQuestionquestion=questionService.getNextQuestion(customerTransaction.getQuestion());
-            if (nextQuestionquestion!=null){
-                response=answerService.getAnswerByQuestion(nextQuestionquestion);
-                customerTransactionService.saveCustomerTransaction(new CustomerTransaction(customerTransaction.getCustomer(),nextQuestionquestion));
+            Question nextQuestionquestion = questionService.getNextQuestion(customerTransaction.getQuestion());
+            if (nextQuestionquestion != null) {
+                response = answerService.getAnswerByQuestion(nextQuestionquestion);
+                customerTransactionService.saveCustomerTransaction(new CustomerTransaction(customerTransaction.getCustomer(), nextQuestionquestion));
 
-            }else {
-                response="Thank you. No more questions";
+            } else {
+                response = "Thank you. No more questions";
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -188,10 +206,10 @@ public class SurveyController {
         String response = null;
         try {
 
-            if (customerTransaction.getQuestion()!=null){
-                response=answerService.getAnswerByQuestion(customerTransaction.getQuestion());
-            }else {
-                response="Thank you.";
+            if (customerTransaction.getQuestion() != null) {
+                response = answerService.getAnswerByQuestion(customerTransaction.getQuestion());
+            } else {
+                response = "Thank you.";
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -200,9 +218,9 @@ public class SurveyController {
     }
 
     private String getQuestionOne(Question question) {
-        String response=null;
-        if (question!=null) {
-            response =  answerService.getAnswerByQuestion(question); //before it had this question.getQsn() +"\n"+ which resulted into sending qsn text twice
+        String response = null;
+        if (question != null) {
+            response = answerService.getAnswerByQuestion(question); //before it had this question.getQsn() +"\n"+ which resulted into sending qsn text twice
         }
         return response;
     }
