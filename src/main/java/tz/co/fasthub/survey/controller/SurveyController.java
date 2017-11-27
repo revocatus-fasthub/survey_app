@@ -103,6 +103,7 @@ public class SurveyController {
             customerTransaction = customerTransactionService.getOneTransactionByCustomerDesc(customer, false);
 
             if (customerTransaction != null) {
+                log.info("Found Existing Transaction: "+customerTransaction);
                 Answer answer = answerService.getAllByQuestionAndPosition(customerTransaction.getQuestion(), parseIntInput(text));
                 if (answer != null || customerTransaction.getQuestion().getType().equals("Open Ended")) {
 
