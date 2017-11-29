@@ -60,7 +60,9 @@
                                         </thead>
                                         <tbody>
                                         <tr th:each="customerTransaction : ${customerTransactions}">
-                                            <td th:text="${customerTransaction.id}"><a href="/customerTransaction/${customerTransaction.id}">Id</a></td>
+
+                                            <td th:alt-title="${customerTransaction.id}"><i class="fa fa-user-circle"></i></td>
+                                            <!--<td th:text="${customerTransaction.id}"><a href="/customerTransaction/${customerTransaction.id}">Id</a></td>-->
                                             <td th:text="${customerTransaction.customer.msisdn}">Msisdn</td>
                                             <td th:text="${customerTransaction.question.qsn}">Question</td>
                                             <td th:if="${ans != null}" th:text="${customerTransaction.answer.ans}">Answer</td>
@@ -71,12 +73,6 @@
                                                  th:if="${!#strings.isEmpty(customerTransaction)}"
                                                  <td th:text="${customerTransaction.answer.ans != null ? customerTransaction.answer.ans : '-' }"></td>
                                              -->
-
-                                            <!--
-                                            <td><a th:href="${'/survey/customerTransaction/' + customerTransaction.id}">View</a></td>
-                                            <td><a th:href="${'/survey/customerTransaction/edit/' + customerTransaction.id}">Edit</a></td>
-                                            <td><a th:href="${'/survey/customerTransaction/delete/' + customerTransaction.id}">Delete</a></td>
-                                            -->
                                         </tr>
                                         </tbody>
                                     </table>

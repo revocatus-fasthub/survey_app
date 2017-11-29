@@ -73,9 +73,9 @@
                                             <div th:if="${not #lists.isEmpty(answers)}">
                                                 <tr>
                                                 <thead>
-                                                    <th colspan="2">Id</th>
-                                                    <th colspan="2">Answer </th>
+                                                    <!--<th colspan="2">Id</th>-->
                                                     <th>Position</th>
+                                                    <th colspan="2">Answer </th>
                                                     <th>Count</th>
                                                     <!--<th>Move Up</th>
                                                     <th>Move Down</th>-->
@@ -84,9 +84,9 @@
                                                 </tr>
                                                 <tbody>
                                                 <tr th:each="answer : ${answers}">
-                                                    <td colspan="2" th:text="${answer.id}">Id</td>
-                                                    <td colspan="2" th:text="${answer.ans}">answer </td>
+                                                    <!--<td colspan="2" th:text="${answer.id}">Id</td>-->
                                                     <td th:text="${answer.position}">position</td>
+                                                    <td colspan="2" th:text="${answer.ans}">answer </td>
                                                     <td th:text="${answer.count}">count</td>
 
 

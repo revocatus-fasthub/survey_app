@@ -117,7 +117,7 @@ public class SurveyController {
                         response = fetchNextQuestion(customerTransaction);
                     }
                 } else {
-                    response = "Sorry Invalid input , try again" + "\n\n" + fetchPreviousQuestion(customerTransaction);
+                    response = "Uchaguzi si sahihi, jaribu tena" + "\n\n" + fetchPreviousQuestion(customerTransaction);
                 }
             } else {
                 Question questionOne = questionService.getQnOneBySequence();
@@ -138,7 +138,7 @@ public class SurveyController {
                         response = fetchNextQuestion(customerTransaction);
                     }
                 } else {
-                    response = "Sorry , no questions";
+                    response = "Samahani, hakuna swali la ziada";
                 }
             }
         } else {
@@ -167,7 +167,7 @@ public class SurveyController {
 
 
             } else {
-                response = "Sorry, no questions";
+                response = "Samahani, hakuna swali la ziada";
             }
 
         }
@@ -177,6 +177,8 @@ public class SurveyController {
 
             if (customerTransaction1 != null && preselectedAnswer != null) {
                 customerTransaction1.setAnswer(preselectedAnswer);
+                customerTransaction1.setAnswerDetails(String.valueOf(preselectedAnswer));//************
+                customerTransaction1.setAttended(true);
                 customerTransactionService.saveCustomerTransaction(customerTransaction1);
             }
 
@@ -200,7 +202,7 @@ public class SurveyController {
                 customerTransactionService.saveCustomerTransaction(new CustomerTransaction(customerTransaction.getCustomer(), nextQuestionquestion));
 
             } else {
-                response = "Thank you. No more questions";
+                response = "Asante.";
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -215,7 +217,7 @@ public class SurveyController {
             if (customerTransaction.getQuestion() != null) {
                 response = answerService.getAnswerByQuestion(customerTransaction.getQuestion());
             } else {
-                response = "Thank you.";
+                response = "Asante.";
             }
         } catch (Exception e) {
             e.printStackTrace();
