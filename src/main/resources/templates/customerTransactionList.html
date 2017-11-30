@@ -50,7 +50,8 @@
                                     <th>Id</th>
                                     <th>Customer_Msisdn </th>
                                     <th>Question</th>
-                                    <th>Answer</th>
+                                    <th>Answers</th>
+                                    <!--<th>Open Ended Answers</th>-->
                                     <th>Timestamp</th>
                                     <!--
                                     <th>View</th>
@@ -60,16 +61,38 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="customerTransaction : ${customerTransactions}">
-                                        <td th:text="${customerTransaction.id}"><a href="/customerTransaction/${customerTransaction.id}">Id</a></td>
+                                        <!--//display id-->
+                                        <!--<td th:text="${customerTransaction.id}"><a href="/customerTransaction/${customerTransaction.id}">Id</a></td>-->
+                                        <td th:alt-title="${customerTransaction.id}"><i class="fa fa-user-circle"></i></td>
+
+                                        <!--//phone number-->
                                         <td th:text="${customerTransaction.customer.msisdn}">Msisdn</td>
+
+                                        <!--//question-->
                                         <td th:text="${customerTransaction.question.qsn}">Question</td>
-                                        <td th:if="${customerTransaction.answer != null}" th:text="${customerTransaction.answer.ans}">Answer</td>
+
+                                        <!--closed ended answers-->
+                                        <!--first option displays answers in text instead if position-->
+                                        <!--<td th:text="${customerTransaction.answer != null} ? ${customerTransaction.answer.ans} : '-'">Answer</td>-->
+                                        <!--<td th:if="${customerTransaction.answer != null}" th:text="${customerTransaction.answer.ans}">Answer</td>-->
+
+                                        <!--open ended answers-->
                                         <!--<td th:text="${customerTransaction.answerDetails}">Answer Details</td>-->
+                                        <!--<td th:text="${customerTransaction.answerDetails} ? ${customerTransaction.answerDetails} : '-'">Answer Details</td>-->
+                                        <td th:text="${customerTransaction.answer != null}  ? ${customerTransaction.answer.ans} : ${customerTransaction.answerDetails}">Answer Details</td>
+
+                                        <!--timestamp-->
                                         <td th:text="${customerTransaction.timestamp}">timestamp</td>
                                         <!--
                                               th:text="${customerTransaction.answer.ans != null} ? ${customerTransaction.answer.ans} : 'null value'"
                                              th:if="${!#strings.isEmpty(customerTransaction)}"
-                                             <td th:text="${customerTransaction.answer.ans != null ? customerTransaction.answer.ans : '-' }">
+                                             <td th:text="${customerTransaction.answer.ans != null ? customerTransaction.answer.ans : '-' }"></td>
+                                         -->
+
+                                        <!--
+                                        <td><a th:href="${'/survey/customerTransaction/' + customerTransaction.id}">View</a></td>
+                                        <td><a th:href="${'/survey/customerTransaction/edit/' + customerTransaction.id}">Edit</a></td>
+                                        <td><a th:href="${'/survey/customerTransaction/delete/' + customerTransaction.id}">Delete</a></td>
                                         -->
                                     </tr>
                                     </tbody>
