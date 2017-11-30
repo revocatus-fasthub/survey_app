@@ -7,76 +7,83 @@
     <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
 </head>
 <body>
-    <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
-    <div class="main-panel">
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
+<div class="main-panel">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
 
-                    <div class="col-md-12">
-                        <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-success"></h3>
+                <div class="col-md-12">
+                    <h3 th:if="${#vars['flash.message']}" th:text="${#vars['flash.message']}" class="alert alert-success"></h3>
 
-                        <div class="card">
-                            <div class="header">
-                                <div th:fragment="header">
+                    <div class="card">
+                        <div class="header">
+                            <div th:fragment="header">
 
-                                    <section>
-                                        <div class="pull-left" style="padding-right:5px">
-                                            <h3>Customer Transaction List</h3>
-                                        </div>
+                                <section>
+                                    <div class="pull-left" style="padding-right:5px">
+                                        <h3>Customer Transaction List</h3>
+                                    </div>
 
-                                        <div class="pull-right" style="padding-right: 4px">
-                                            <form action="#"  th:action="${'/survey/transactionSearch'}" th:object="${transaction}" method="post">
-                                                <div class="input-group input-sm">
-                                                    <label class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></label>
-                                                    <input class="form-control" id="card" name="q" placeholder="Search" required="required"/>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <!--<div class="pull-right" style="padding-right:2px">-->
-                                        <!--&lt;!&ndash;<a href="<c:url value='/download/external' />">Download This File (located outside project, on file system)</a>&ndash;&gt;-->
-                                        <!--<a th:href="@{'/survey/download/pdf/transctionList.pdf'}"><i class="fa fa-download" aria-hidden="true"></i>PDF</a>-->
-                                        <!--</div>-->
-                                    </section>
-                                </div>
-
+                                    <div class="pull-right" style="padding-right: 4px">
+                                        <form action="#"  th:action="${'/survey/transactionSearch'}" th:object="${transaction}" method="post">
+                                            <div class="input-group input-sm">
+                                                <label class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></label>
+                                                <input class="form-control" id="card" name="q" placeholder="Search" required="required"/>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!--<div class="pull-right" style="padding-right:2px">-->
+                                    <!--&lt;!&ndash;<a href="<c:url value='/download/external' />">Download This File (located outside project, on file system)</a>&ndash;&gt;-->
+                                    <!--<a th:href="@{'/survey/download/pdf/transctionList.pdf'}"><i class="fa fa-download" aria-hidden="true"></i>PDF</a>-->
+                                    <!--</div>-->
+                                </section>
                             </div>
-                            <div class="content table-responsive table-full-width">
-                                <div th:if="${not #lists.isEmpty(customerTransactions)}">
+
+                        </div>
+                        <div class="content table-responsive table-full-width">
+                            <div th:if="${not #lists.isEmpty(customerTransactions)}">
 
                                 <table class="table table-hover table-striped">
-                                        <thead>
-                                        <th>Id</th>
-                                        <th>Customer_Msisdn </th>
-                                        <th>Question</th>
-                                        <th>Answer</th>
-                                        <th>Timestamp</th>
+                                    <thead>
+                                    <th>Id</th>
+                                    <th>Customer_Msisdn </th>
+                                    <th>Question</th>
+                                    <th>Answer</th>
+                                    <th>Position</th>
+                                    <th>Timestamp</th>
+                                    <!--
+                                    <th>View</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                    -->
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="customerTransaction : ${customerTransactions}">
+                                        <!--<td th:text="${customerTransaction.id}"><a href="/customerTransaction/${customerTransaction.id}">Id</a></td>-->
+                                        <td th:alt-title="${customerTransaction.id}"><i class="fa fa-user-circle"></i></td>
+                                        <td th:text="${customerTransaction.customer.msisdn}">Msisdn</td>
+                                        <td th:text="${customerTransaction.question.qsn}">Question</td>
+                                        <td th:text="${customerTransaction.answer != null} ? ${customerTransaction.answer.ans} : '-'">Answer</td>
+                                        <!--<td th:if="${customerTransaction.answer != null}" th:text="${customerTransaction.answer.ans}">Answer</td>-->
+                                        <td th:text="${customerTransaction.answerDetails}">Answer Details</td>
+                                        <!--<td th:text="${customerTransaction.answerDetails} ? ${customerTransaction.answerDetails} : '-'">Answer Details</td>-->
+                                        <td th:text="${customerTransaction.timestamp}">timestamp</td>
                                         <!--
-                                        <th>View</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
-                                        -->
-                                        </thead>
-                                        <tbody>
-                                        <tr th:each="customerTransaction : ${customerTransactions}">
+                                              th:text="${customerTransaction.answer.ans != null} ? ${customerTransaction.answer.ans} : 'null value'"
+                                             th:if="${!#strings.isEmpty(customerTransaction)}"
+                                             <td th:text="${customerTransaction.answer.ans != null ? customerTransaction.answer.ans : '-' }"></td>
+                                         -->
 
-                                            <td th:alt-title="${customerTransaction.id}"><i class="fa fa-user-circle"></i></td>
-                                            <!--<td th:text="${customerTransaction.id}"><a href="/customerTransaction/${customerTransaction.id}">Id</a></td>-->
-                                            <td th:text="${customerTransaction.customer.msisdn}">Msisdn</td>
-                                            <td th:text="${customerTransaction.question.qsn}">Question</td>
-                                            <td th:if="${ans != null}" th:text="${customerTransaction.answer.ans}">Answer</td>
-                                            <td th:text="${customerTransaction.answerDetails}">Answer Details</td>
-                                            <td th:text="${customerTransaction.timestamp}">timestamp</td>
-                                            <!--
-                                                  th:text="${customerTransaction.answer.ans != null} ? ${customerTransaction.answer.ans} : 'null value'"
-                                                 th:if="${!#strings.isEmpty(customerTransaction)}"
-                                                 <td th:text="${customerTransaction.answer.ans != null ? customerTransaction.answer.ans : '-' }"></td>
-                                             -->
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        <!--
+                                        <td><a th:href="${'/survey/customerTransaction/' + customerTransaction.id}">View</a></td>
+                                        <td><a th:href="${'/survey/customerTransaction/edit/' + customerTransaction.id}">Edit</a></td>
+                                        <td><a th:href="${'/survey/customerTransaction/delete/' + customerTransaction.id}">Delete</a></td>
+                                        -->
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -84,6 +91,7 @@
             </div>
         </div>
     </div>
+</div>
 
 <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
