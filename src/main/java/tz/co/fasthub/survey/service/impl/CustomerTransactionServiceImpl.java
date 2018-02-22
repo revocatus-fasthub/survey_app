@@ -66,6 +66,13 @@ public class CustomerTransactionServiceImpl implements CustomerTransactionServic
     public List<CustomerTransaction> findAllByMsisdn(String customerTransaction) {
         return customerTransactionRepository.findAllByCustomer(customerTransaction);
     }
+
+    @Override
+    public List<CustomerTransaction> findByIdGreaterThan(Long id) {
+        return customerTransactionRepository.findByIdGreaterThan(id);
+    }
+
+
 /*
 
     @Override

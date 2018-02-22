@@ -23,5 +23,7 @@ public interface CustomerTransactionRepository extends CrudRepository<CustomerTr
 
     List<CustomerTransaction> findAllByCustomer(String customerTransaction);
 
+    List<CustomerTransaction> findByIdGreaterThan(Long id);
+
     List<CustomerTransaction> findAllByAnswerDetailsContainingIgnoreCaseOrCustomerMsisdnContainingOrQuestionQsnContainingIgnoreCaseOrAnswerAnsContainingIgnoreCase(String answerDetails,String msisdnQuery, String qsnQuery, String ansQuery);
 }
