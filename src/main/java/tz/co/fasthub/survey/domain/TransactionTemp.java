@@ -1,5 +1,8 @@
 package tz.co.fasthub.survey.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.stereotype.Component;
+
 import java.util.Date;
 
 /**
@@ -7,34 +10,25 @@ import java.util.Date;
  */
 public class TransactionTemp {
     private Long id;
-
     private String msisdn;
-
     private String  question;
-
     private String answer;
-
-    private Date timestamp;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'",timezone = "Africa/Dar_es_Salaam")
+    private Date time_stamp;
     private boolean attended;
 
-    private String answerDetails;
 
-
-
-    public TransactionTemp() {
-    }
-
-    public TransactionTemp(Long id, String msisdn, String question, String answer, Date timestamp, boolean attended, String answerDetails) {
+    public TransactionTemp(Long id, String msisdn, String question, String answer, Date time_stamp, boolean attended) {
         this.id = id;
         this.msisdn = msisdn;
         this.question = question;
         this.answer = answer;
-        this.timestamp = timestamp;
+        this.time_stamp = time_stamp;
         this.attended = attended;
-        this.answerDetails = answerDetails;
     }
 
+    public TransactionTemp() {
+    }
 
     @Override
     public String toString() {
@@ -43,12 +37,10 @@ public class TransactionTemp {
                 ", msisdn='" + msisdn + '\'' +
                 ", question='" + question + '\'' +
                 ", answer='" + answer + '\'' +
-                ", timestamp=" + timestamp +
+                ", time_stamp=" + time_stamp +
                 ", attended=" + attended +
-                ", answerDetails='" + answerDetails + '\'' +
                 '}';
     }
-
 
     public Long getId() {
         return id;
@@ -82,12 +74,12 @@ public class TransactionTemp {
         this.answer = answer;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
+    public Date getTime_stamp() {
+        return time_stamp;
     }
 
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+    public void setTime_stamp(Date time_stamp) {
+        this.time_stamp = time_stamp;
     }
 
     public boolean isAttended() {
@@ -96,13 +88,5 @@ public class TransactionTemp {
 
     public void setAttended(boolean attended) {
         this.attended = attended;
-    }
-
-    public String getAnswerDetails() {
-        return answerDetails;
-    }
-
-    public void setAnswerDetails(String answerDetails) {
-        this.answerDetails = answerDetails;
     }
 }

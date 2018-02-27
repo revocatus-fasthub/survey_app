@@ -98,24 +98,34 @@ public class CustomerTransactionController {
 
         List<TransactionTemp> transactionTemps = new ArrayList<>();
 
+        transactionTemps=processTransaction(last_id);
+        return transactionTemps;
+
+    }
+
+    private List<TransactionTemp> processTransaction(long last_id) {
+        List<TransactionTemp> transactionTemps = new ArrayList<>();
         List<CustomerTransaction> customerTransactions=customerTransactionService.findByIdGreaterThan(last_id);
 
         if (customerTransactions!=null&&!customerTransactions.isEmpty()){
             for (CustomerTransaction customerTransaction : customerTransactions) {
                 TransactionTemp transactionTemp = new TransactionTemp();
-                transactionTemp.setAnswer(customerTransaction.getAnswer().getAns());
-                transactionTemp.setAnswerDetails(customerTransaction.getAnswerDetails());
+                if (customerTransaction.getAnswer()!=null) {
+                    transactionTemp.setAnswer(customerTransaction.getAnswer().getAns());
+                }
                 transactionTemp.setAttended(customerTransaction.getAttended());
                 transactionTemp.setMsisdn(customerTransaction.getCustomer().getMsisdn());
                 transactionTemp.setId(customerTransaction.getId());
-                transactionTemp.setTimestamp(customerTransaction.getTimestamp());
-                transactionTemp.setQuestion(customerTransaction.getQuestion().getQsn());
+                transactionTemp.setTime_stamp(customerTransaction.getTimestamp());
+                if (customerTransaction.getQuestion()!=null) {
+                    transactionTemp.setQuestion(customerTransaction.getQuestion().getQsn());
+                }
 
                 transactionTemps.add(transactionTemp);
             }
         }
-        return transactionTemps;
 
+        return transactionTemps;
     }
 
 
