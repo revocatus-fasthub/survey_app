@@ -5,13 +5,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import tz.co.fasthub.survey.domain.CustomerTransaction;
+import tz.co.fasthub.survey.domain.TransactionTemp;
 import tz.co.fasthub.survey.service.CustomerTransactionService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -93,6 +92,43 @@ public class CustomerTransactionController {
         log.info("phonne number is: "+msisdn);
         model.addAttribute("customerTransactions", msisdn);
         return "customerTransactionList";
+    }
+
+
+    @RequestMapping(value="/resolve/result/{last_id}", method = RequestMethod.GET,produces = "application/json")
+    public @ResponseBody
+    List<TransactionTemp> getCustomerTransactions(@PathVariable long last_id) {
+
+        List<TransactionTemp> transactionTemps = new ArrayList<>();
+
+        transactionTemps=processTransaction(last_id);
+        return transactionTemps;
+
+    }
+
+    private List<TransactionTemp> processTransaction(long last_id) {
+        List<TransactionTemp> transactionTemps = new ArrayList<>();
+        List<CustomerTransaction> customerTransactions=customerTransactionService.findByIdGreaterThan(last_id);
+
+        if (customerTransactions!=null&&!customerTransactions.isEmpty()){
+            for (CustomerTransaction customerTransaction : customerTransactions) {
+                TransactionTemp transactionTemp = new TransactionTemp();
+                if (customerTransaction.getAnswer()!=null) {
+                    transactionTemp.setAnswer(customerTransaction.getAnswer().getAns());
+                }
+                transactionTemp.setAttended(customerTransaction.getAttended());
+                transactionTemp.setMsisdn(customerTransaction.getCustomer().getMsisdn());
+                transactionTemp.setId(customerTransaction.getId());
+                transactionTemp.setTime_stamp(customerTransaction.getTimestamp());
+                if (customerTransaction.getQuestion()!=null) {
+                    transactionTemp.setQuestion(customerTransaction.getQuestion().getQsn());
+                }
+
+                transactionTemps.add(transactionTemp);
+            }
+        }
+
+        return transactionTemps;
     }
 
 
