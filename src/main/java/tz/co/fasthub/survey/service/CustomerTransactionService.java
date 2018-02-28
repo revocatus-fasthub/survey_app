@@ -25,6 +25,8 @@ public interface CustomerTransactionService {
     List<CustomerTransaction> getAllQuestionAndAnswer(Question question, Answer answer);
 
     List<CustomerTransaction> findAllByMsisdn(String customerTransaction);
+    List<CustomerTransaction> findByIdGreaterThan(Long id);
+
 
 //    List<CustomerTransaction> getAllQuestionAndAnswerDetails(Question question, CustomerTransaction answerDetails);
 
