@@ -52,6 +52,7 @@ public class AnswerServiceImpl implements AnswerService {
                     for (Answer answer1 : answers) {
                         answer.setPosition(answer1.getPosition()+1);
                         break;
+                        
                     }
                 }
                 else {
