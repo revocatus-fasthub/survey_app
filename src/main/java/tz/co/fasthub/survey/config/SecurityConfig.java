@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .contentTypeOptions();
 
         http    .authorizeRequests()
-               .antMatchers("/survey/resolve/result/**").permitAll()
+                .antMatchers("/survey/resolve/result/**").permitAll()
 
                 .antMatchers("/survey/users/**").hasAnyRole("ADMIN")
 //                .antMatchers("survey/")

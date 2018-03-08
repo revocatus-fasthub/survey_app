@@ -23,8 +23,10 @@ public class CustomerTransactionController {
 
     private static final String INTERNAL_FILE="customer_transaction_list.pdf";
     private static final String EXTERNAL_FILE_PATH="C:/mytemp/survey_app.zip";
-    private static final Logger log = LoggerFactory.getLogger(CustomerTransactionController.class);
+
     private CustomerTransactionService customerTransactionService;
+
+    private static final Logger log = LoggerFactory.getLogger(CustomerTransactionController.class);
 
     @Autowired
     public CustomerTransactionController(CustomerTransactionService customerTransactionService) {
@@ -94,7 +96,8 @@ public class CustomerTransactionController {
 
 
     @RequestMapping(value="/resolve/result/{last_id}", method = RequestMethod.GET,produces = "application/json")
-    public @ResponseBody List<TransactionTemp> getCustomerTransactions(@PathVariable long last_id) {
+    public @ResponseBody
+    List<TransactionTemp> getCustomerTransactions(@PathVariable long last_id) {
 
         List<TransactionTemp> transactionTemps = new ArrayList<>();
 
